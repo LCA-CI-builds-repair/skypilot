@@ -838,7 +838,7 @@ class Resources:
                 with ux_utils.print_exception_no_traceback():
                     size_compare = 'larger than' if image_size > self.disk_size \
                         else 'equal to'
-                    raise ValueError(
+                    raise Exception(
                         f'Image {image_id!r} is {image_size}GB, which is '
                         f'{size_compare} the specified disk_size: '
                         f'{self.disk_size} GB. Please specify a larger '
