@@ -816,13 +816,20 @@ class Storage(object):
         global_user_state.
         """
         # Name should not be specified if the source is a cloud store URL.
-        source = override_args.get('source', metadata.source)
-        name = override_args.get('name', metadata.storage_name)
+    def __init__(self, source: str, name: str):
+        """Initializes the storage object.
+
+        Args:
+            source (str): The source of the storage.
+            name (str): The name of the storage.
+        """
+        self.source = source
+        self.name = name
+
         # If the source is a list, it consists of local paths
         if not isinstance(source, list): 
             if data_utils.is_cloud_store_url(source):
                 name = None
-
         storage_obj = cls(name=name,
                           source=source,
                           sync_on_reconstruction=override_args.get(

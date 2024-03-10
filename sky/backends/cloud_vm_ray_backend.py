@@ -4554,9 +4554,6 @@ class CloudVmRayBackend(backends.Backend['CloudVmRayResourceHandle']):
                     f'may already exist. Log: {log_path}')
 
             subprocess_utils.run_in_parallel(_symlink_node, runners)
-        end = time.time()
-        logger.debug(f'File mount sync took {end - start} seconds.')
-
     def _execute_storage_mounts(self, handle: CloudVmRayResourceHandle,
                                 storage_mounts: Dict[Path, storage_lib.Storage],
                                 mount_mode: storage_utils.StorageMode):
@@ -4568,6 +4565,31 @@ class CloudVmRayBackend(backends.Backend['CloudVmRayResourceHandle']):
             return
 
         # Process only mount mode objects here. COPY mode objects have been
+        # handled in a separate method.
+        for path, mount in storage_mounts.items():
+            if mount.mode == storage_utils.StorageMode.MOUNT:
+                self._mount_storage(handle, path, mount)
+            elif mount.mode == storage_utils.StorageMode.MOUNT_WITH_CACHE:
+                self._mount_storage_with_cache(handle, path, mount)
+
+    def _mount_storage(self, handle: CloudVmRayResourceHandle,
+                       path: Path, mount: storage_lib.Storage):
+        """Mounts the storage to the VM."""
+        name = mount.name
+        # If the source is a list, it consists of local paths
+        if not isinstance(source, list): 
+            if data_utils.is_cloud_store_url(source):
+                name = None
+
+    def _mount_storage_with_cache(self, handle: CloudVmRayResourceHandle,
+                                  path: Path, mount: storage_lib.Storage):
+        """Mounts the storage to the VM with caching enabled."""
+        name = mount.name
+        # If the source is a list, it consists of local paths
+        if not isinstance(source, list): 
+            if data_utils.is_cloud_store_url(source):
+                name = None
+
         # converted to regular copy file mounts and thus have been handled
         # in the '_execute_file_mounts' method.
         storage_mounts = {
