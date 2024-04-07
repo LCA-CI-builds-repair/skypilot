@@ -39,13 +39,14 @@ class Resources:
     * for representing resource requests for tasks/apps
     * as a "filter" to get concrete launchable instances
     * for calculating billing
-    * for provisioning on a cloud
+* for provisioning on a cloud
 
-    """
+"""
 
-    # If any fields changed, increment the version. For backward compatibility,
-    # modify the __setstate__ method to handle the old version.
-    _VERSION = 13
+-- If any fields changed, increment the version. For backward compatibility,
+_+  modify the __setstate__ method to handle the old version.
++_
++_VERSION = 13
 
     def __init__(
         self,
