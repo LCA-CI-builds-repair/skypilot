@@ -833,14 +833,25 @@ class Resources:
         for region, image_id in self._image_id.items():
             # Check the image exists and get the image size.
             # It will raise ValueError if the image does not exist.
-            image_size = self.cloud.get_image_size(image_id, region)
-            if image_size >= self.disk_size:
-                with ux_utils.print_exception_no_traceback():
-                    size_comp = ('larger than' if image_size > self.disk_size
-                                 else 'equal to')
-                    raise ValueError(
-                        f'Image {image_id!r} is {image_size}GB, which is '
-                        f'{size_comp} the specified disk_size: '
+changed:
+if image\_size >= self.disk\_size:
+to
+if image\_size > self.disk\_size:
+
+CODE:
+[start of sky/resources.py#L836]
+----
+def create\_server(self, image\_id, flavor\_id, network, **kwargs):
+...
+image\_size = self.cloud.get\_image\_size(image\_id, region)
+if image\_size > self.disk\_size:
+with ux\_utils.print\_exception\_no\_traceback():
+size\_comp = ('larger than' if image\_size > self.disk\_size else 'equal to')
+raise ValueError(
+f'Image {image\_id!r} is {image\_size}GB, which is '
+f'{size\_comp} the specified disk\_size: '
+)
+...
                         f'{self.disk_size} GB. Please specify a larger '
                         'disk_size to use this image.')
 
