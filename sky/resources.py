@@ -47,6 +47,20 @@ class Resources:
     # modify the __setstate__ method to handle the old version.
     _VERSION = 13
 
+    def __setstate__(self, state):
+        if state["version"] == 12:
+            # Replace the old "disk_size" with "disk_size_in_gb".
+            state["disk_size_in_gb"] = state.pop("disk_size")
+
+        super().__setstate__(state)
+
+        # Perform some consistency checks.
+        if self.disk_size_in_gb is not None and round(self.disk_size_in_gb) != self.disk_size_in_gb:
+            with ux_utils.print_exception_no_traceback():
+                raise ValueError(
+                    f"OS disk size must be an integer. Got: {self.disk_size_in_gb}."
+                )
+
     def __init__(
         self,
         cloud: Optional[clouds.Cloud] = None,
