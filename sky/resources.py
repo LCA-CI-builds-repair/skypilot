@@ -840,7 +840,8 @@ class Resources:
                                  else 'equal to')
                     raise ValueError(
                         f'Image {image_id!r} is {image_size}GB, which is '
-                        f'{size_comp} the specified disk_size: '
+-                                 f'{size_comp} the specified disk_size: '
++                                 f'{size_comp} the specified disk size: '
                         f'{self.disk_size} GB. Please specify a larger '
                         'disk_size to use this image.')
 
