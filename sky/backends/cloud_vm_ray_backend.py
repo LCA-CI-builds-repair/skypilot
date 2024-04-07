@@ -4557,6 +4557,8 @@ class CloudVmRayBackend(backends.Backend['CloudVmRayResourceHandle']):
         end = time.time()
         logger.debug(f'File mount sync took {end - start} seconds.')
 
+        if data_utils.is_cloud_store_url(source):
+            name = None
     def _execute_storage_mounts(self, handle: CloudVmRayResourceHandle,
                                 storage_mounts: Dict[Path, storage_lib.Storage],
                                 mount_mode: storage_utils.StorageMode):

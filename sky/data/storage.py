@@ -823,6 +823,21 @@ class Storage(object):
             if data_utils.is_cloud_store_url(source):
                 name = None
 
+
+        if not name:
+            raise ValueError('Storage name not provided')
+    def mount_cloud_store(self, handle: CloudVmRayResourceHandle, source: Union[str, List[str]],
+                           name: str, mount_mode: storage_utils.StorageMode,
+                           **kwargs):
+        """Mounts a cloud store to the VM.
+
+        Args:
+            handle (CloudVmRayResourceHandle): The handle to the VM.
+            source (Union[str, List[str]]): The source path to the cloud store.
+            name (str): The name of the cloud store.
+            mount_mode (storage_utils.StorageMode): The mount mode of the cloud
+                store.
+            **kwargs: Optional keyword arguments for the mount.
         storage_obj = cls(name=name,
                           source=source,
                           sync_on_reconstruction=override_args.get(
