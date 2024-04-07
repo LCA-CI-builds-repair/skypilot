@@ -99,6 +99,9 @@ html_logo = '_static/SkyPilot_wide_light.svg'
 # docs. This file should be a Windows icon file (.ico), 16x16 or 32x32 pixels.
 html_favicon = '_static/favicon.ico'
 
+# If you want to use the default favicon instead, you can remove the following line:
+# html_favicon = '_static/favicon.ico'
+
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named 'default.css' will overwrite the builtin 'default.css'.
