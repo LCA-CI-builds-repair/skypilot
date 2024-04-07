@@ -834,7 +834,7 @@ class Resources:
             # Check the image exists and get the image size.
             # It will raise ValueError if the image does not exist.
             image_size = self.cloud.get_image_size(image_id, region)
-            if image_size >= self.disk_size:
+            if image_size < self.disk_size:
                 with ux_utils.print_exception_no_traceback():
                     size_comp = ('larger than' if image_size > self.disk_size
                                  else 'equal to')
