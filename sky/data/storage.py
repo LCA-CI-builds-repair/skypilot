@@ -817,12 +817,7 @@ class Storage(object):
         """
         # Name should not be specified if the source is a cloud store URL.
         source = override_args.get('source', metadata.source)
-        name = override_args.get('name', metadata.storage_name)
-        # If the source is a list, it consists of local paths
-        if not isinstance(source, list): 
-            if data_utils.is_cloud_store_url(source):
-                name = None
-
+        name = metadata.storage_name  # Assign name from metadata instead of source
         storage_obj = cls(name=name,
                           source=source,
                           sync_on_reconstruction=override_args.get(
