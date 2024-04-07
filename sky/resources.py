@@ -39,13 +39,23 @@ class Resources:
     * for representing resource requests for tasks/apps
     * as a "filter" to get concrete launchable instances
     * for calculating billing
-    * for provisioning on a cloud
+```python
+# If any fields changed, increment the version. For backward compatibility,
+# modify the __setstate__ method to handle the old version.
+_VERSION = 13
 
-    """
-
-    # If any fields changed, increment the version. For backward compatibility,
-    # modify the __setstate__ method to handle the old version.
-    _VERSION = 13
+def __init__(
+        self,
+        # other fields
+        disk_size: int,  # the root disk size in GB
+        # other fields
+):
+        # other initialization
+        if round(disk_size) != disk_size:
+            with ux_utils.print_exception_no_traceback():
+                raise ValueError(
+                    f"OS disk size must be an integer. Got: {disk_size}."
+                )
 
     def __init__(
         self,
