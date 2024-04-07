@@ -4554,9 +4554,6 @@ class CloudVmRayBackend(backends.Backend['CloudVmRayResourceHandle']):
                     f'may already exist. Log: {log_path}')
 
             subprocess_utils.run_in_parallel(_symlink_node, runners)
-        end = time.time()
-        logger.debug(f'File mount sync took {end - start} seconds.')
-
     def _execute_storage_mounts(self, handle: CloudVmRayResourceHandle,
                                 storage_mounts: Dict[Path, storage_lib.Storage],
                                 mount_mode: storage_utils.StorageMode):
@@ -4568,6 +4565,15 @@ class CloudVmRayBackend(backends.Backend['CloudVmRayResourceHandle']):
             return
 
         # Process only mount mode objects here. COPY mode objects have been
+        # handled in the 'sky start' command.
+
+        # Install mounting tools if necessary
+        if mount_mode == storage_utils.StorageMode.MOUNT:
+            self._install_storage_mount_tools(handle, storage_mounts)
+
+        # Mount storage
+        self._mount_storage(handle, storage_mounts)
+
         # converted to regular copy file mounts and thus have been handled
         # in the '_execute_file_mounts' method.
         storage_mounts = {
