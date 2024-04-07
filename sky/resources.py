@@ -843,7 +843,6 @@ class Resources:
                         f'{size_compare} the specified disk_size: '
                         f'{self.disk_size} GB. Please specify a larger '
                         'disk_size to use this image.')
-
     def _try_validate_disk_tier(self) -> None:
         if self.disk_tier is None:
             return
