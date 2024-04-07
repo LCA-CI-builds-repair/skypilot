@@ -834,10 +834,9 @@ class Resources:
             # Check the image exists and get the image size.
             # It will raise ValueError if the image does not exist.
             image_size = self.cloud.get_image_size(image_id, region)
-            if image_size >= self.disk_size:
+            if image_size > self.disk_size:  # Changed from '>=' to '>'
                 with ux_utils.print_exception_no_traceback():
-                    size_comp = ('larger than' if image_size > self.disk_size
-                                 else 'equal to')
+                    size_comp = 'larger than'  # Removed the inline conditional for clarity
                     raise ValueError(
                         f'Image {image_id!r} is {image_size}GB, which is '
                         f'{size_comp} the specified disk_size: '
