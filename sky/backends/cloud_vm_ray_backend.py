@@ -4568,6 +4568,15 @@ class CloudVmRayBackend(backends.Backend['CloudVmRayResourceHandle']):
             return
 
         # Process only mount mode objects here. COPY mode objects have been
+        for source, storage in storage_mounts.items():
+            if mount_mode == storage_utils.StorageMode.MOUNT:
+                if data_utils.is_cloud_store_url(source):
+                    name = None
+                else:
+                    # Handle local mount paths here
+                    self._install_mount_tool(storage.mount_tool)
+                    self._mount_storage_path(source, storage)
+
         # converted to regular copy file mounts and thus have been handled
         # in the '_execute_file_mounts' method.
         storage_mounts = {
