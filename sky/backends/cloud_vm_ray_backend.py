@@ -4554,20 +4554,38 @@ class CloudVmRayBackend(backends.Backend['CloudVmRayResourceHandle']):
                     f'may already exist. Log: {log_path}')
 
             subprocess_utils.run_in_parallel(_symlink_node, runners)
+```python
+def _mount_cloud_storage(self, handle: CloudVmRayResourceHandle,
+                          storage_mounts: Dict[Path, storage_lib.Storage],
+                          mount_mode: storage_utils.StorageMode):
+    """Mounts cloud storage to the VM."""
+    if not storage_mounts:
+        return
+
+    # Process only mount mode objects here. COPY mode objects have been
+    # handled already.
+    storage_mount_uuids = list(storage_mounts.keys())
+    for uuid in storage_mount_utils.get_mount_uuids(
+            storage_mount_uuids, mount_mode):
+        storage = storage_mounts[uuid]
+        start = time.time()
+        logger.debug(f'Mounting {uuid}...')
+        try:
+            if not data_utils.is_cloud_store_url(storage.source):
+                # If the source is not a cloud URL, it is a local path.
+                # We don't need to mount the local path.
+                continue
+            logger.debug(f'File mount sync started for {uuid}.')
+            storage.sync_file_mount(handle.vm)
+            logger.debug(f'File mount sync succeeded for {uuid}.')
+        except Exception as e:
+            logger.debug(f'File mount sync failed for {uuid}: {str(e)}.')
+            # If the file mount failed, we still need to mount the file system
+            # to access the metadata.
+            storage.mount(handle.vm, mount_mode)
         end = time.time()
         logger.debug(f'File mount sync took {end - start} seconds.')
-
-    def _execute_storage_mounts(self, handle: CloudVmRayResourceHandle,
-                                storage_mounts: Dict[Path, storage_lib.Storage],
-                                mount_mode: storage_utils.StorageMode):
-        """Executes storage mounts: installing mounting tools and mounting."""
-        # Handle cases where `storage_mounts` is None. This occurs when users
-        # initiate a 'sky start' command from a Skypilot version that predates
-        # the introduction of the `storage_mounts_metadata` feature.
-        if not storage_mounts:
-            return
-
-        # Process only mount mode objects here. COPY mode objects have been
+```
         # converted to regular copy file mounts and thus have been handled
         # in the '_execute_file_mounts' method.
         storage_mounts = {
