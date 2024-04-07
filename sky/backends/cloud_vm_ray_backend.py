@@ -4568,6 +4568,12 @@ class CloudVmRayBackend(backends.Backend['CloudVmRayResourceHandle']):
             return
 
         # Process only mount mode objects here. COPY mode objects have been
+        # handled by the caller.
+        for path, storage in storage_mounts.items():
+            # Set the mount mode for the storage.
+            storage.set_mount_mode(mount_mode)
+
+            # Execute the mount command.
         # converted to regular copy file mounts and thus have been handled
         # in the '_execute_file_mounts' method.
         storage_mounts = {

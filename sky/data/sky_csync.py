@@ -255,6 +255,12 @@ def csync(source: str, storetype: str, destination: str, num_threads: int,
 
     Args:
         source (str): The local path to the directory that you want to sync.
+
+    Returns:
+        None
+    """
+    def sync_daemon(source, bucket_url):
+        # Start the sync daemon.
         storetype (str): The type of cloud storage to sync to.
         destination (str): The bucket or subdirectory in the bucket where the
             files should be synced.
