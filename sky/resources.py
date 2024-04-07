@@ -45,7 +45,7 @@ class Resources:
 
     # If any fields changed, increment the version. For backward compatibility,
     # modify the __setstate__ method to handle the old version.
-    _VERSION = 13
+    _VERSION = 14
 
     def __init__(
         self,
