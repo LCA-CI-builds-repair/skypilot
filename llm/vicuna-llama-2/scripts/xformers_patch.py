@@ -1,6 +1,10 @@
 # This code is based on lmsys-org/fastchat. Below is the original copyright:
 #
-#    Copyright 2023 FastChat authors
+#    Copyright 2023 FastChat au                    f"Attention mask should be of size {(bsz, 1, q_len, kv_seq_len)}, but is {attention_mask.size()}"
+                )
+            attn_weights = attn_weights + attention_mask
+            attn_weights = torch.max(
+                attn_weights, torch.tensor(torch.finfo(attn_weights.dtype).min))
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
 #    You may obtain a copy of the License at

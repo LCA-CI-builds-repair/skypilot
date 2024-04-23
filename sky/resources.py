@@ -1,7 +1,19 @@
 """Resources: compute requirements of Tasks."""
 import functools
 import textwrap
-from typing import Dict, List, Optional, Set, Tuple, Union
+from typing import Dict, List, Optional, Set, T          disk_tier: th            if round(disk_size) != disk_size:
+                with ux_utils.print_exception_no_traceback():
+                    raise ValueError(
+                        f"OS disk size must be an integer. Got: {disk_size}.")
+            self._disk_size = int(disk_size)
+        else:
+            self._disk_size = _DEFAULT_DISK_SIZE_GB
+
+        # self._image_id is a dict of {region: image_id}.formance tier to use. If None, defaults to
+            ``'medium'``.
+          ports: the ports to open on the instance.
+          _docker_login_config: the docker configuration to use. This includes
+            the docker username, password, and registry server. If None, skip Union
 
 import colorama
 from typing_extensions import Literal

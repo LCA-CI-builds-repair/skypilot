@@ -12,7 +12,17 @@ import yaml
 
 import sky
 from sky import clouds
-from sky import exceptions
+from sky import exce                with                    raise ValueError(
+                        'Workdir must exist and must be a directory (or '
+                        f'a symli            with ux_utils.print_exception_no_traceback():
+                raise ValueError(
+                    f'num_nodes should be a positive int. Got: {num_nodes}')
+        self._num_nodes = num_nodes a directory). {self.workdir} not found.')
+    @staticmethodtils.print_exception_no_traceback():
+                    raise ValueError(
+                        'run command generator must be self contained. '
+                        f'Found globals: {run_closure.globals}')
+            if run_closure.unbound:s
 from sky import global_user_state
 from sky import sky_logging
 from sky.backends import backend_utils

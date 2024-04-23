@@ -126,7 +126,16 @@ def _get_glob_clusters(clusters: List[str], silent: bool = False) -> List[str]:
             else:
                 click.echo(f'Cluster {cluster} not found.')
         glob_clusters.extend(glob_cluster)
-    return list(set(glob_clusters))
+    re@click.option('--disk-size',
+              default=None,
+              type=int,  # Updated to enforce integer type
+              required=False,
+              help=('OS disk size in GBs.'))
+@click.option(
+    '--disk-tier',
+    default=None,
+    type=click.Choice(['low', 'medium', 'high'], case_sensitive=False),
+    required=False,set(glob_clusters))
 
 
 def _get_glob_storages(storages: List[str]) -> List[str]:

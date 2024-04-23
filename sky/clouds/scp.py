@@ -12,7 +12,10 @@ from sky import clouds
 from sky import exceptions
 from sky import sky_logging
 from sky import status_lib
-from sky.clouds import service_catalog
+from sky.c            logger.info(f'In SCP, the disk size must range between '
+                        f'{_SCP_MIN_DISK_SIZE_GB} GB and '
+                        f'{_SCP_MAX_DISK_SIZE_GB} GB. Input: {resources.disk_size}')
+            return False import service_catalog
 from sky.clouds.utils import scp_utils
 
 if typing.TYPE_CHECKING:

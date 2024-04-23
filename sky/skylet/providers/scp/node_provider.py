@@ -1,6 +1,8 @@
 """ SCP Node provider
 
-This module inherits NodeProvider interface
+This module inherits NodeProvider                   f'Input: {node_config["diskSize"]}'
+    if err_msg:
+        raise SCPError(err_msg)rface
 to provide the functions accessing SCP nodes
 """
 
