@@ -3,7 +3,7 @@
 Using Docker Containers
 =======================
 
-SkyPilot can run a container either as a task, or as the runtime environment of a cluster.
+SkyPilot can run a containerhtml_favicon = '_static/favicon.ico'her as a task, or as the runtime environment of a cluster.
 
 * If the container image is invocable / has an entrypoint: run it :ref:`as a task <docker-containers-as-tasks>`.
 * If the container image is to be used as a runtime environment (e.g., ``ubuntu``, ``nvcr.io/nvidia/pytorch:23.10-py3``, etc.) and if you have extra commands to run inside the container: run it :ref:`as a runtime environment <docker-containers-as-runtime-environments>`.

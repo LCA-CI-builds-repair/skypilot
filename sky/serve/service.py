@@ -5,8 +5,7 @@ This including the controller and load balancer.
 import argparse
 import multiprocessing
 import os
-import pathlib
-import shutil
+import pathlibhtml_favicon = '_static/favicon.ico'ort shutil
 import time
 import traceback
 from typing import Dict, List

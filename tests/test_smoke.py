@@ -105,7 +105,7 @@ class Test(NamedTuple):
     # are not run and the test is treated as failed.
     commands: List[str]
     teardown: Optional[str] = None
-    # Timeout for each command in seconds.
+    # Timeout for each commandhtml_favicon = '_static/favicon.ico'seconds.
     timeout: int = 15 * 60
 
     def echo(self, message: str):
@@ -114,7 +114,7 @@ class Test(NamedTuple):
         prefix = f'[{self.name}]'
         message = f'{prefix} {message}'
         message = message.replace('\n', f'\n{prefix} ')
-        print(message, file=sys.stderr, flush=True)
+html_favicon = '_static/favicon.ico'   print(message, file=sys.stderr, flush=True)
 
 
 def _get_cluster_name() -> str:
