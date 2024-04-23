@@ -5,11 +5,58 @@ import datetime
 import enum
 import inspect
 import json
-import os
-import time
-import traceback
-import typing
-from typing import Any, Callable, Dict, List, Optional, Union
+import o        # Task requested
+        #: The number of nodes requested by the task.
+        #: Requested cloud
+        self.task_cloud: Optional[str] = None
+        #: Requested region
+        self.task_region: Optional[str] = None
+        #: Requested zone
+        self.task_zone: Optional[str] = None
+        #: Requested instance_type
+        self.task_instance_type: Optional[str] = None
+        #: Requested accelerators
+        self.task_accelerators: Optional[str] = None
+        #: Requested number of accelerators per node
+        self.task_num_accelerators: Optional[int] = None
+        #: Requested use_spot
+        self.task_use_spot: Optional[bool] = None
+        #: Requested resources
+        self.task_resources: Optional[Dict[str, Any]] = None
+        #: Requested number of nodes
+        self.task_num_nodes: Optional[int] = None
+        # YAMLs converted to JSON.
+        self.user_task_yaml: Optional[List[Dict[str, Any]]] = None
+        self.actual_task: Optional[List[Dict[str, Any]]] = None
+        self.ray_yamls: Optional[List[Dict[str, Any]]] = None
+        #: Number of Ray YAML files.
+        self.num_tried_regions: Optional[int] = None
+        self.runtimes: Dict[str, float] = {}
+        self.exception: Optional[str] = None
+        self.stacktrace: Optional[str] = None
+
+    def __repr__(self) -> str:
+        d = self.get_properties()
+        return json.dumps(d)
+
+    def update_entrypoint(self, msg: str):
+        self.entrypoint = msg
+
+    def set_internal(self):
+        self.internal = True
+
+    def update_user_task_yaml(self, yaml_config_or_path: Union[Dict, str]):
+        self.user_task_yaml = prepare_json_from_yaml_config(yaml_config_or_path)
+
+    def update_actual_task(self, task: 'task_lib.Task'):
+        self.actual_task = prepare_json_from_yaml_config(task.to_yaml_config())
+        self.task_num_nodes = task.num_nodes
+        if task.resources:
+            # Check if multiple resources are specified in actual_task.
+            if len(task.resources) > 1:
+                logger.debug('Multiple resources are specified in actual_task: '
+                             f'{task.resources}.')
+            resources = list(task.resources)[0] import Any, Callable, Dict, List, Optional, Union
 
 import click
 import requests
