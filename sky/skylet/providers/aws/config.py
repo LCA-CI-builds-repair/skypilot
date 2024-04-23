@@ -20,7 +20,28 @@ from sky.skylet.providers.aws.utils import (
     resource_cache,
 )
 from ray.autoscaler._private.cli_logger import cf, cli_logger
-from ray.autoscaler._private.event_system import CreateClusterEvent, global_event_system
+from ray.autoscaler._private            (
+                s
+                for s in candidate_subnets
+                if s.state == "available"
+                and (
+                    # If using internal IPs, the subnets must not assign public
+                    # IPs. Additionally, requires that each eligible subnet
+                    # contain a name tag which includes the substring
+                    # 'private'. This is a HACK; see below.
+                    #
+                    # Reason: the first two checks alone are not enough. For
+                    # example, the VPC creation helper from AWS will create a
+                    # "public" and a "private" subnet per AZ. However, the
+                    # created "public" subnet by default has
+                    # map_public_ip_on_launch set to False as well. This means
+                    # we could've launched in that subnet, which will make any
+                    # instances not able to send outbound traffic to the
+                    # internet. By requiring the 'private' substring in the
+                    # name tag, we ensure that we're only selecting subnets
+                    # that are truly 'private'.
+                )
+            )ort CreateClusterEvent, global_event_system
 from ray.autoscaler._private.providers import _PROVIDER_PRETTY_NAMES
 from ray.autoscaler._private.util import check_legacy_fields
 from ray.autoscaler.tags import NODE_TYPE_LEGACY_HEAD, NODE_TYPE_LEGACY_WORKER

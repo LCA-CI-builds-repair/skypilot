@@ -36,9 +36,24 @@ if typing.TYPE_CHECKING:
     import boto3  # type: ignore
     from google.cloud import storage  # type: ignore
 
-logger = sky_logging.init_logger(__name__)
+logger = sky_logging.init_logger(__name_        if (self.source is None or not isinstance(self.source, str) or
+                not data_utils.is_cloud_store_url(self.source)):
+            # Remove name if source is a cloud store URL
+            name = self.name
+            add_if_not_none('name', name)
+            add_if_not_none('source', self.source)
 
-StorageHandle = Any
+            stores = None
+            if self.stores is not None and len(self.stores) > 0:
+                stores = ','.join([store.value for store in self.stores])
+            add_if_not_none('store', stores)
+            add_if_not_none('persistent', self.persistent)
+            if self.mode is not None:
+                add_if_not_none('mode', self.mode.value)
+            add_if_not_none('interval_seconds', self.interval_seconds)
+            if self.force_delete:
+                config['_force_delete'] = True
+        return config = Any
 StorageStatus = status_lib.StorageStatus
 Path = str
 SourceType = Union[Path, List[Path]]
