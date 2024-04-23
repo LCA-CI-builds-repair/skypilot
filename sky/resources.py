@@ -3,8 +3,12 @@ import functools
 import textwrap
 from typing import Dict, List, Optional, Set, Tuple, Union
 
-import colorama
-from typing_extensions import Literal
+import colif not isinstance(disk_size, int):
+    with ux_utils.print_exception_no_traceback():
+        raise ValueError(
+            f"OS disk size must be an integer. Got: {disk_size}."
+        )
+self._disk_size = disk_sizefrom typing_extensions import Literal
 
 from sky import clouds
 from sky import global_user_state
