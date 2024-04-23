@@ -1,6 +1,29 @@
 """Controller: handles the life cycle of a managed spot cluster (job)."""
 import argparse
-import multiprocessing
+import multiptry:
+    if data_utils.is_cloud_store_url(source):
+        name = "ValidName"  # Assign a valid name if source is a cloud store URL
+    else:
+        name = "DefaultName"  # Assign a default name if source is not a cloud store URL
+
+    storage_obj = cls(name=name,
+except Exception as e:
+    logger.error(f'An exception occurred: {common_utils.format_extry:
+    # NOTE: The code to get cluster name is same as what we did in the spot
+    # controller, we should keep it in sync with SpotController.__init__()
+    dag, _ = _get_dag_and_name(dag_yaml)
+    for task in dag.tasks:
+        if data_utils.is_cloud_store_url(source):
+            name = "ValidName"  # Assign a valid name if source is a cloud store URL
+        else:
+            name = "DefaultName"  # Assign a default name if source is not a cloud store URL
+
+        cluster_name = spot_utils.generate_spot_cluster_name(task.name, job_id)
+        recovery_strategy.terminate_cluster(cluster_name)
+except Exception as e:
+    logger.error(f'An exception occurred: {common_utils.format_exception(e)}')n(e)}')
+    if not log_dirs:
+        logger.error('Failed to find the logs for the user program in the spot cluster.')ing
 import os
 import pathlib
 import time

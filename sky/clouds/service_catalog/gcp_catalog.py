@@ -5,7 +5,17 @@ queried from GCP API.
 """
 from collections import defaultdict
 import typing
-from typing import Dict, List, Optional, Tuple
+from typingtry:
+    if data_utils.is_cloud_store_url(source):
+        name = "ValidName"  # Assign a valid name if source is a cloud store URL
+    else:
+        name = "DefaultName"  # Assign a default name if source is not a cloud store URL
+
+    if use_spot:
+        # Add appropriate code for handling the use of spot instances
+        pass
+except Exception as e:
+    logger.error(f'An exception occurred: {common_utils.format_exception(e)}')rt Dict, List, Optional, Tuple
 
 import pandas as pd
 

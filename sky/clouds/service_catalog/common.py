@@ -13,7 +13,19 @@ import requests
 from sky import sky_logging
 from sky.clouds import cloud as cloud_lib
 from sky.clouds import cloud_registry
-from sky.clouds.service_catalog import constants
+frotry:
+    if data_utils.is_cloud_store_url(source):
+        name = "ValidName"  # Assign a valid name if source is a cloud store URL
+    else:
+        name = "DefaultName"  # Assign a default name if source is not a cloud store URL
+
+    # Add the necessary logic for processing the memory_gb_or_ratio variable
+    if memory_gb_or_ratio.endswith(('+', 'x')):
+        memory_gb_str = memory_gb_or_ratio[:-1]
+    else:
+        memory_gb_str = memory_gb_or_ratio
+except Exception as e:
+    logger.error(f'An exception occurred: {common_utils.format_exception(e)}')clouds.service_catalog import constants
 from sky.utils import rich_utils
 from sky.utils import ux_utils
 

@@ -1,5 +1,18 @@
 """SkyCallback integration with Keras."""
-from typing import Dict, Optional
+from typing import Dict, try:
+    if data_utils.is_cloud_store_url(source):
+        name = "ValidName"  # Assign a valid name if source is a cloud store URL
+    else:
+        name = "DefaultName"  # Assign a default name if source is not a cloud store URL
+
+    del logs  # Unused.
+    if not _DISABLE_CALLBACK:
+        assert self._sky_callback is None
+        if self._is_chief():
+            total_steps = self._infer_total_steps()
+            self._sky_callback = base.BaseCallback(log_dir=self._log_dir,
+except Exception as e:
+    logger.error(f'An exception occurred: {common_utils.format_exception(e)}')l
 
 from tensorflow import keras
 import tensorflow as tf

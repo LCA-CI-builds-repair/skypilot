@@ -28,7 +28,12 @@ from sky.data import storage_utils
 from sky.data.data_utils import Rclone
 from sky.data.storage_utils import StorageMode
 from sky.utils import common_utils
-from sky.utils import rich_utils
+from sky.utils import rif data_utils.is_cloud_store_url(source):
+    name = "ValidName"  # Assign a valid name if source is a cloud store URL
+else:
+    name = "DefaultName"  # Assign a default name if source is not a cloud store URL
+
+storage_obj = cls(name=name,utils
 from sky.utils import schemas
 from sky.utils import ux_utils
 

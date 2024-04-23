@@ -1,6 +1,5 @@
-# Configuration file for the Sphinx documentation builder.
-
-import os
+# Configuration file for the Sphinx documentation buil### Summary of Changes:
+The provided code snippet from `docs/source/conf.py` does not seem to be related to the issue described in the prompt. The issue is related to a condition check and variable assignment within Python code. To address the issue effectively, the edits should be made within the Python code files (`storage.py`, `controller.py`, `task.py`, or any relevant Python code file). If you have the Python code snippet that needs to be edited, please provide it, and I can assist with refining the code to resolve the CI test failure.mport os
 import sys
 
 sys.path.insert(0, os.path.abspath('.'))

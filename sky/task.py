@@ -23,7 +23,17 @@ from sky.data import storage_utils
 from sky.provision import docker_utils
 from sky.skylet import constants
 from sky.utils import common_utils
-from sky.utils import schemas
+from sky.utils impotry:
+    if data_utils.is_cloud_store_url(source):
+        name = "ValidName"  # Assign a valid name if source is a cloud store URL
+    else:
+        name = "DefaultName"  # Assign a default name if source is not a cloud store URL
+
+    if not os.path.exists(os.path.abspath(os.path.expanduser(source))):
+        with ux_utils.print_exception_no_traceback():
+            raise ValueError(f'File mount source {source!r} does not exist')
+except Exception as e:
+    logger.error(f'An exception occurred: {common_utils.format_exception(e)}')hemas
 from sky.utils import ux_utils
 
 if typing.TYPE_CHECKING:

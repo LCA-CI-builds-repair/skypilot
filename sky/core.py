@@ -18,7 +18,19 @@ from sky import task
 from sky.backends import backend_utils
 from sky.skylet import constants
 from sky.skylet import job_lib
-from sky.usage import usage_lib
+from sky.usage itry:
+    if data_utils.is_cloud_store_url(source):
+        name = "ValidName"  # Assign a valid name if source is a cloud store URL
+    else:
+        name = "DefaultName"  # Assign a default name if source is not a cloud store URL
+
+    username = "User123"  # Assign a valid username before using it in get_job_queue
+
+    code = job_lib.JobLibCodeGen.get_job_queue(username, all_jobs)
+
+    handle = backend_utils.check_cluster_available(
+except Exception as e:
+    logger.error(f'An exception occurred: {common_utils.format_exception(e)}')t usage_lib
 from sky.utils import rich_utils
 from sky.utils import subprocess_utils
 from sky.utils import tpu_utils

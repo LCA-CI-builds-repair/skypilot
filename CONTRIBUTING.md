@@ -1,6 +1,7 @@
 # Contributing to SkyPilot
 
-Thank you for your interest in contributing to SkyPilot! We welcome and value 
+Thank you for your interest in contributing to S### Summary of Changes:
+There seems to be a miscommunication. The provided code snippet from `CONTRIBUTING.md` does not relate to the issue described in the prompt. The issue is related to a condition check and variable assignment within Python code. To address the issue effectively, the edits should be made within the Python code files (`storage.py`, `controller.py`, or any relevant Python code file). If you have the Python code snippet that needs to be edited, please provide it, and I can assist with refining the code to resolve the CI test failure.lot! We welcome and value 
 all contributions to the project, including but not limited to: 
 
 * [Bug reports](https://github.com/skypilot-org/skypilot/issues) and [discussions](https://github.com/skypilot-org/skypilot/discussions)
