@@ -14,7 +14,40 @@
 # > pytest tests/test_smoke.py::test_minimal
 #
 # Only run managed spot tests
-# > pytest tests/test_smoke.py --managed-spot
+# > pytest tests/tdef test_aws_image_id_dict_regiondef test_gcp_image_id_dict_region():
+    name = _get_cluster_name()
+   def test_gcp_image_id_dict_zone():
+    name = _get_cluster_name()
+    test = Test(
+        'gcp_image_id_dict_zone',
+        [
+            f'sky launch -y -c {name} --zone us-east1-a tests/test_yamls/gcp_per_region_images.yaml && exit 1 || true',
+            f'sky status | grep {name} && exit 1 || true',  # Ensure the cluster is not created.
+            f'sky launch -y -c {name} --zone us-central1-a tests/test_yamls/gcp_per_region_images.yaml',
+            f'sky launch -y -c {name} --cloud gcp --image-id skypilot:cpu-debian-10 tests/test_yamls/minimal.yaml',
+            f'sky exec {name} --cloud gcp --image-id skypilot:cpu-debian-10 tests/test_yamls/minimal.yaml',
+            f'sky exec {name} --cloud gcp --image-id skypilot:gpu-debian-10 tests/test_yamls/minimal.yaml && exit 1 || true',
+        ]
+    )        'gcp_image_id_dict_region',
+        [
+            f'sky launch -y -c {name} --region us-east1 tests/test_yamls/gcp_per_region_images.yaml && exit 1 || true',
+            f'sky status | grep {name} && exit 1 || true',  # Ensure the cluster is not created.
+            f'sky launch -y -c {name} --region us-west3 tests/test_yamls/gcp_per_region_images.yaml',
+            f'sky launch -c {name} --cloud gcp --image-id projects/ubuntu-os-cloud/global/images/ubuntu-1804-bionic-v20230112 tests/test_yamls/minimal.yaml',
+            f'sky exec {name} --cloud gcp --image-id projects/ubuntu-os-cloud/global/images/ubuntu-1804-bionic-v20230112 tests/test_yamls/minimal.yaml',
+        ]
+    ) = _get_cluster_name()
+    test = Test(
+        'aws_image_id_dict_region',
+        [
+            f'sky launch -y -c {name} --region us-east-1 examples/per_region_images.yaml && exit 1 || true',
+            f'sky status | grep {name} && exit 1 || true',  # Ensure the cluster is not created.
+            f'sky launch -y -c {name} --region us-east-2 examples/per_region_images.yaml',
+            f'sky launch -c {name} --image-id skypilot:gpu-ubuntu-2004 examples/minimal.yaml',
+            f'sky exec {name} --image-id skypilot:gpu-ubuntu-2004 examples/minimal.yaml',
+            f'sky exec {name} --image-id skypilot:gpu-ubuntu-1804 examples/minimal.yaml && exit 1 || true',
+        ]
+    )naged-spot
 #
 # Only run test for AWS + generic tests
 # > pytest tests/test_smoke.py --aws

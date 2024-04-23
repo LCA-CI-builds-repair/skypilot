@@ -11,7 +11,23 @@ from sky import clouds
 from sky import exceptions
 
 
-def _test_parse_task_yaml(spec: str, test_fn: Optional[Callable] = None):
+def _test_parse_task_yaml(spec: str, teimport pytest
+
+def test_instance_types_for_optimization(capfd):
+    stdout, _ = capfd.readouterr()
+    assert 'g4dn.xlarge' in stdout  # AWS, 4 vCPUs, 16 GB memory, 1 T4 GPU
+    assert 'Standard_NC4as_T4_v3' in stdout  # Azure, 4 vCPUs, 28 GB memory, 1 T4 GPU
+    assert 'n1-highmem-4' in stdout  # GCP, 4 vCPUs, 26 GB memory, 1 T4 GPU
+
+def test_optimal_instance_type_selection(capfd, monkeypatch):
+    _test_resources_launch(monkeypatch,
+                           cpus='16+',
+                           memory='32+',
+                           accelerators='T4')
+    stdout, _ = capfd.readouterr()
+    assert 'n1-standard-16' in stdout  # GCP, 16 vCPUs, 60 GB memory, 1 T4 GPU
+    assert 'g4dn.4xlarge' in stdout  # AWS, 16 vCPUs, 64 GB memory, 1 T4 GPU
+    assert 'Standard_NC16as_T4_v3' in stdout  # Azure, 16 vCPUs, 110 GB memory, 1 T4 GPU[Callable] = None):
     """Tests parsing a task from a YAML spec and running a test_fn."""
     with tempfile.NamedTemporaryFile('w') as f:
         f.write(spec)
