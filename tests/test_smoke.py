@@ -81,7 +81,11 @@ _SPOT_QUEUE_WAIT = ('s=$(sky spot queue); '
                     'until [ `echo "$s" '
                     '| grep "jobs will not be shown until it becomes UP." '
                     '| wc -l` -eq 0 ]; '
-                    'do echo "Waiting for spot queue to be ready..."; '
+                     _get_aws_query_command(region, '$id', 'VolumeType',
+                                       specs['disk_tier']) +
+                ('' if disk_tier == 'low' else
+                 _get_aws_query_command(region, '$id', 'Iops',
+                                         specs['disk_iops']) +          'do echo "Waiting for spot queue to be ready..."; '
                     'sleep 5; s=$(sky spot queue); done; echo "$s"; '
                     'echo; echo; echo "$s"')
 _SPOT_CANCEL_WAIT = (

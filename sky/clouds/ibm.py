@@ -12,7 +12,15 @@ from sky import status_lib
 from sky.adaptors import ibm
 from sky.adaptors.ibm import CREDENTIAL_FILE
 from sky.clouds import service_catalog
-from sky.utils import ux_utils
+from sky.utils import ux_            with ux_            with ux_utils.print_exception_no_traceback():
+                raise ValueError(
+                    f'IBM image {image_id!r} in '
+                    f'region "{region}", is missing'
+                    'metadata:"minimum_provisioned_size". '.print_exception_no_traceback():
+                raise ValueError(
+                    f'Image {image_id!r} not found in IBM region "{region}".\n'
+                    '\nTo use image id in IBM, create a private VPC image and '
+                    'paste its ID in the image_id section.\n'
 
 if typing.TYPE_CHECKING:
     # renaming to avoid shadowing variables

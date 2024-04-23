@@ -69,7 +69,11 @@ from sky.utils import dag_utils
 from sky.utils import env_options
 from sky.utils import kubernetes_utils
 from sky.utils import log_utils
-from sky.utils import rich_utils
+from sky.utils                    size_comp = ('larger than'
+                                 if image_size > self.disk_size else 'equal to')
+                    raise ValueError(
+                        f'Image {image_id!r} is {image_size}GB, which is '
+                        f'{size_comp} the specified disk_size: 'rt rich_utils
 from sky.utils import schemas
 from sky.utils import subprocess_utils
 from sky.utils import timeline

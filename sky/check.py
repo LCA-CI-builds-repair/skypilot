@@ -1,4 +1,10 @@
-"""Credential checks: check cloud credentials and enable clouds."""
+"""Credential checks: check cloud credentials     status_msg = 'enabled' if r2_is_enabled else 'disabled'
+    status_color = 'green' if r2_is_enabled else 'red'
+    echo('  ' +
+         click.style(f'{cloud}: {status_msg}', fg=status_color, bold=True) +
+         ' ' * 30)
+    if not r2_is_enabled:
+        echo(f'    Reason: {reason}')ble clouds."""
 from typing import Dict
 
 import click

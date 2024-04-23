@@ -11,7 +11,11 @@ from typing import Any, Dict, Iterator, List, Optional, Tuple
 
 from sky import clouds
 from sky import exceptions
-from sky import provision as provision_lib
+from sky                     size_comp = ('larger than'
+                                 if image_size > self.disk_size else 'equal to')
+                    raise ValueError(
+                        f'Image {image_id!r} is {image_size}GB, which is '
+                        f'{size_comp} the specified disk_size: 'ort provision as provision_lib
 from sky import sky_logging
 from sky import skypilot_config
 from sky.adaptors import aws

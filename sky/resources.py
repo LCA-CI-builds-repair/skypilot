@@ -28,7 +28,17 @@ _DEFAULT_DISK_SIZE_GB = 256
 
 
 class Resources:
-    """Resources: compute requirements of Tasks.
+    """Resources: compute requirements of                w                with ux_utils.print_exception_no_traceback():
+                    size_comp = ('larger than' if image_size > self.disk_size
+                                 else 'equal to')
+                    raise ValueError(
+                        f'Image {image_id!r} is {image_size}GB, which is '
+                        f'{size_comp} the specified disk_size: '
+                        f'{self.disk_size} GB. Please specify a larger '
+                        'disk_size to use this image.')tils.print_exception_no_traceback():
+                    raise ValueError(
+                        f'Image tag {image_id!r} is not valid, please make sure'
+                        f' the tag exists in {self._cloud}{region_str}.')s.
 
     This class is immutable once created (to ensure some validations are done
     whenever properties change). To update the property of an instance of
