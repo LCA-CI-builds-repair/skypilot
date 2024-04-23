@@ -5,7 +5,12 @@ queried from GCP API.
 """
 from collections import defaultdict
 import typing
-from typing import Dict, List, Optional, Tuple
+from typing    specified, and will then be utilized in a GCP CLI command in order
+    to check for a non-zero quota.
+    """
+
+    if use_spot:
+        # Add your code block or statement here to handle the conditionrt Dict, List, Optional, Tuple
 
 import pandas as pd
 

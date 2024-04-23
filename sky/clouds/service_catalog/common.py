@@ -12,7 +12,21 @@ import requests
 
 from sky import sky_logging
 from sky.clouds import cloud as cloud_lib
-from sky.clouds import cloud_registry
+from sky.clouds i    # but we add it here     # resources.py::_set_memory() but we add it here for safety.
+    if memory_gb_or_ratio.endswith(('+', 'x')):
+        memory_gb_str = memory_gb_or_ratio[:-1]
+    else:
+        memory_gb_str = memory_gb_or_ratio
+    try:
+        # Add your error handling logic or continuation of code herefety.
+    if cpus.endswith('+'):
+        num_cpus_str = cpus[:-1]
+    else:
+        num_cpus_str = cpus
+    try:
+        num_cpus = float(num_cpus_str)
+    except ValueError:
+        # Add your error handling logic or continuation of code hereoud_registry
 from sky.clouds.service_catalog import constants
 from sky.utils import rich_utils
 from sky.utils import ux_utils

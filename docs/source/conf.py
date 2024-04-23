@@ -1,6 +1,10 @@
-# Configuration file for the Sphinx documentation builder.
+# Configuration file for the Sphinx documentation buil# Set the order for presenting Python methods in source code order
+autodoc_member_order = 'bysource'
 
-import os
+# -- Options for HTML output
+
+# Specify the HTML theme to be used
+html_theme = 'sphinx_book_theme'mport os
 import sys
 
 sys.path.insert(0, os.path.abspath('.'))

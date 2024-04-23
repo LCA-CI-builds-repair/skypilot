@@ -77,7 +77,15 @@ from sky.utils import ux_utils
 from sky.utils.cli_utils import status_utils
 
 if typing.TYPE_CHECKING:
-    from sky.backends import backend as backend_lib
+    from sky.backends import backen    '--status',
+    is_flag=True,
+    default=False,
+    help=('If specified, do not show logs but exit with a status code for the '
+          'job\'s status: 0 for succeeded, or 1 for all other statuses.')
+)
+@click.option(
+    '--follow/--no-follow',
+    is_flag=True,kend_lib
 
 logger = sky_logging.init_logger(__name__)
 

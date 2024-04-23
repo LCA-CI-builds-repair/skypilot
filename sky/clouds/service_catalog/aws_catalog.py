@@ -4,8 +4,12 @@ This module loads the service catalog file and can be used to query
 instance types and pricing information for AWS.
 """
 import glob
-import hashlib
-import os
+import hashli    specified, and will then be utilized in a botocore API command in order
+    to check its quota.
+    """
+
+    if use_spot:
+        # Add your code block or statement here to handle the conditionort os
 import threading
 import typing
 from typing import Dict, List, Optional, Tuple

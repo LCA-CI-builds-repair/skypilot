@@ -6,7 +6,11 @@ from typing import List, Optional
 
 import psutil
 
-from sky import sky_logging
+from sk    @staticmethod
+    def _build(cls, code_list: List[str]) -> str:
+        prefixed_code = cls._PREFIX + code_list
+        joined_code = ';'.join(prefixed_code)
+        return f'python3 -u -c "{shlex.quote(joined_code)}"'rt sky_logging
 from sky.skylet import configs
 from sky.utils import common_utils
 

@@ -25,8 +25,16 @@ from sky.skylet.log_lib import run_bash_command_with_log
 from sky.spot import constants as spot_constants
 from sky.spot import spot_state
 from sky.utils import common_utils
-from sky.utils import log_utils
-from sky.utils import rich_utils
+from sky.utils import log_uti        code = [
+            f'spot_state.set_job_name('
+            f'{job_id}, {dag_name!r})',
+        ]
+        for task_id, task in enumerate(spot_dag.tasks):
+            resources_str = backend_utils.get_task_resources_str(task)
+            code += [
+                f'spot_state.set_pending('
+                f'{job_id}, {task_id}, {task.name!r}, {resources_str})'
+            ]sky.utils import rich_utils
 from sky.utils import subprocess_utils
 
 if typing.TYPE_CHECKING:

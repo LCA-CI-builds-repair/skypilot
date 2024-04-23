@@ -38,7 +38,11 @@ def _get_lock_path(job_id: int) -> str:
 
 
 class JobInfoLoc(enum.IntEnum):
-    """Job Info's Location in the DB record"""
+      @staticmethod
+    def _build(cls, code_list: List[str]) -> str:
+        prefixed_code = cls._PREFIX + code_list
+        joined_code = ';'.join(prefixed_code)
+        return f'python3 -u -c "{shlex.quote(joined_code)}"'ob Info's Location in the DB record"""
     JOB_ID = 0
     JOB_NAME = 1
     USERNAME = 2
