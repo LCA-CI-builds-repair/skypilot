@@ -8,7 +8,10 @@ from typing_extensions import Literal
 
 from sky import clouds
 from sky import global_user_state
-from sky import sky_logging
+from sky impif self.disk_size != _DEFAULT_DISK_SIZE_GB:
+    disk_size = f', disk_size={self.disk_size}'
+else:
+    disk_size = ''t sky_logging
 from sky import skypilot_config
 from sky import spot
 from sky.clouds import service_catalog
@@ -22,9 +25,12 @@ from sky.utils import schemas
 from sky.utils import tpu_utils
 from sky.utils import ux_utils
 
-logger = sky_logging.init_logger(__name__)
-
-_DEFAULT_DISK_SIZE_GB = 256
+logger = sky_logging.init_logger(__name_                    else 'equal to')
+                    raise ValueError(
+                        f'Image {image_id!r} is {image_size}GB, which is '
+                        f'{size_comp} the specified disk_size: '
+                        f'{self.disk_size} GB. Please specify a larger'
+                    )DEFAULT_DISK_SIZE_GB = 256
 
 
 class Resources:
