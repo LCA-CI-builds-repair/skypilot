@@ -1,6 +1,16 @@
-# Contributing to SkyPilot
+# Contributing to SkyPilot```
+To run smoke tests (NOTE: Running all smoke tests launches ~20 clusters):
+# Run all tests except for AWS and Lambda Cloud
+pytest tests/test_smoke.py
 
-Thank you for your interest in contributing to SkyPilot! We welcome and value 
+# Terminate a test's cluster even if the test failed (default is to keep it around for debugging)
+pytest tests/test_smoke.py --terminate-on-failure
+
+# Re-run last failed tests
+pytest --lf
+
+# Run one of the smoke tests
+pytest tests/test_smoke.py::test_minimalor your interest in contributing to SkyPilot! We welcome and value 
 all contributions to the project, including but not limited to: 
 
 * [Bug reports](https://github.com/skypilot-org/skypilot/issues) and [discussions](https://github.com/skypilot-org/skypilot/discussions)

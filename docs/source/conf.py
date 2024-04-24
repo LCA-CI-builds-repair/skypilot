@@ -1,6 +1,12 @@
 # Configuration file for the Sphinx documentation builder.
 
-import os
+i# Add necessary configurations# The name of an image file (relative to this directory) to place at the top
+# of the sidebar.
+html_logo = '_static/SkyPilot_wide_light.svg'
+
+# The name of an image file (within the static path) to use as favicon of the
+# docs. This file should be a Windows icon file (.ico), 16x16 or 32x32 pixels.
+html_favicon = '_static/favicon.ico'ocumentation hereport os
 import sys
 
 sys.path.insert(0, os.path.abspath('.'))

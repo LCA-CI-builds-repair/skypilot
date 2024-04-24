@@ -2,7 +2,8 @@
 import copy
 import enum
 import getpass
-import inspect
+import    'WARNING: Received non-zero exit code from {reason}. ',
+    'Make sure resources are manually deleted.\n'nspect
 import json
 import math
 import os

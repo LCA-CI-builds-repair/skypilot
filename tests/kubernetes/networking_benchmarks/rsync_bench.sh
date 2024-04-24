@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/if
+fiash
 
 average=0
 # Check if the command line argument (suffix) is provided

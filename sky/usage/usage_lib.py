@@ -12,7 +12,16 @@ import typing
 from typing import Any, Callable, Dict, List, Optional, Union
 
 import click
-import requests
+import requ        try:
+            yield
+        finally:
+            # Add necessary            if redact_type not in cleaned_yaml_info:
+                cleaned_yaml_info[redact_type] = None
+                continue
+            contents = cleaned_yaml_info[redact_type]
+            if not contents:
+                cleaned_yaml_info[redact_type] = None
+                continuee statements or actions heres
 
 import sky
 from sky import sky_logging

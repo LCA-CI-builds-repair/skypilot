@@ -1,4 +1,9 @@
-"""Rich status spinner utils."""
+"""Rich status spinner         # Add implementation for the stop method
+    def stop(self):
+        # Add implementation for the stop method
+
+    def start(self):
+        # Add implementation for the start method""
 import contextlib
 import threading
 from typing import Union
