@@ -8,9 +8,69 @@ Example usage:
   # Run a task, described in a yaml file.
   # Provisioning, setup, file syncing are handled.
   >> sky launch task.yaml
-  >> sky launch [-c cluster_name] task.yaml
+  >> sky launch [-c cl    os_disk_size = click.option('--os-disk-size',
+                                default=None,
+                                type=int,
+                                required=False,
+                                help=('OS disk size in GBs.'))
+    disk_tier = click.option('--disk-tier',
+                             default=None,
+                             type=click.Choice(['low', 'medium', 'high'],
+                                               case_sensitive=False),
+                             required=False,
+                             help=('OS disk tier. Could be one of "low", '
+                                   '"medium", "high". Default: medium'))
+    ports = click.option('--ports',
+                         required=False,
+                         type=str,
+                         multiple=True,
+                         help=('Ports to open on the cluster. '
+                               'If specified, overrides the "ports" config in the YAML. '))
+    no_confirm = click.option('--yes',
+                         @click.option('--memory',
+              default=None,
+              type=str,
+              required=False,
+              help=('Amount of memory each instance must have in GB (e.g., '
+                    '``--memory=16`` (exactly 16GB), ``--memory=16+`` (at least 16GB))'))
+@click.option('--disk-size',
+              default=None,
+              type=int,
+              required=False,
+              help=('OS disk size in GBs.'))
+@click.option('--disk-tier',
+              default=None,
+              type=click.Choice(['low', 'medium', 'high'], case_sensitive=False),
+              required=False,
+              help=('OS disk tier. Could be one of "low", "medium", "high". Default: medium'))
+@click.option('--idle-minutes-to-autostop',
+              '-i',
+              default=None,
+              type=int,
+              required=False,
+              help=('Automatically stop the cluster after thi    if not click.confirm(f'Cancelling {job_identity_str}. Proceed?',
+                        default=True,
+                        abort=True,
+                        show_default=True):
+        click.echo("Cancellation aborted.")
+        sys.exit()
 
-  # Show the list of running clusters.
+    try:
+        core.cancel(cluster, all=all, job_ids=job_ids_to_cancel)
+    except exceptions.NotSupportedError:
+        # Friendly message for usage like 'sky cancel <spot controller> -a/<job id>'.
+        error_str = ('Cancelling the spot controller\'s jobs is not allowed.'
+                     f'\nTo cancel spot jobs, use: {bold}sky spot cancel <spot '
+                     f'job IDs> [--all]{reset}')
+        click.echo(error_str)
+        sys.exit(1)
+    except ValueError as e:
+        raise click.UsageError(str(e))
+    except exceptions.ClusterNotUpError as e:
+        click.echo(f"Cluster is not up: {str(e)}")
+        sys.exit(1)                 'of idleness, i.e., no running or pending jobs in the cluster\'s job '
+                    'queue. Idleness gets reset whenever setting-up/running/pending jobs '
+                    'are found in the job queue. ')) of running clusters.
   >> sky status
 
   # Tear down a specific cluster.

@@ -10,7 +10,32 @@ otherwise managed. Those classes contain methods abstracting GCP REST API
 calls.
 Each resource has a corresponding node type, represented by a
 class inheriting from ``GCPNode``. Those classes are essentially dicts
-with some extra methods. The instances of those classes will be created
+with some extra methods. The instances of tho        self, base_config: dict, instance_name: str, wait_for_operation: bool = True
+    ) -> dict:
+        """Resize a Google Cloud disk based on the provided configuration."""
+
+        try:
+            # Extract the specified disk size from the configuration
+            new_size_gb = base_config.get("disks", [{}])[0].get("initializeParams", {}).get("diskSizeGb")
+
+            # Fetch the instance details to get the disk name and current disk size
+            response = (
+                self.resource.instances()
+                .get(
+                    project=self.project_id,
+                    zone=self.availability_zone,
+                    instance=instance_name,
+                )
+                .execute()
+            )
+            disk_name = response.get("disks", [{}])[0].get("source", "").split("/")[-1]
+
+            return {"disk_name": disk_name, "new_size_gb": new_size_gb}
+
+        except Exception as e:
+            # Handle any exceptions that may occur during the execution
+            print(f"An error occurred: {str(e)}")
+            return {"error": str(e)} created
 from API responses.
 
 The ``GCPNodeType`` enum is a lightweight way to classify nodes.

@@ -3,8 +3,13 @@ import functools
 import textwrap
 from typing import Dict, List, Optional, Set, Tuple, Union
 
-import colorama
-from typing_extensions import Literal
+import colo                with ux_utils.print_exception_no_traceback():
+                    try:
+                        self._disk_size = int(disk_size)
+                    except ValueError as e:
+                        print(f"Error converting disk_size to integer: {str(e)}")
+            except ValueError as ve:
+                print(f"OS disk size must be an integer. Got: {disk_size}.")from typing_extensions import Literal
 
 from sky import clouds
 from sky import global_user_state

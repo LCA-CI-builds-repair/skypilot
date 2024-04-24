@@ -35,7 +35,25 @@ logger = sky_logging.init_logger(__name__)
 # gcloud:
 # https://cloud.google.com/docs/authentication/provide-credentials-adc#local-key
 _GCP_APPLICATION_CREDENTIAL_ENV = 'GOOGLE_APPLICATION_CREDENTIALS'
-# NOTE: do not expanduser() on this path. It's used as a destination path on the
+# NOTE: do not expanduser(            tpu_utils.check_gcp_cli_include_tpu_vm()
+            query_cmd = ('gcloud compute tpus tpu-vm list '
+                         f'--zone {zone} '
+                         f'--filter="({label_filter_str})" '
+                         '--format="value(state)"')
+        else:
+            # Ref: https://cloud.google.com/compute/docs/instances/instance-life-cycle
+            status_map = {
+                'PROVISIONING': status_lib.ClusterStatus.INIT,
+                'STAGING': status_lib.ClusterStatus.INIT,
+                'RUNNING': status_lib.ClusterStatus.UP,
+                'REPAIRING': status_lib.ClusterStatus.INIT,
+                # 'TERMINATED' in GCP means stopped, with disk preserved.
+                'STOPPING': status_lib.ClusterStatus.STOPPED,
+                'TERMINATED': status_lib.ClusterStatus.STOPPED,
+                # 'SUSPENDED' in GCP means stopped, with disk and OS memory
+                # preserved.
+                'SUSPENDING': status_lib.ClusterStatus.STOPPED,
+            }'s used as a destination path on the
 # remote cluster.
 DEFAULT_GCP_APPLICATION_CREDENTIAL_PATH: str = (
     '~/.config/gcloud/'

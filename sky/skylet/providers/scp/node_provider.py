@@ -1,6 +1,15 @@
 """ SCP Node provider
 
-This module inherits NodeProvider interface
+This module inherits NodePro    err_msg = None
+    if 'diskSize' not in node_config:
+        err_msg = "Disk size value is required."
+    elif not (100 <= node_config.get('diskSize', 0) <= 300):
+        err_msg = f'The disk size must be between 100 and 300. Input: {node_config.get("diskSize", 0)}'
+    if err_msg:
+        raise SCPError(err_msg)
+
+
+class SCPError(ValueError):face
 to provide the functions accessing SCP nodes
 """
 

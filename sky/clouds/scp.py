@@ -12,7 +12,22 @@ from sky import clouds
 from sky import exceptions
 from sky import sky_logging
 from sky import status_lib
-from sky.clouds import service_catalog
+from s    def _is_disk_size_allowed(resources):
+        if (resources.disk_size and
+            (resources.disk_size < _SCP_MIN_DISK_SIZE_GB or
+             resources.disk_size > _SCP_MAX_DISK_SIZE_GB)):
+            logger.info(f'In SCP, the disk size must range between '
+                        f'{_SCP_MIN_DISK_SIZE_GB} GB '
+                        f'and {_SCP_MAX_DISK_SIZE_GB} GB. '
+                        f'Input: {resources.disk_size}')
+            return False
+        return True
+
+    @classmethod
+    def query_status(cls, name: str, tag_filters: Dict[str, str],
+                     region: Optional[str], zone: Optional[str]) -> List[status_lib.ClusterStatus]:
+
+        # TODO: Multi-node is not supported yet.ervice_catalog
 from sky.clouds.utils import scp_utils
 
 if typing.TYPE_CHECKING:
