@@ -8,8 +8,62 @@ from typing import Dict, List, Set, Tuple
 
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.asymmetric import rsa
-from google.oauth2 import service_account
+from cryptography.hazmat.primitives.asymdef _create_crm(credentials):
+    # Implementation for creating CRM client
+    pass
+
+def _create_iam(credentials):
+    # Implementation for creating IAM client
+    pass
+
+def _create_compute(credentials):
+    # Implementation for creating Compute client
+    pass
+
+def construct_clients_from_provider_config(provider_config):
+    # Implementation for constructing clients from provider config
+    pass
+
+def _configure_project(config, crm):
+    # Implementation for configuring GCP project
+    pass
+
+def _configure_iam_role(config, crm, iam):
+    # Implementation for configuring IAM role
+    pass
+
+def _configure_key_pair(config, compute):
+    # Implementation for configuring key pair
+    pass
+
+def _configure_subnet(config, compute):
+    # Implementation for configuring subnet
+    pass
+
+def bootstrap_gcp(config):
+    config = copy.deepcopy(config)
+    check_legacy_fields(config)
+    # Used internally to store head IAM role.
+    config["head_node"] = {}
+
+    # Check if we have any TPUs defined, and if so,
+    # insert that information into the provider config
+    if _has_tpus_in_node_configs(config):
+        config["provider"][HAS_TPU_PROVIDER_FIELD] = True
+
+    crm = _create_crm(credentials)
+    iam = _create_iam(credentials)
+    compute = _create_compute(credentials)
+    tpu = tpu_resource
+
+    crm, iam, compute, tpu = construct_clients_from_provider_config(config["provider"])
+
+    config = _configure_project(config, crm)
+    config = _configure_iam_role(config, crm, iam)
+    config = _configure_key_pair(config, compute)
+    config = _configure_subnet(config, compute)
+
+    return configgle.oauth2 import service_account
 from google.oauth2.credentials import Credentials as OAuthCredentials
 from googleapiclient import discovery, errors
 

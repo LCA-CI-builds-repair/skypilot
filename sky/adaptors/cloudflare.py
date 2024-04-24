@@ -1,4 +1,40 @@
-"""Cloudflare cloud adaptors"""
+"# pylint: disable=import-outside-toplevel
+
+import os
+imfrom sky.utils import ux_utils
+
+def get_r2_credentials(boto3_session):
+    """Gets the R2 credentials from the boto3 session object.
+
+    Args:
+        boto3_session: The boto3 session object.
+    Returns:
+        botocore.credentials.ReadOnlyCredentials object with the R2 credentials.
+    """
+    with _load_r2_credentials_env():
+        cloudflare_credentials = boto3_session.get_credentials()
+        if cloudflare_credentials is None:
+            with ux_utils.print_exception_no_traceback():
+                raise ValueError('Cloudflare credentials not found. Run '
+                                 '`sky check` to verify credentials are '
+                                 'correctly set up.')
+        else:
+            return cloudflare_credentials.get_frozen_credentials()rom typing import Dict, Optional, Tuple
+
+import contextlib
+import functools
+
+from sky.utils import ux_utils
+
+import boto3
+import botocore
+
+_session_creation_lock = threading.RLock()
+ACCOUNT_ID_PATH = '~/.cloudflare/accountid'
+R2_CREDENTIALS_PATH = '~/.cloudflare/r2.credentials'
+R2_PROFILE_NAME = 'r2'
+_INDENT_PREFIX = '    '
+NAME = 'Cloudflare'adaptors"""
 # pylint: disable=import-outside-toplevel
 
 import contextlib

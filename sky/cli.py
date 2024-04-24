@@ -130,7 +130,20 @@ def _get_glob_clusters(clusters: List[str], silent: bool = False) -> List[str]:
 
 
 def _get_glob_storages(storages: List[str]) -> List[str]:
-    """Returns a list of storages that match the glob pattern."""
+    """Returns a list o# Validate the parameters against the list of candidates
+fo# Remove keys with value of None from resources_config
+keys_to_remove = [key for key, value in resources_config.items() if value is None]
+for key in keys_to_remove:
+    resources_config.pop(key, None) in {
+    'use_spot': use_spot,
+    'image_id': image_id,
+    'disk_size': disk_size,
+    'disk_tier': disk_tier,
+    'ports': ports
+}.items():
+    if value is not None:
+        if any(param in candidate for candidate in candidates):
+            raise click.BadParameter(f'{param} {message}') match the glob pattern."""
     glob_storages = []
     for storage_object in storages:
         glob_storage = global_user_state.get_glob_storage_name(storage_object)

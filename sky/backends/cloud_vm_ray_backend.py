@@ -61,7 +61,36 @@ from sky.utils import timeline
 from sky.utils import tpu_utils
 from sky.utils import ux_utils
 
-if typing.TYPE_CHECKING:
+if                 if cluster_exists:
+                    # Guard against the case where there's an existing cluster
+                    # with ray runtime potentially messed up (e.g., manually killed).
+                    # Query the ray status and restart ray if needed for clusters
+                    # where the ray runtime may not be properly running.
+                    #
+                    # The above 'ray up' will not restart            handle,
+            instance_setup.RAY_STATUS_WITH_SKY_RAY_PORT_COMMAND,
+            require_outputs=True)
+        while returncode == 0 and 'No cluster status' in output:
+            # Retry until ray status is ready to avoid the scenario where
+            # the ray cluster is started but the ray status is not yet available.
+            logger.info('Waiting for ray cluster to be ready remotely.')
+            time.sleep(1)
+            returncode, output, _ = backend.run_on_head(
+                handle,
+                instance_setup.RAY_STATUS_WITH_SKY_RAY_PORT_COMMAND,
+                require_outputs=True)
+        if returncode == 0:
+            return
+        launched_resources = handle.launched_resources
+        # Ray cluster should already be running if the system admin has set up Ray.
+        if isinstance(launched_resources.cloud, clouds.Local):
+            raise RuntimeError("Ray cluster is not running as expected. Please check the setup.")ue
+                    # to the '--no-restart' flag used in the command.
+                    #
+                    # NOTE: This check is performance-sensitive and may take 9s.
+                    # It is recommended to perform this check for existing clusters,
+                    # not freshly launched ones that should have the ray runtime already started.
+                    self._ensure_cluster_ray_started(handle, log_abs_path)HECKING:
     from sky import dag
 
 Path = str

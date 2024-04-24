@@ -29,8 +29,25 @@ class CloudwatchConfigType(str, Enum):
 
 
 class CloudwatchHelper:
-    def __init__(
-        self, provider_config: Dict[str, Any], node_id: str, cluster_name: str
+        def cloudwatch_config_exists(config: Dict[str, Any], config_type: str) -> bool:
+        """Check if CloudWatch configuration was specified by the user
+        in their cluster config file.
+
+        Specifically, this function checks if a CloudWatch config file is
+        specified by the user in their cluster config file.
+
+        Args:
+            config: provider section of cluster config file.
+            config_type: type of CloudWatch config file.
+
+        Returns:
+            True if config file is specified by user.
+            False if config file is not specified.
+        """
+        if config.get('cloudwatch_config') and config.get('cloudwatch_config').get(config_type):
+            return True
+        else:
+            return False       self, provider_config: Dict[str, Any], node_id: str, cluster_name: str
     ) -> None:
         self.node_id = node_id
         self.cluster_name = cluster_name

@@ -19,8 +19,104 @@ from sky.skylet.providers.aws.utils import (
     handle_boto_error,
     resource_cache,
 )
-from ray.autoscaler._private.cli_logger import cf, cli_logger
-from ray.autoscaler._private.event_system import CreateClusterEvent, global_event_system
+from ray.autoscaler._private.cli_logger import cf,from typing import List, Any, Set
+
+user_specified_subnets = []  # Define user_specified_subnets as nefrom typing import List, Any
+
+def _skypilot_log_error_and_exit_for_failover(message: str):
+    # Function definition for logging error and exiting
+
+def _are_user_subnets_pruned(subnets: List[Any]) -> bool:
+    # Implementation for checking if user-subnets are pruned
+
+azs = ""  # Define azs as needed
+subnets = []  # Define subnets as needed
+node_type_key = ""  # Define node_type_key as needed
+
+azs = [az.strip() for az in azs.split(",")]
+subnets = [
+    s
+    for az in azs  # Iterate over AZs first to maintain the ordering
+    for s in subnets
+    if s.availability_zone == az
+]
+if not subnets:
+    _skyfrom typing import Dict, Any
+
+def _configure_from_network_interfaces(config: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Copies all network interface subnet and security group IDs up to their
+    parent node config for each available node type.
+
+    Args:
+        config (Dict[str, Any]): config to bootstrap
+    Returns:
+        config (Dict[str, Any]): The input config with all network interface
+        subnet and security group IDs copied into the node config of all
+        available node types. If no network interfaces are found, then the
+        config is returned unchanged.
+    Raises:
+        ValueError: If [1] subnet and security group IDs exist at both the
+        node config and network interface levels, [2] any network interface
+        doesn't have a subnet defined, or [3] any network interface doesn't
+        have a security group defined.
+    """
+    # Implementation to copy network interface subnet and security group IDs
+    pass_exit_for_failover(
+        f"No usable subnets matching availability zone {azs} found "
+        f"for node type {node_type_key}. Choose a different "
+        "availability zone or try manually creating an instance in "
+        "your specified region to populate the list of subnets and "
+        "trying this again. If you have set `use_internal_ips`, check "
+        "that this zone has a subnet that (1) has the substring 'private' in its name tag "
+        "and (2) does not assign public IPs (`map_public_ip_on_launch` is False)."
+    )
+elif _are_user_subnets_pruned(subnets):
+    # Handle the case where user-subnets are pruned
+    pass []  # Define all_subnets as needed
+vpc_id_of_sg = ""  # Define vpc_id_of_sg as needed
+
+def _are_user_subnets_pruned(current_subnets: List[Any]) -> bool:
+    return user_specified_subnets is not None and len(current_subnets) != len(user_specified_subnets)
+
+def _get_pruned_subnets(current_subnets: List[Any]) -> Set[str]:
+    current_subnet_ids = {s.subnet_id for s in current_subnets}
+    user_specified_subnet_ids = {s.subnet_id for s in user_specified_subnets}
+    return user_specified_subnet_ids - current_subnet_ids
+
+def _subnet_name_tag_contains(subnet, substr: str) -> bool:
+    tags = subnet.meta.data["Tags"]
+    for tag in tags:
+        if tag["Key"] == "Name":
+            name = tag["Value"]
+            return substr in name
+    return False
+
+try:
+    candidate_subnets = (
+        user_specified_subnets
+        if user_specified_subnets is not None
+        else all_subnets
+    )
+    if vpc_id_of_sg:
+        candidate_subnets = [
+            s for s in candidate_subnets if s.vpc_id == vpc_id_of_sg
+        ]
+
+    subnets = sorted(
+        (
+            s
+            for s in candidate_subnets
+            if s.state == "available"
+            and (
+                # If using internal IPs, the subnets must not assign public IPs.
+                # Additionally, requires that each eligible subnet contain a name tag which includes the substring 'private'.
+                # This is a HACK; see below.
+                #
+                # Reason: the first two checks alone are not enough. For example, the VPC creation helper from AWS will create a
+                # "public" and a "private" subnet per AZ. However, the created "public" subnet by default has
+                # map_public_ip_on_launch set to False as well. This means we could've launched in that subnet, which will make any
+                # instances not able to send outbound traffic to theort CreateClusterEvent, global_event_system
 from ray.autoscaler._private.providers import _PROVIDER_PRETTY_NAMES
 from ray.autoscaler._private.util import check_legacy_fields
 from ray.autoscaler.tags import NODE_TYPE_LEGACY_HEAD, NODE_TYPE_LEGACY_WORKER

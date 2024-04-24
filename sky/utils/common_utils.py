@@ -7,8 +7,27 @@ import hashlib
 import inspect
 import json
 import os
-import platform
-import random
+impoimport hashlib
+from utils.constants import CLUSTER_NAME_HASH_LENGTH
+
+def generate_cluster_name(cluster_name: str, max_length: int, user_hash: str) -> str:
+    if len(cluster_name) <= max_length - CLUSTER_NAME_HASH_LENGTH - len(user_hash):
+        return f'{cluster_name}{user_hash}'
+
+    # -1 is for the dash between cluster name and cluster name hash.
+    truncate_cluster_name_length = max_length - CLUSTER_NAME_HASH_LENGTH - 1 - len(user_hash)
+    truncate_cluster_name = cluster_name[:truncate_cluster_name_length]
+
+    if truncate_cluster_name.endswith('-'):
+        truncate_cluster_name = truncate_cluster_name.rstrip('-')
+
+    assert truncate_cluster_name_length > 0, (cluster_name, max_length)
+
+    cluster_name_hash = hashlib.md5(cluster_name.encode()).hexdigest()
+    # Use base36 to reduce the length of the hash.
+    cluster_name_hash = base36_encode(int(cluster_name_hash, 16))
+
+    return f'{truncate_cluster_name}-{cluster_name_hash[:CLUSTER_NAME_HASH_LENGTH]}{user_hash}'port random
 import re
 import socket
 import sys

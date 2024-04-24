@@ -8,7 +8,18 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from sky import sky_logging
 from sky.provision import common
-from sky.provision import docker_utils
+from sky.provisio# `start_ray_on_head_node`.
+cmd = (f'unset AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY; '
+       'RAY_SCHEDULER_EVENTS=0 RAY_DEDUP_LOGS=0 '
+       f'ray start --disable-usage-stats {ray_options} || exit 1;' +
+       _RAY_PRLIMIT + _DUMP_RAY_PORTS)
+if no_restart:
+    # Check if the raylet process is running on the specified gcs address.
+    cmd = (f'{_RAY_PORT_COMMAND}; ps aux | grep "ray/raylet/raylet" | '
+           f'grep "gcs-address={head_private_ip}:${{RAY_PORT}}" || '
+           f'{{ {cmd}; }}')
+else:
+    cmd = 'ray stop; ' + cmdutils
 from sky.provision import logging as provision_logging
 from sky.provision import metadata_utils
 from sky.skylet import constants

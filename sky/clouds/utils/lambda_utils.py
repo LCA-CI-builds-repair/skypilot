@@ -4,9 +4,26 @@ import os
 import time
 from typing import Any, Dict, List, Optional, Tuple
 
-import requests
+import reqfrom typing import List
 
-from sky.utils import common_utils
+class LambdaUtils:
+    def launch_instances(self, instance_type: str = 'gpu_1x_a100_sxm4',
+                         region: str = 'us-east-1',
+                         quantity: int = 1,
+                         name: str = '',
+                         ssh_key_name: str = '') -> List[str]:
+        """Launch new instances."""
+        # Optimization:
+        # Most API requests are rate limited at ~1 request every second but
+        # launch requests are rate limited at ~1 request every 10 seconds.
+        # So don't use launch requests to check availability.
+        # See https://docs.lambdalabs.com/cloud/rate-limiting/ for more.
+        available_regions = self.list_catalog()[instance_type]\
+                ['regions_with_capacity_available']
+        available_regions = [reg['name'] for reg in available_regions]
+        if region not in available_regions:
+            # Handle the case where the specified region is not in the list of available regions
+            return [].utils import common_utils
 
 CREDENTIALS_PATH = '~/.lambda_cloud/lambda_keys'
 API_ENDPOINT = 'https://cloud.lambdalabs.com/api/v1'

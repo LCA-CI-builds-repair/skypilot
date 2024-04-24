@@ -28,7 +28,49 @@ from sky.data import storage_utils
 from sky.data.data_utils import Rclone
 from sky.data.storage_utils import StorageMode
 from sky.utils import common_utils
-from sky.utils import rich_utils
+from sky.    @classmethod
+    def from_metadata(cls, metadata: StorageMetadata,
+                      **override_args) -> 'Storage':
+        """Create Storage from StorageMetadata object.
+
+        Used when reconstructing Storage object and Abstr        if self.source is None or not isinstance(self.source, str) or not data_utils.is_cloud_store_url(self.source):
+            # Remove name if source is a cloud store URL
+            name = self.name
+        config = {
+            'name': name,
+            'source': self.source,
+            'store': ','.join([store.value for store in self.stores]) if self.stores else None,
+            'persistent': self.persistent,
+            'mode': self.mode.value,
+            'interval_seconds': self.interval_seconds,
+        }
+        if self.force_delete:
+            config['_force_delete'] = True
+        return config
+
+    def get_storage_name(self):
+        return self.name
+
+
+class S3Store(AbstractStore):
+    """S3Store inherits from Storage Object and represents the backend
+    for S3 buckets.
+    """
+
+    _ACCESS_DENIED_MESSAGE = 'Access Denied'  global_user_state.
+        """
+        # Name should not be specified if the source is a cloud store URL.
+        source = override_args.get('source', metadata.source)
+        name = override_args.get('name', metadata.storage_name)
+        # If the source is a list, it consists of local paths
+        if not isinstance(source, list):
+            if data_utils.is_cloud_store_url(source):
+                name = None
+
+        storage_obj = cls(name=name,
+                          source=source,
+                          sync_on_reconstruction=override_args.get(
+                              'sync_on_reconstruction', True))ls
 from sky.utils import schemas
 from sky.utils import ux_utils
 

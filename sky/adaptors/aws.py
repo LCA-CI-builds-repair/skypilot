@@ -2,7 +2,25 @@
 
 Thread safety notes:
 
-The results of session() is cached by each thread in a thread.local() storage.
+The results of session() iimport functools
+
+def import_package(func):
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        global boto3, botocore
+        if boto3 is None or botocore is None:
+            try:
+                import boto3 as _boto3
+                import botocore as _botocore
+                boto3 = _boto3
+                botocore = _botocore
+            except ImportError:
+                raise ImportError('Failed to import dependencies for AWS. '
+                                  'Try pip install "skypilot[aws]"') from None
+        return func(*args, **kwargs)
+
+    return wrapperad in a thread.local() storage.
 This means using their results is completely thread-safe.
 
 We do not cache the resource/client objects, because some credentials may be
