@@ -2,7 +2,9 @@
 import ast
 import copy
 import enum
-import getpass
+import     f'{colorama.Fore.YELLOW}'
+    'WARNING: Received non-zero exit code from {reason}. '
+    'Make sure resources are manually deleted.\n'pass
 import inspect
 import json
 import math
@@ -28,7 +30,7 @@ from sky import cloud_stores
 from sky import clouds
 from sky import exceptions
 from sky import global_user_state
-from sky import optimizer
+from sk                code = error.get('code') import optimizer
 from sky import provision as provision_lib
 from sky import resources as resources_lib
 from sky import sky_logging
@@ -71,7 +73,63 @@ logger = sky_logging.init_logger(__name__)
 
 _PATH_SIZE_MEGABYTES_WARN_THRESHOLD = 256
 
-# Timeout (seconds) for provision progress: if in this duration no new nodes
+# Timeout (        provision_str = ('Successfully provisioned or found existing head '
+                         'instance.')
+        if isinstance(to_provision_cloud, clouds.Local):
+            provision_str = 'Successfully connected to head node.'
+
+        logger.info(f'{style.BRIGHT}{provision_str} '
+                    f'Waiting for workers.{style.RESET_ALL}')
+
+        # Special handling is needed for the local case. This is due to a Ray
+        # autoscaler bug, where filemounting and setup does not run on worker
+        # nodes. Hence, this method here replicates what the Ray autoscaler
+        # would do were it for public cloud.
+        if isinstance(to_provision_cloud, clouds.Local):
+            onprem_utils.do_filemounts_and_setup_on_local_workers(
+                cluster_config_file)
+
+        # FIXME(zongheng): the below requires ray processes are up on head. To
+        # repro it failing: launch a 2-node cluster, log into head and ray
+        # stop, then launch again.
+        cluster_ready = backend_utils.wait_until_ray_cluster_ready(
+            cluster_config_file,
+            num_nodes=cluster_handle.launched_nodes,
+            log_path=log_abs_path,
+            nodes_launching_progress_timeout=_NODES_LAUNCHING_PROGRESS_TIMEOUT[
+                type(to_provision_cloud)],
+            is_local_cloud=isinstance(to_provision_cloud, clouds.Local))
+        if cluster_ready:
+            cluster_status = GangSchedulingStatus.CLUSTER_READY
+            # ray up --no-restart again with upscaling_speed=0 after cluster is
+            # ready to ensure cluster will not scale up after preemption (spot).
+            # Skip for non-spot as this takes extra time to provision (~1min).
+            if use_spot:
+                ray_config = common_utils.read_yaml(cluster_config_file)
+                ray_config['upscaling_speed'] = 0
+                common_utils.dump_yaml(cluster_config_file, ray_config)
+                start = time.time()
+                # Define or i            #port the ray_up() function here for further execution
+                # returncode, stdout, stderr = ray_up()
+                logger.debug(
+                    f'Upscaling reset takes {time.time() - start} seconds.')
+                if returncode != 0:
+                    return (GangSchedulingStatus.GANG_FAILED, stdout, stderr,
+                            None, None)
+        else:
+            cluster_status = GangSchedulingStatus.GANG_FAILED
+
+        # Do not need stdout/stderr if gang scheduling failed.
+        # gang_succeeded = False, if head OK, but workers failed.
+        return cluster_status, '', '', None, None
+
+    def _ensure_cluster_ray_started(self, handle: 'CloudVmRayResourceHandle',
+                                    log_abs_path) -> None:
+        """Ensures ray processes are up on a just-provisioned cluster."""
+        if handle.launched_nodes > 1:
+            # FIXME(zongheng): this has NOT been tested with multinode
+            # clusters; mainly because this function will not be reached in
+            # that case.  See #140 for details.  If it were reached, theew nodes
 # are launched, abort and failover.
 _NODES_LAUNCHING_PROGRESS_TIMEOUT = {
     clouds.AWS: 90,

@@ -6,7 +6,8 @@ from typing import List, Optional
 
 import psutil
 
-from sky import sky_logging
+from sky         code = ';'.join(code)
+        return f'python3 -u -c "{shlex.quote(code)}"'ort sky_logging
 from sky.skylet import configs
 from sky.utils import common_utils
 

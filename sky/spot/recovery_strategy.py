@@ -8,10 +8,43 @@ resources:
 import time
 import traceback
 import typing
-from typing import Optional, Tuple
-
-import sky
-from sky import backends
+from typing import Op                cloud user identity, or unsupported feature.
+            exceptions.SpotJobReachedMaxRetryError: This will be raised when
+                all prechecks passed but the maximum number of retries is
+                reached for `sky.launch`. The failure of `sky.launch` can be
+                due to:
+                1. Any of the underlying failover exceptions is due to resources
+                unavailability.
+                2. The cluster is preempted before the job is submitted.
+                3. Any unexpected error happens during the `sky.launch`.
+        Other exceptions may be raised depending on the backend.
+        """
+        # TODO(zhwu): handle the failure during `preparing sky runtime`.
+        retry_cnt = 0
+        backoff = common_utils.Backoff(self.RETRY_INIT_GAP_SECONDS)
+        while True:
+            retry_cnt += 1
+            try:
+                usage_lib.messages.usage.set_internal()
+                # Detach setup, so that the setup failure can be detected
+                # by the controller process (job_status -> FAILED_SETUP).
+                sky.launch(self.dag,
+                           cluster_name=self.cluster_name,
+                           detach_setup=True,
+                           detach_run=True,
+                           _is_launched_by_spot_controller=True)
+                logger.info('Spot cluster launched.')
+            except (exceptions.InvalidClusterNameError,
+                    exceptions.NoCloudAccessError,
+                    exceptions.ResourcesMismatchError) as e:
+                logger.error('Failure happened before provisioning. '
+                             f'{common_utils.format_exception(e)}')
+                if raise_on_failure:
+                    raise exceptions.ProvisionPrechecksError(reasons=[e])
+            except Exception as e:
+                logger.error('An unexpected error occurred during sky launch. '
+                             f'{common_utils.format_exception(e)}')
+                # Handle the unexpected error during sky launch appropriatelyy import backends
 from sky import exceptions
 from sky import global_user_state
 from sky import sky_logging

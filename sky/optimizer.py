@@ -18,7 +18,8 @@ from sky import skypilot_config
 from sky import task as task_lib
 from sky.backends import backend_utils
 from sky.utils import env_options
-from sky.utils import log_utils
+from sky.utils import l        # node -> best resources
+        best_plan = None_utils
 from sky.utils import ux_utils
 
 if typing.TYPE_CHECKING:

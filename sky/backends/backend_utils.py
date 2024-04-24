@@ -13,12 +13,78 @@ import textwrap
 import time
 import typing
 from typing import Any, Dict, List, Optional, Sequence, Set, Tuple, Union
-import uuid
+import    """Helper for handling file mounts."""
 
-import colorama
-import filelock
-import jinja2
-from packaging import version
+    @classmethod
+    def wrap_file_mount(cls, path: str) -> str:
+        """Prepends ~/<opaque dir>/ to a path to work around permission issues.
+
+        Examples:
+        /root/hello.txt -> ~/<opaque dir>/root/hello.txt
+        local.txt -> ~/<opaque dir>/local.txt
+
+        After the path is synced, we can later create a symlink to this wrapped
+        path from the original path, e.g., in the initialization_commands of the
+        ray autoscaler YAML.
+        """
+        return os.path.join(_SKY_REMOTE_FILE_MOUNTS_DIR, path.lstrip('/'))
+
+    @classmethod
+    def make_safe_symlink_command(cls, *, source: str, target: str) -> str:
+        """Returns a command that safely symlinks 'source' to 'target'.
+
+        All intermediate directories of 'source' will be owned by $USER,
+        excluding the root directory (/).
+
+        'source' must be an absolute path; both 'source' and 'target' must not
+        end with a slash (/).
+
+        This function is needed because a simple 'ln -s target source' may
+        fail: 'source' can have multiple levels (/a/b/c), its parent dirs may
+        or may not exist, can end with a slash, or may need sudo access, etc.
+
+        Cases of <target: local> file mounts and their behaviors:
+
+            /existing_dir: ~/local/dir
+              - error out saying this cannot be done as LHS already exists
+            /existing_file: ~/local/file
+              - error out saying this cannot be done as LHS already exists
+            /existing_symlink: ~/local/file
+              - overwrite the existing symlink; this is important because `sky
+                launch` can be run multiple times
+            Paths that start with ~/ and /tmp/ do not have the above
+            restrictions; they are delegated to rsync behaviors.
+        """
+        assert os.path.isabs(source), source
+        assert not source.endswith('/') and not target.endswith('/'), (source,
+                                                                       target)
+        # Below, use sudo in case the symlink needs sudo access to create.
+        # Prepare to create the symlink:
+        #  1. make sure its dir(s) exist & are owned by $USER.
+        dir_of_symlink = os.path.dirname(source)
+        commands = [
+            # Ensure intermediate directories exist and are owned by $USER
+            f'sudo mkdir -p {dir_of_symlink}',
+            # Set ownership on intermediate directories
+            ('(p=""; '
+             f'for w in $(echo {dir_of_symlink} | tr "/" " "); do '
+             'p=${p}/${w}; sudo chown $USER $p; done)')
+        ]
+        #  2. remove any existing symlink
+        commands += [
+            # Remove any existing symlink
+            f'((test -L {source} && sudo rm {source} &>/dev/null) || '
+            f'(test ! -e {source} || '
+            f'(echo "!!! Failed mounting because path exists ({source})"; '
+            'exit 1)))',
+        ]
+        commands += [
+            # Create the symlink
+            f'sudo ln -s {target} {source}',
+            # Set ownership of the symlink
+            f'sudo chown -h $USER {source}',
+        ]
+        return ' && '.join(commands)rsion
 import requests
 from requests import adapters
 from requests.packages.urllib3.util import retry as retry_lib

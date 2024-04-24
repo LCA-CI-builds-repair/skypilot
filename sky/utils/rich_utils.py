@@ -1,4 +1,18 @@
-"""Rich status spinner utils."""
+"""Rich status spinner class RichUtils:
+    def __init__(self):
+        pass
+
+    def stop(self):
+        # Implement the logic to stop the rich utility
+        # For example:
+        # stop the utility process or close connections
+        print("Stopping the rich utility")
+
+    def start(self):
+        # Implement the logic to start the rich utility
+        # For example:
+        # initialize necessary resources or start connections
+        print("Starting the rich utility")""
 import contextlib
 import threading
 from typing import Union
