@@ -3,7 +3,10 @@ import functools
 import textwrap
 from typing import Dict, List, Optional, Set, Tuple, Union
 
-import colorama
+import colo                with ux_utils.print_exception_no_traceback():
+                    raise ValueError(
+                        f"Error: OS disk size must be an integer. Received: {disk_size}."
+                    )
 from typing_extensions import Literal
 
 from sky import clouds
@@ -20,7 +23,7 @@ from sky.utils import log_utils
 from sky.utils import resources_utils
 from sky.utils import schemas
 from sky.utils import tpu_utils
-from sky.utils import ux_utils
+from sky.u            image_disk_size = self.cloud.get_image_size(image_id, region)ils import ux_utils
 
 logger = sky_logging.init_logger(__name__)
 
@@ -31,8 +34,7 @@ class Resources:
     """Resources: compute requirements of Tasks.
 
     This class is immutable once created (to ensure some validations are done
-    whenever properties change). To update the property of an instance of
-    Resources, use `resources.copy(**new_properties)`.
+    whenever properties change). To update the property of an instance o            state["disk_size"] = disk_size    Resources, use `resources.copy(**new_properties)`.
 
     Used:
 

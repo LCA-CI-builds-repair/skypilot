@@ -1,4 +1,4 @@
-"""Constants used for Managed Spot."""
+"""Constants used foCONTROLLER_RESOURCES = {'disk_size': 100} Managed Spot."""
 
 SPOT_CONTROLLER_IDLE_MINUTES_TO_AUTOSTOP = 10
 

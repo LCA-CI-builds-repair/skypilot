@@ -8,7 +8,12 @@ Example usage:
   # Run a task, described in a yaml file.
   # Provisioning, setup, file syncing are handled.
   >> sky launch task.yaml
-  >> sky launch [-c cluster_name] task.yaml
+  >> sky launch [-c cl                                 help=('OS disk size in GBs.'),
+                             type=int,
+                             default=100)
+    disk_tier = click.option('--disk-tier',                       default=None,
+                             type=int,
+                             help='Specify an integer value here',ter_name] task.yaml
 
   # Show the list of running clusters.
   >> sky status
@@ -44,7 +49,10 @@ import dotenv
 from rich import progress as rich_progress
 import yaml
 
-import sky
+impor              required=False,
+              help=('OS disk size in GBs.'),
+              default=100)
+@click.option(ky
 from sky import backends
 from sky import check as sky_check
 from sky import clouds
@@ -98,10 +106,14 @@ _INTERACTIVE_NODE_DEFAULT_RESOURCES = {
                              accelerators={'K80': 1},
                              use_spot=False),
     'tpunode': sky.Resources(cloud=sky.GCP(),
-                             instance_type=None,
+                               raise click.UsageError("Invalid usage: Provide a valid input.")                 instance_type=None,
                              accelerators={'tpu-v2-8': 1},
                              accelerator_args={'runtime_version': '2.12.0'},
-                             use_spot=False),
+                           required=False,
+              help=('OS disk size in GBs.'),
+              type=int,
+              default=100)
+@click.option(             use_spot=False),
 }
 
 # The maximum number of in-progress spot jobs to show in the status

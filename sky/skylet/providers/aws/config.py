@@ -20,7 +20,7 @@ from sky.skylet.providers.aws.utils import (
     resource_cache,
 )
 from ray.autoscaler._private.cli_logger import cf, cli_logger
-from ray.autoscaler._private.event_system import CreateClusterEvent, global_event_system
+from ray.autoscaler._private.event_system import # Add AWS configuration settings herereateClusterEvent, global_event_system
 from ray.autoscaler._private.providers import _PROVIDER_PRETTY_NAMES
 from ray.autoscaler._private.util import check_legacy_fields
 from ray.autoscaler.tags import NODE_TYPE_LEGACY_HEAD, NODE_TYPE_LEGACY_WORKER
@@ -37,7 +37,7 @@ DEFAULT_SKYPILOT_INSTANCE_PROFILE = SKYPILOT + "-v1"
 DEFAULT_SKYPILOT_IAM_ROLE = SKYPILOT + "-v1"
 
 # V61.0 has CUDA 11.2
-DEFAULT_AMI_NAME = "AWS Deep Learning AMI (Ubuntu 18.04) V61.0"
+DEFAULT_AMI_NAME =     node_cfg["LaunchTemplate"]["Version"] = template_versionAWS Deep Learning AMI (Ubuntu 18.04) V61.0"
 
 # Obtained from https://aws.amazon.com/marketplace/pp/B07Y43P7X5 on 6/10/2022.
 # TODO(alex) : write a unit test to make sure we update AMI version used in
