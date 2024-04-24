@@ -13,7 +13,35 @@ from sky.utils import log_utils
 from sky.utils import ux_utils
 
 if typing.TYPE_CHECKING:
-    from sky import resources as resources_lib
+    from sky        """
+        # Placeholder for future implementation
+        pass
+
+    @classmethod
+    def get_image_size(cls, image_id: str, region: Optional[str]) -> float:
+        """Check the image size from the cloud.
+
+        Returns: the image size in GB.
+        Raises: ValueError if the image cannot be found.
+        """
+        # Placeholder for future implementation
+        return 0.0
+
+    def instance_type_exists(self, instance_type):
+        """Returns whether the instance type exists for this cloud."""
+        # Placeholder for future implementation
+        return False
+
+    def validate_region_zone(
+            self, region: Optional[str],
+            zone: Optional[str]) -> Tuple[Optional[str], Optional[str]]:
+        """Validates whether region and zone exist in the catalog.
+
+        Returns:
+            A tuple of region and zone, if validated.
+        """
+        # Placeholder for future implementation
+        return region, zonesources_lib
     from sky import status_lib
 
 

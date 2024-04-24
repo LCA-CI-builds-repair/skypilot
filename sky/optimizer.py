@@ -27,9 +27,16 @@ if typing.TYPE_CHECKING:
     # pylint: disable=ungrouped-imports
     from sky import dag as dag_lib
 
-logger = sky_logging.init_logger(__name__)
+logger = sky_logging.init_logger(__na        field_names = resource_fields + [metric, 'CHOSEN']
 
-_DUMMY_SOURCE_NAME = 'skypilot-dummy-source'
+        num_nodes = len(ordered_node_to_cost_map)
+        for node, v in ordered_node_to_cost_map.items():
+            node_str = (f'for node {repr(node)!r} ' if num_nodes > 1 else '')
+            plural = 's' if node.num_nodes > 1 else ''
+            logger.info(
+                f'{colorama.Style.BRIGHT}Considered resources {node_str}'
+                f'({node.num_nodes} node{plural}):'
+                f'{colorama.Style.RESET_ALL}')MMY_SOURCE_NAME = 'skypilot-dummy-source'
 _DUMMY_SINK_NAME = 'skypilot-dummy-sink'
 
 # task -> resources -> estimated cost or time.

@@ -7,8 +7,93 @@ import colorama
 from typing_extensions import Literal
 
 from sky import clouds
-from sky import global_user_state
-from sky import sky_logging
+from sky import global_user_sta        use_spot = ''
+        if self.use_spot:
+            use_spot = '[Spot]'
+
+        image_id = ''
+        if self.image_id is not None:
+            if None in self.image_id:
+                image_id = f', image_id={self.image_id[None]}'
+            else:
+                image_id = f', image_id={self.image_id}'
+
+        disk_tier = ''
+        if self.disk_tier is not None:
+            disk_tier = f', disk_tier={self.disk_tier}'
+
+        disk_size = ''
+        if self.disk_size != _DEFAULT_DISK_SIZE_GB:
+            disk_size = f', disk_size={self.disk_size}'
+
+        por        for region, image_id in self._image_id.items():
+            # Check the image exists and get the image size.
+            # It will raise ValueError if the image does not exist.
+            image_size = self.cloud.get_image_size(image_id, region)
+            if image_size >= self.disk_size:
+                with ux_utils.print_exception_no_t        """Set state from pickled state, for backward compatibility."""
+        self._version = self._VERSION
+
+        # TODO (zhwu): Design our persistent state format with `__getstate__`,
+        # so that to get rid of the version tracking.
+        version = state.pop('_version', None)
+        # Handle old version(s) here.
+        if version is None:
+            version = -1
+        if version < 0:
+            cloud = state.pop('cloud', None)
+            state['_cloud'] = cloud
+
+            instance_type = state.pop('instance_type', None)
+            state['_instance_type'] = instance_type
+
+            use_spot = state.pop('use_spot', False)
+            state['_use_spot'] = use_spot
+
+            accelerator_args = state.pop('accelerator_args', None)
+            state['_accelerator_args'] = accelerator_args
+
+            disk_size = state.pop('disk_size', _DEFAULT_DISK_SIZE_GB)
+            state['_disk_size'] = disk_size
+
+        if version < 2:
+            self._region = None
+
+        if version < 3:
+            self._spot_recovery = None
+
+        if version < 4:
+            self._image_id = None
+
+        if version < 5:
+            self._zone = None
+
+        if version < 6:
+            accelerators = state.pop('_accelerators', None)
+            if accelerators is not None:
+                accelerators = {
+                    accelerator_registry.canonicalize_accelerator_name(acc):
+                    acc_count for acc, acc_count in accelerators.items()
+                }
+            state['_accelerators'] = accelerators
+
+        if version < 7:
+            self._cpus = None
+
+        if version < 8:
+            self._memory = None
+
+        if '_image_id' in state:
+            self._image_id = {state.get('_region', None): state['_image_id']}an or equal to' if image_size >= self.disk_size
+                                 else 'smaller than')
+                    raise ValueError(
+                        f'Image {image_id!r} is {image_size}GB, which is '
+                        f'{size_comp} the specified disk_size: '
+                        f'{self.disk_size} GB. Please specify a larger '
+                        'disk_size to use this image.')   if self.ports is not None:
+            ports = f', ports={self.ports}'
+
+        instance_type = '' if self._instance_type is None else f'{self._instance_type}'ging
 from sky import skypilot_config
 from sky import spot
 from sky.clouds import service_catalog

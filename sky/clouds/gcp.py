@@ -20,8 +20,24 @@ from sky import status_lib
 from sky.adaptors import gcp
 from sky.clouds import service_catalog
 from sky.skylet import log_lib
-from sky.utils import common_utils
-from sky.utils import subprocess_utils
+from sky.utils import common_uti        if None in resources.image_id:
+            image_id = resources.image_id[None]
+        else:
+            assert region_name in resources.image_id, resources.image_id
+            image_id = resources.image_id[region_name]
+
+        if image_id.startswith('skypilot:'):
+            image_id = service_catalog.get_image_id_from_tag(image_id, clouds='gcp')
+
+        assert image_id is not None, (image_id, r)
+        resources_vars['image_id'] = image_id
+        resources_vars['machine_image'] = None
+
+        if self._is_machine_image(image_id):
+            resources_vars['machine_image'] = image_id
+            resources_vars['image_id'] = None
+
+        resources_vars['disk_tier'] = GCP._get_disk_type(r.disk_tier)mport subprocess_utils
 from sky.utils import ux_utils
 
 if typing.TYPE_CHECKING:

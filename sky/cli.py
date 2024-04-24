@@ -69,8 +69,50 @@ from sky.utils import dag_utils
 from sky.utils import env_options
 from sky.utils import kubernetes_utils
 from sky.utils import log_utils
-from sky.utils import rich_utils
-from sky.utils import schemas
+from sky.utils impo                            verb='specified'))
+        else:
+            click.echo(f'{colorama.Fore.CYAN}{colorama.Style.BRIGHT}Clusters'
+                       f'{colorama.Style.RESET_ALL}')
+        query_clusters: Optional[List[str]] = None
+        if clusters:
+            query_clusters = _get_glob_clusters(clusters, silent=ip)
+        cluster_records = core.status(cluster_names=query_clusters,
+          click.confirm(f'Cancelling {job_identity_str}. Proceed?',
+                      default=True,
+                      abort=True,
+                      show_default=True)
+
+    try:
+        core.cancel(cluster, all=all, job_ids=job_ids_to_cancel)
+    except exceptions.NotSupportedError:
+        # Friendly message for usage like 'sky cancel <spot controller> -a/<job id>'.
+        error_str = ('Cancelling the spot controller\'s jobs is not allowed.'
+                     f'\nTo cancel spot jobs, use: {bold}sky spot cancel <spot '
+                     f'job IDs> [--all]{reset}')
+        click.echo(error_str)
+        sys.exit(1)
+    except ValueError as e:
+        raise click.UsageError(str(e))
+    except exceptions.ClusterNotUpError as e:
+        click.echo(str(e))
+        sys.exit(1)                refresh=refresh)
+        if ip:
+            if len(cluster_records) != 1:
+                with ux_utils.print_exception_no_traceback():
+                    plural = 's' if len(cluster_records) > 1 else ''
+                    cluster_num = (str(len(cluster_records))
+                                   if len(clusters) > 0 else 'No'                try:
+                    quantity = int(accelerator_split[1])
+                    if quantity <= 0:
+                        raise ValueError(
+                            'Quantity cannot be a non-positive integer.')
+                except ValueError as invalid_quantity:
+                    raise click.UsageError(
+                        f'Invalid accelerator quantity "{accelerator_split[1]}". '
+                        'Expected a positive integer.') from invalid_quantity             raise ValueError(
+                        _STATUS_IP_CLUSTER_NUM_ERROR_MESSAGE.format(
+                            cluster_num=cluster_num,
+                            plural=plural))sky.utils import schemas
 from sky.utils import subprocess_utils
 from sky.utils import timeline
 from sky.utils import ux_utils

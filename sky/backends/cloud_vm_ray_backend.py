@@ -123,7 +123,18 @@ _MAX_RAY_UP_RETRY = 5
 # Number of retries for getting zones.
 _MAX_GET_ZONE_RETRY = 3
 
-_JOB_ID_PATTERN = re.compile(r'Job ID: ([0-9]+)')
+_JOB_ID_PATTERN = re.compile(        try:
+            job_id_match = _JOB_ID_PATTERN.search(job_id_str)
+            if job_id_match is not None:
+                job_id = int(job_id_match.group(1))
+            else:
+                # For backward compatibility.
+                job_id = int(job_id_str)
+        except ValueError as e:
+            logger.error(stderr)
+            raise ValueError(f'Failed to parse job id: {job_id_str}; '
+                             f'Returncode: {returncode}') from e
+        return job_id[0-9]+)')
 
 # Path to the monkey-patched ray up script.
 # We don't do import then __file__ because that script needs to be filled in

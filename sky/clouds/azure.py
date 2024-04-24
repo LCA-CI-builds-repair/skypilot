@@ -21,8 +21,22 @@ from sky.skylet import log_lib
 from sky.utils import common_utils
 from sky.utils import ux_utils
 
-if typing.TYPE_CHECKING:
-    from sky import resources
+if typing.TYPE_CHECKING    def get_project_id(cls, dryrun: bool = False) -> str:
+        if dryrun:
+            return 'dryrun-project-id'
+        try:
+            azure_subscription_id = azure.get_subscription_id()
+            if not azure_subscription_id:
+                raise ValueError('Azure subscription ID is not available.')
+        except ModuleNotFoundError as e:
+            with ux_utils.print_exception_no_traceback():
+                raise ModuleNotFoundError('Unable to import azure python '
+                                          'module. Is azure-cli python package '
+                                          'installed? Try pip install '
+                                          '.[azure] in the sky repo.') from e
+        except Exception as e:  # pylint: disable=broad-except
+            with ux_utils.print_exception_no_traceback():
+                raise RuntimeError('An error occurred while getting the project ID.') from emport resources
 
 logger = sky_logging.init_logger(__name__)
 

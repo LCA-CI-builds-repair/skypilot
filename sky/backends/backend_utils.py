@@ -83,7 +83,22 @@ _LAUNCHED_RESERVED_WORKER_PATTERN = re.compile(
 # bug with python=3.6.
 # 10.133.0.5: ray.worker.default,
 _LAUNCHING_IP_PATTERN = re.compile(
-    r'({}): ray[._]worker[._](?:default|reserved)'.format(IP_ADDR_REGEX))
+    r'({}): ray[._]worker[._](?:d        plural = 's' if len(autodown_clusters) > 1 else ''
+        cluster_str = ', '.join(autodown_clusters)
+        logger.info(f'Autodowned cluster{plural}: {bright}{cluster_str}{reset}')
+
+        if remaining_clusters:
+            plural = 's' if len(remaining_clusters) > 1 else ''
+            cluster_str = ', '.join(name for name in remaining_clusters)
+            logger.warning(f'{yellow}Cluster{plural} terminated on the cloud: {reset}{bright}{cluster_str}{reset}')
+
+        if failed_clusters:
+            plural = 's' if len(failed_clusters) > 1 else ''
+            logger.warning(f'{yellow}Failed to refresh status for {len(failed_clusters)} cluster{plural}:{reset}')
+            for cluster_name, e in failed_clusters:
+                logger.warning(f'  {bright}{cluster_name}{reset}: {e}')
+
+        return kept_records.format(IP_ADDR_REGEX))
 WAIT_HEAD_NODE_IP_MAX_ATTEMPTS = 3
 
 # We check network connection by going through _TEST_IP_LIST. We may need to
