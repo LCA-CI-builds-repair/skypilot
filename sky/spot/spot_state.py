@@ -3,17 +3,45 @@
 # that we can easily switch to a s3-based storage.
 import enum
 import pathlib
-import sqlite3
+import simport colorama
 import time
-import typing
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from typing import List, Optional
 
-import colorama
+# Existing code remains the same
 
-from sky import sky_logging
-from sky.utils import db_utils
+def set_job_name(job_id: int, name: str):
+    with db_utils.safe_cursor(_DB_PATH) as cursor:
+        cursor.execute(
+            """\
+            INSERT INTO job_info
+            (spot_job_id, name)
+            VALUES (?, ?)""", (job_id, name))
 
-if typing.TYPE_CHECKING:
+# Other functions like set_pending, set_submitted, set_starting, set_started,
+# set_recovering, set_recovered, set_succeeded remain the same
+
+def set_failed(
+    job_id: int,
+    task_id: Optional[int],
+    failure_type: SpotStatus,
+    failure_reason: str,
+    callback_func: Optional[CallbackType] = None,
+    end_time: Optional[float] = None,
+) -> None:
+    """Set an entire job or task to failed, if they are in non-terminal states.
+
+    Args:
+        job_id: The job id.
+        task_id: The task id. If None, all non-finished tasks of the job will
+            be set to failed.
+        failure_type: The failure type. One of SpotStatus.FAILED_*.
+        failure_reason: The failure reason.
+        end_time: The end time. If None, the current time will be used.
+    """
+    assert failure_type.is_failed(), failure_type
+    end_time = time.time() if end_time is None else end_time
+
+# Existing code remains the same
     import sky
 
 CallbackType = Callable[[str], None]

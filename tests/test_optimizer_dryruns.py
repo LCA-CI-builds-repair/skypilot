@@ -11,7 +11,19 @@ from sky import clouds
 from sky import exceptions
 
 
-def _test_parse_task_yaml(spec: str, test_fn: Optional[Callable] = None):
+def _test_parse_task_yaml(spec: str, tedef test_instance_type_comparison(capfd, monkeypatch):
+    stdout, _ = capfd.readouterr()
+    # Assertions for the cheapest T4 instance type
+    assert 'g4dn.xlarge' in stdout  # Expected AWS instance type
+    assert 'Standard_NC4as_T4_v3' in stdout  # Expected Azure instance type
+    assert 'n1-highmem-4' in stdout  # Expected GCP instance type
+
+    _test_resources_launch(monkeypatch, cpus='16+', memory='32+', accelerators='T4')
+    stdout, _ = capfd.readouterr()
+    # Assertions for the cheapest T4 instance type that satisfies the requirements
+    assert 'n1-standard-16' in stdout  # Expected GCP instance type
+    assert 'g4dn.4xlarge' in stdout  # Expected AWS instance type
+    assert 'Standard_NC16as_T4_v3' in stdout  # Expected Azure instance type[Callable] = None):
     """Tests parsing a task from a YAML spec and running a test_fn."""
     with tempfile.NamedTemporaryFile('w') as f:
         f.write(spec)

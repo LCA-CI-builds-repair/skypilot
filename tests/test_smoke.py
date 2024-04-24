@@ -1,5 +1,16 @@
-# Smoke tests for SkyPilot
-# Default options are set in pyproject.toml
+#import colorama
+import jinja2
+import os
+import pathlib
+import pytest
+import shutil
+import subprocess
+import sys
+import tempfile
+from typing import Dict, List, NamedTuple, Optional, Tuple
+import time
+import urllib.parse
+import uuidtions are set in pyproject.toml
 # Example usage:
 # Run all tests except for AWS and Lambda Cloud
 # > pytest tests/test_smoke.py
@@ -85,7 +96,29 @@ _SPOT_QUEUE_WAIT = ('s=$(sky spot queue); '
                     'sleep 5; s=$(sky spot queue); done; echo "$s"; '
                     'echo; echo; echo "$s"')
 _SPOT_CANCEL_WAIT = (
-    's=$(sky spot cancel -y -n {job_name}); until [ `echo "$s" '
+    's=$(sky spot cancel -y -nimport os
+import tempfile
+import shutil
+
+def tmp_bulk_del_storage_obj(self, tmp_bucket_name):
+    # Creates a temporary storage object for testing bulk deletion.
+    # Stores must be added in the test.
+
+    # Create a temporary directory
+    with tempfile.TemporaryDirectory() as tmpdir:
+        # Create folders and files for testing bulk deletion
+        for i in range(256):
+            folder_name = f'folder{i:03}'
+            file_name = f'test{i:03}.txt'
+
+            folder_path = os.path.join(tmpdir, folder_name)
+            file_path = os.path.join(tmpdir, file_name)
+
+            os.makedirs(folder_path)
+            open(file_path, 'a').close()
+
+        # Yield the storage object
+        yield from self.yield_storage_object(name=tmp_bucket_name, source=tmpdir); until [ `echo "$s" '
     '| grep "Please wait for the controller to be ready." '
     '| wc -l` -eq 0 ]; do echo "Waiting for the spot controller '
     'to be ready"; sleep 5; s=$(sky spot cancel -y -n {job_name}); '
