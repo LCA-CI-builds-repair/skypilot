@@ -3,7 +3,30 @@ import pytest
 import sky
 from sky import backends
 from sky import exceptions
-from sky import global_user_state
+"""Test launch and exec on existing clusters.
+
+This test runs launch and exec with different resource configurations on an existing cluster.
+"""
+# Test with resources A100:8
+task = sky.Task(run='echo hi')
+task.set_resources(sky.Resources(accelerators='A100:8'))
+sky.launch(task, cluster_name='test-cluster1', dryrun=True)
+sky.exec(task, cluster_name='test-cluster1', dryrun=True)
+
+# Test with resources A100:3
+task.set_resources(sky.Resources(accelerators='A100:3'))
+sky.launch(task, cluster_name='test-cluster1', dryrun=True)
+sky.exec(task, cluster_name='test-cluster1', dryrun=True)
+
+# Test with resources A100:1 in us-east-1 region
+task.set_resources(
+    sky.Resources(
+        sky.AWS(),
+        accelerators='A100:1',
+        region='us-east-1',
+    )
+)
+sky.launch(task, cluster_name='test-cluster1', dryrun=True)bal_user_state
 from sky.utils import db_utils
 
 

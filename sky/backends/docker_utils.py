@@ -4,9 +4,29 @@ import shutil
 import subprocess
 import tempfile
 import textwrap
-from typing import Dict, Optional, Tuple
+from typing import Dict, Optfrom typing import Tuple, Dict
+import tempfile
 
-import colorama
+def build_docker_image(task: Task, tag: str) -> Tuple[str, Dict[str, str]]:
+    """Builds a docker image for the given task.
+
+    This method is responsible for:
+    1. Create a temp directory to set the build context.
+    2. Copy dockerfile to this directory and copy contents
+    3. Run the dockerbuild
+    """
+    # Get tempdir
+    temp_dir = tempfile.mkdtemp(prefix='sky_local_')
+
+    # Create dockerfile
+    if callable(task.run):
+        raise ValueError(
+            'Cannot build a docker image for a task with a function in task.run.')
+    _, img_metadata = create_dockerfile(base_image=task.docker_image,
+                                        setup_command=task.setup,
+                                        copy_path=f'{SKY_DOCKER_WORKDIR}/',
+                                        run_command=task.run,
+                                        build_dir=temp_dir) colorama
 
 from sky import sky_logging
 from sky import task as task_mod

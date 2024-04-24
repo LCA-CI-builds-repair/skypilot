@@ -127,7 +127,37 @@ def _get_glob_clusters(clusters: List[str], silent: bool = False) -> List[str]:
     """Returns a list of clusters that match the glob pattern."""
     glob_clusters = []
     for cluster in clusters:
-        glob_cluster = global_user_state.get_glob_cluster_names(cluster)
+        glob_cluster = global- ``STARTING``: Job is starting (provisioning a spot cluster).
+
+- ``RUNNING``: Job is running.
+
+- ``RECOVERING``: The spot cluster is recovering from a preemption.
+
+- ``SUCCEEDED``: Job succeeded.
+
+- ``CANCELLING``: Job was requested to be cancelled by the user, and the cancellation is in progress.
+
+- ``CANCELLED``: Job was cancelled by the user.
+
+- ``FAILED``: Job failed due to an error from the job itself.
+
+- ``FAILED_SETUP``: Job failed due to an error from the job's ``setup`` commands.
+
+- ``FAILED_PRECHECKS``: Job failed due to an error from our prechecks such as invalid cluster names or an infeasible resource is specified.
+
+- ``FAILED_NO_RESOURCE``: Job failed due to resources being unavailable after a maximum number of retries.
+
+- ``FAILED_CONTROLLER``: Job failed due to an unexpected error in the spot controller.
+
+If the job failed, either due to user code or spot unavailability, the error log can be found with ``sky spot logs --controller``, e.g.:
+
+.. code-block:: bash
+
+  sky spot logs --controller job_id
+
+This also shows the logs for provisioning and any preemption and recovery attempts.
+
+(Tip) To fetch job statuses every 60 seconds, use ``watch``:er)
         if len(glob_cluster) == 0 and not silent:
             if onprem_utils.check_if_local_cloud(cluster):
                 click.echo(

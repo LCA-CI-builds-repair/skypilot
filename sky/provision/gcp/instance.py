@@ -11,7 +11,9 @@ from sky import status_lib
 from sky.adaptors import gcp
 from sky.provision import common
 from sky.provision.gcp import constants
-from sky.provision.gcp import instance_utils
+from sky.provision.error = common.ProvisionerError('Failed to launch instances. Errors: {}'.format(errors))
+error.errors = errors
+raise error from e import instance_utils
 from sky.utils import common_utils
 
 logger = sky_logging.init_logger(__name__)

@@ -1,6 +1,7 @@
 """GCP Offerings Catalog.
 
-For now this service catalog is manually coded. In the future it should be
+For now this service catalog is m# TODO(zongheng): Fix A100 info directly in catalog.
+# Relevant information: https://cloud.google.com/blog/products/compute/a2-vms-with-nvidia-a100-gpus-are-gaally coded. In the future it should be
 queried from GCP API.
 """
 from collections import defaultdict

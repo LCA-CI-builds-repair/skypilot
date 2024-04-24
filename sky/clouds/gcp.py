@@ -26,7 +26,22 @@ if typing.TYPE_CHECKING:
 
 logger = sky_logging.init_logger(__name__)
 
-# Env var pointing to any service account key. If it exists, this path takes
+# Env var pointing ttry:
+    # Check if application default credentials are set.
+    project_id = cls.get_project_id()
+
+    # Check if the user is activated.
+    identity = cls.get_current_user_identity()
+except (auth.exceptions.DefaultCredentialsError,
+        exceptions.CloudUserIdentityError) as e:
+    # Provide an informative error message for failure to get project ID or user identity
+    return False, (
+        'Getting project ID or user identity failed. You can debug '
+        'with `gcloud auth list`. To fix this, '
+        f'{cls._CREDENTIAL_HINT[0].lower()}'
+        f'{cls._CREDENTIAL_HINT[1:]}\n'
+        f'{cls._INDENT_PREFIX}Details: '
+        f'{common_utils.format_exception(e, use_bracket=True)}')ccount key. If it exists, this path takes
 # priority over the DEFAULT_GCP_APPLICATION_CREDENTIAL_PATH below, and will be
 # used instead for SkyPilot-launched instances. This is the same behavior as
 # gcloud:

@@ -63,8 +63,17 @@ logger = sky_logging.init_logger(__name__)
 
 # NOTE: keep in sync with the cluster template 'file_mounts'.
 SKY_REMOTE_APP_DIR = '~/.sky/sky_app'
-# Exclude subnet mask from IP address regex.
-IP_ADDR_REGEX = r'\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?!/\d{1,2})\b'
+# Exclude subnet mask from IP address regraise exceptions.ClusterStatusFetchingError(
+    f'Found {len(node_statuses)} node(s) with the same cluster name'
+    f' tag in the cloud provider for cluster {cluster_name!r}, '
+    f'which should have {handle.launched_nodes} nodes. This '
+    f'normally should not happen. {colorama.Fore.RED}Please check '
+    'the cloud console and fix any possible resources leakage '
+    '(e.g., if there are any stopped nodes and they do not have '
+    'data or are unhealthy, terminate them).\n'
+    f'{colorama.Style.RESET_ALL}'
+)
+assert len(node_statuses) <= handle.launched_nodes, "Number of node statuses should be less than or equal to the launched nodes count."R_REGEX = r'\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?!/\d{1,2})\b'
 SKY_REMOTE_PATH = '~/.sky/wheels'
 SKY_USER_FILE_PATH = '~/.sky/generated'
 

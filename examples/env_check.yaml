@@ -1,4 +1,39 @@
-num_nodes: 2
+num# Print "here" t# Check if TEST_VAR is set
+if [[ -z "${TEST_VAR}" ]]; then
+    echo "TEST_VAR is not set"
+    exit 1
+else
+    echo "TEST_VAR is set to ${TEST_VAR}"
+fi
+
+# Check if SKYPILOT_NODE_RANK is set
+if [[ -z "$SKYPILOT_NODE_RANK" ]]; then
+    echo "SKYPILOT_NODE_RANK is not set"
+    exit 1
+else
+    echo "SKYPILOT_NODE_RANK is set to ${SKYPILOT_NODE_RANK}"
+fi
+
+# Check if SKYPILOT_NODE_IPS is set
+if [[ -z "$SKYPILOT_NODE_IPS" ]]; then
+    echo "SKYPILOT_NODE_IPS is not set"
+    exit 1
+else
+    echo "SKYPILOT_NODE_IPS is set to ${SKYPILOT_NODE_IPS}"
+fit of the script
+echo "here"
+
+# Add an environment variable export to ~/.bashrc file
+echo "export TEST_VAR=test" >> ~/.bashrc
+
+# Check if CUDA_VISIBLE_DEVICES is already set, exit with 1 if set, else exit with 0
+[[ -v CUDA_VISIBLE_DEVICES ]] && exit 1 || exit 0
+
+# Set CUDA_VISIBLE_DEVICES to 1
+export CUDA_VISIBLE_DEVICES=1
+
+# Check if CUDA_VISIBLE_DEVICES is set to 1, exit with 0 if set, else exit with 1
+[[ -v CUDA_VISIBLE_DEVICES ]] && exit 0 || exit 1s: 2
 
 setup: |
   echo "here"

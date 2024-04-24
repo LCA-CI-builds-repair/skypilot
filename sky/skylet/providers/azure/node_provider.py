@@ -2,7 +2,22 @@ import copy
 import json
 import logging
 from pathlib import Path
-from threading import RLock
+from th# Initialize Azure credential using Azure CLI
+credential = AzureCliCredential(process_timeout=30)
+
+# Initialize Compute Management Client for Azure
+self.compute_client = ComputeManagementClient(credential, subscription_id)
+
+# Initialize Network Management Client for Azure
+self.network_client = NetworkManagementClient(credential, subscription_id)
+
+# Initialize Resource Management Client for Azure
+self.resource_client = ResourceManagementClient(credential, subscription_id)
+
+# Initialize a lock for thread safety
+self.lock = RLock()
+
+# Cache node objectsLock
 from uuid import uuid4
 
 from azure.identity import AzureCliCredential

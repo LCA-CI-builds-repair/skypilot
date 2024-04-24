@@ -1,5 +1,15 @@
-"""Playground: demo_dockerutils."""
-import logging
+"""Playground: demo_dockertag = docker_utils.build_dockerimage_from_task(t)
+logger.info(f'Build successful. Tag: {tag}.')
+
+# Provide instructions to run the docker image
+logger.info(f'Try running docker run -it --rm {tag}')
+logger.info(f'Debug your container with docker run -it --rm {tag} /bin/bash')
+
+# Implement cloud-agnostic push pipeline in the future
+logger.info(f'Trying to push image {tag}')
+remote_tag = docker_utils.push_dockerimage(tag, t.name)
+logger.info('Push successful. From any machine, try '
+            f'docker run -it --rm {remote_tag}')mport logging
 
 import sky
 from sky.backends import docker_utils

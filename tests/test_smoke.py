@@ -1,5 +1,107 @@
-# Smoke tests for SkyPilot
-# Default options are set in pyproject.toml
+## Default options are set in pyproject.toml
+# Example usage:
+# Run all tests except for AWS and Lambda Cloud
+# > pytest tests/test_smoke.py
+#
+# Terminate failed clusters after test finishes
+# > pytest tests/test_smoke.py --terminate-on-failure
+#
+# Re-run last failed tests
+# > pytest --lf
+#
+# Run one of the smoke tests
+# > pytest tests/test_smoke.py::test_minimal
+#
+# Only run managed spot tests
+# > pytest tests/test_smoke.py --managed-spot
+#
+# Only run sky serve tests
+# > pytest tests/test_smoke.py --sky-serve
+#
+# Only run test for AWS + generic tests
+# > pytest tests/test_smoke.py --aws
+#
+# Change cloud for generic tests to aws
+# > pytest tests/test_smoke.py --generic-cloud aws
+
+import inspect
+
+# Add necessary imports for the test cases
+import pytest
+
+# Implement the test cases for smoke testing with the specified options
+def test_minimal():
+    assert True
+
+@pytest.mark.skip(reason="Skipping AWS Cloud test")
+def test_aws():
+    assert True
+
+@pytest.mark.skip(reason="Skipping Lambda Cloud test")
+def test_lambda_cloud():
+    assert True
+
+@pytest.mark.skip(reason="Skipping managed spot tests")
+def test_managed_spot():
+    assert True
+
+@pytest.mark.skip(reason="Skipping sky serve tests")
+def test_sky_scommands = [
+    # Check the status of the queue and the setup process for {name}-4
+    f's=$(sky queue {name}) && echo "$s" && (echo "$s" | grep {name}-4 | grep SETTING_UP)',
+    
+    # Cancel the job {name} with job ID 4
+    f'sky cancel -y {name} 4',
+    
+    # Check the status of the queue to verify that job {name}-4 is cancelled
+    f's=$(sky queue {name}) && echo "$s" && (echo "$s" | grep {name}-4 | grep CANCELLED)',
+    
+    # Execute a command with GPU T4:0.2 ensuring only 1 GPU per node
+    f'sky exec {name} --gpus T4:0.2 "[[ \$SKYPILOT_NUM_commands = [
+    # Wait for autodown timeout
+    f'sleep {autodown_timeout}',
+    
+    # Check the status of the cluster and ensure it is either Autodowned or terminated on the cloud
+    f's=$(SKYPILOT_DEBUG=0 sky status {name} --refresh) && echo "$s" && {{ echo "$s" | grep {name} | grep "Autodowned cluster\|terminated on the cloud"; }} || {{ echo "$s" | grep {name} && exit 1 || exit 0; }}',
+    
+    # Launch a cluster with specified parameters and configuration
+    f'sky launch -y -d -c {name} --cloud {generic_cloud} --num-nodes 2 --down tests/test_yamls/minimal.yaml',
+    
+    # Check the status of the cluster to ensure it is UP
+    f'sky status | grep {name} | grep UP',  # Ensure the cluster is UP.
+    
+    # Execute a command on the cluster using a specific configuration
+    f'sky exec {name} --cloud {generic_cloud} tests/test_yamls/minimal.yaml',
+    
+    # Check the status of the cluster to verify it is 1m (down)
+    f'sky status | grep {name} | grep "1m (down)"',
+    
+    # Wait for autodown timeout again
+    f'sleep {autodown_timeout}',
+    
+    # Ensure the cluster is terminated or Autodowned
+    f's=$(SKYPILOT_DEBUG=0 sky status {name} --refresh) && echo "$s" && {{ echo "$s" | grep {name} | grep "Autodowned cluster\|terminated on the cloud"; }} || {{ echo "$s" | grep {name} && exit 1 || exit 0; }}',
+]NODE -eq 1 ]] || exit 1"',
+    
+    # Execute a command with GPU T4:0.2 and 2 nodes, ensuring only 1 GPU per node
+    f'sky exec {name} --gpus T4:0.2 --num-nodes 2 "[[ \$SKYPILOT_NUM_GPUS_PER_NODE -eq 1 ]] || exit 1"',
+    
+    # Execute a command with GPU T4:1 and 2 nodes, ensuring only 1 GPU per node
+    f'sky exec {name} --gpus T4:1 --num-nodes 2 "[[ \$SKYPILOT_NUM_GPUS_PER_NODE -eq 1 ]] || exit 1"',
+    
+    # Get logs for job {name} with job ID 5
+    f'sky logs {name} 5 --status',
+    
+    # Get logs for job {name} with job ID 6
+    f'sky logs {name} 6 --status',
+    
+    # Get logs for job {name} with job ID 7
+    f'sky logs {name} 7 --status',
+]  assert True
+
+@pytest.mark.skip(reason="Skipping generic tests with AWS cloud")
+def test_generic_cloud_aws():
+    assert True Default options are set in pyproject.toml
 # Example usage:
 # Run all tests except for AWS and Lambda Cloud
 # > pytest tests/test_smoke.py

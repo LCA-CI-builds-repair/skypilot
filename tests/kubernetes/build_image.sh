@@ -1,5 +1,21 @@
 #!/bin/bash
-# Builds the Dockerfile_k8s image as the SkyPilot image.
+# Builds the Dockerfile_k8s ishift $((OPTIND-1))
+
+# Navigate to the root of the project (inferred from git)
+cd "$(git rev-parse --show-toplevel)"
+
+# If push is used, build the image for both amd64 and arm64
+if [[ $push == "true" ]]; then
+  # If gpu is used, build the GPU image for amd64
+  if [[ $gpu == "true" ]]; then
+    echo "Building and pushing GPU image for amd64: $TAG"
+    docker buildx build --push --platform linux/amd64 -t $TAG -f Dockerfile_k8s_gpu ./sky
+  else
+    # Build the CPU image for both amd64 and arm64
+    echo "Building and pushing CPU image for amd64 and arm64: $TAG"
+    docker buildx build --push --platform linux/arm64,linux/amd64 -t $TAG -f Dockerfile_k8s ./sky
+  fi
+fiilot image.
 # Optionally, if -p is specified, pushes the image to the registry.
 # Uses buildx to build the image for both amd64 and arm64.
 # If -p flag is specified, pushes the image to the registry.

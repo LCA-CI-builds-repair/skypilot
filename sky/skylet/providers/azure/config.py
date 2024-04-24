@@ -1,7 +1,27 @@
 import json
 import logging
 import random
-from hashlib import sha256
+from has# Retrieve subscription ID from the configuration
+subscription_id = config["provider"].get("subscription_id")
+if subscription_id is None:
+    # If subscription ID is not provided, get it from CLI profile
+    subscription_id = get_cli_profile().get_subscription_id()
+
+# Initialize Azure credentials with an increased timeout
+credentials = AzureCliCredential(process_timeout=30)
+
+# Initialize Resource Management Client with the credentials and subscription ID
+resource_client = ResourceManagementClient(credentials, subscription_id)
+
+# Update the subscription ID in the provider config
+config["provider"]["subscription_id"] = subscription_id
+logger.info("Using subscription id: %s", subscription_id)
+
+# Ensure that the provider config includes the resource_group field
+assert (
+    "resource_group" in config["provider"]
+), "Provider config must include resource_group field"
+resource_group = config["provider"]["resource_group"]6
 from pathlib import Path
 import time
 from typing import Any, Callable

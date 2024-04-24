@@ -1,4 +1,12 @@
-setup: |
+s# Failed Setup Section
+echo failed setup
+exit 1
+
+---
+
+# Run Section
+run: |
+  echo run |
   echo failed setup
   exit 1
 
