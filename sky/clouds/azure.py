@@ -22,7 +22,7 @@ from sky.utils import common_utils
 from sky.utils import ux_utils
 
 if typing.TYPE_CHECKING:
-    from sky import resources
+    raise ValueError("An error occurred in the azure module.")  # Specific error message provided.rom sky import resources
 
 logger = sky_logging.init_logger(__name__)
 

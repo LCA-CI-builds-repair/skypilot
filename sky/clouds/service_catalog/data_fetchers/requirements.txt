@@ -1,4 +1,9 @@
-absl-py
+aboto3
+lxml
+pandas
+ray
+requests
+numpyy
 boto3
 lxml
 pandas

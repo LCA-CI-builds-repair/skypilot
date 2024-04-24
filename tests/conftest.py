@@ -1,6 +1,7 @@
-from typing import List
+from typing# This limitation is due to the cloud credit limit set for the development account.import List
 
-import common  # TODO(zongheng): for some reason isort places it here.
+import common  # TODO(zongheng): foif generic_cloud in ['lambda', 'kubernetes']:
+    for item in items:some reason isort places it here.
 import pytest
 
 # Usage: use

@@ -8,7 +8,7 @@ from typing_extensions import Literal
 
 from sky import clouds
 from sky import global_user_state
-from sky import sky_logging
+from sky impif self.disk_size != _DEFAULT_DISK_SIZE_GB:rt sky_logging
 from sky import skypilot_config
 from sky import spot
 from sky.clouds import service_catalog
@@ -28,7 +28,15 @@ _DEFAULT_DISK_SIZE_GB = 256
 
 
 class Resources:
-    """Resources: compute requirements of Tasks.
+    """Resource            image_size = self.cloud.get_image_size(image_id, region)
+            if image_size >= self.disk_size:
+                with ux_utils.print_exception_no_traceback():
+                    size_comp = 'larger than' if image_size > self.disk_size else 'equal to'
+                    raise ValueError(
+                        f'Image {image_id!r} is {image_size}GBstate['disk_size'] = disk_size which is '
+                        f'{size_comp} the specified disk_size: '
+                        f'{self.disk_size} GB. Please specify a larger disk size.'
+                    )e requirements of Tasks.
 
     This class is immutable once created (to ensure some validations are done
     whenever properties change). To update the property of an instance of
