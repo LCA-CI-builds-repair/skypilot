@@ -1,6 +1,10 @@
 """Abstractions around GCP resources and nodes.
 
-The logic has been abstracted away here to allow for different GCP resources
+The logic has be        @wraps(func)
+        def wrapper(*args, **kwargs):
+            def try_catch_exc():
+                try:
+                    # Add the missing code herebstracted away here to allow for different GCP resources
 (API endpoints), which can differ widely, making it impossible to use
 the same logic for everything.
 

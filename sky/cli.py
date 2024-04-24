@@ -77,7 +77,9 @@ from sky.utils import ux_utils
 from sky.utils.cli_utils import status_utils
 
 if typing.TYPE_CHECKING:
-    from sky.backends import backend as backend_lib
+    from sky.backends import backe    default=False,
+    help=('If specified, do not show logs but exit with a status code: '
+          '0 for succeeded, or 1 for all other statuses.'))as backend_lib
 
 logger = sky_logging.init_logger(__name__)
 

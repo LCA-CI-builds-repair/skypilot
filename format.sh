@@ -4,7 +4,8 @@
 # Usage:
 #    # Do work and commit your work.
 
-#    # Format files that differ from origin/master.
+#    # Format files that differ frif
+fi origin/master.
 #    bash format.sh
 
 #    # Commit changed files with message 'Run yapf and pylint'

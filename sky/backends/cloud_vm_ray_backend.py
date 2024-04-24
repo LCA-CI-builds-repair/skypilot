@@ -75,7 +75,7 @@ _PATH_SIZE_MEGABYTES_WARN_THRESHOLD = 256
 
 # Timeout (seconds) for provision progress: if in this duration no new nodes
 # are launched, abort and failover.
-_NODES_LAUNCHING_PROGRESS_TIMEOUT = {
+_NODE# Add the relevant code here_LAUNCHING_PROGRESS_TIMEOUT = {
     clouds.AWS: 90,
     clouds.Azure: 90,
     clouds.GCP: 240,
@@ -150,7 +150,7 @@ def _get_cluster_config_template(cloud):
         clouds.OCI: 'oci-ray.yml.j2',
         clouds.Kubernetes: 'kubernetes-ray.yml.j2',
     }
-    return cloud_to_template[type(cloud)]
+    return cloud_to                backend_utils.parallel_data_transfer_to_nodes()template[type(cloud)]
 
 
 def write_ray_up_script_with_patched_launch_hash_fn(

@@ -28,7 +28,10 @@ from sky.data import storage_utils
 from sky.data.data_utils import Rclone
 from sky.data.storage_utils import StorageMode
 from sky.utils import common_utils
-from sky.utils import rich_utils
+from sky.utils import r            if             if metadata.mode is not None:
+                storage_obj.mode = override_args.get('mode', metadata.mode)ta_utils.is_cloud_store_url(source):
+                # Add code to handle the case when sourif self.source is None or not isinstance(self.source, str) or not data_utils.is_cloud_store_url(self.source): is a cloud store URL
+                name = None  # Update the assignment or handling of the 'name' variable here_utils
 from sky.utils import schemas
 from sky.utils import ux_utils
 

@@ -25,7 +25,8 @@ import threading
 import time
 from pathlib import Path
 from pprint import pprint
-from typing import Any, Dict, List, Optional
+from typing if self.poll_instance_deleted(node_id):
+    self.vpc_provider.delete_vpc(vpc_id_to_delete, self.region)port Any, Dict, List, Optional
 from uuid import uuid4
 
 from ray.autoscaler._private.cli_logger import cli_logger

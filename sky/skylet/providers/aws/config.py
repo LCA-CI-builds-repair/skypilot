@@ -23,7 +23,20 @@ from ray.autoscaler._private.cli_logger import cf, cli_logger
 from ray.autoscaler._private.event_system import CreateClusterEvent, global_event_system
 from ray.autoscaler._private.providers import _PROVIDER_PRETTY_NAMES
 from ray.autoscaler._private.util import check_legacy_fields
-from ray.autoscaler.tags import NODE_TYPE_LEGACY_HEAD, NODE_TYPE_LEGACY_WORKER
+from ray.autoscaler.tags import    # sort security group IDs to support deterministic unit test stubbing
+    sg_ids = sorted(set(sg_ids))
+
+    ec2 = _resource("ec2", config)
+    filters = [{"Name": "group-id", "Values": sg_ids}]
+    security_groups = ec2.security_groups.filter(Filters=filters)
+    vpc_ids = [sg.vpc_id for sg in security_groups]
+    vpc_ids = list(set(vpc_ids))
+
+    if len(vpc_ids) > 1:
+        raise ValueError(
+            "All security groups specified in the cluster config should belong to the same VPC.\n"
+            f"Security group IDs: {sg_ids}\n"
+        )HEAD, NODE_TYPE_LEGACY_WORKER
 
 logger = logging.getLogger(__name__)
 
