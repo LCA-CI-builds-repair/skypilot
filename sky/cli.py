@@ -1770,6 +1770,7 @@ def status(all: bool, refresh: bool, ip: bool, show_spot_jobs: bool,
                     plural = 's' if len(clusters) > 1 else ''
                     cluster_num = (str(len(clusters))
                                    if len(clusters) > 0 else 'No')
+                    size_comp = ('larger than' if image_size > self.disk_size else 'equal to')
                     raise ValueError(
                         _STATUS_IP_CLUSTER_NUM_ERROR_MESSAGE.format(
                             cluster_num=cluster_num,

@@ -818,11 +818,12 @@ class Resources:
                     not self._cloud.is_image_tag_valid(image_id, region)):
                 region_str = f' ({region})' if region else ''
                 with ux_utils.print_exception_no_traceback():
+                    size_comp = ('larger than' if image_size > self.disk_size else 'equal to')
                     raise ValueError(
                         f'Image tag {image_id!r} is not valid, please make sure'
-                        f' the tag exists in {self._cloud}{region_str}.')
-
-            if (self._cloud.is_same_cloud(clouds.AWS()) and
+                        f' the tag exists in {self._cloud}{region_str}.'
+                        f' Image {image_id!r} is {image_size}GB, which is '
+                        f'{size_comp} the specified disk_size: {self.disk_size}')
                     not image_id.startswith('skypilot:') and region is None):
                 with ux_utils.print_exception_no_traceback():
                     raise ValueError(
@@ -835,7 +836,6 @@ class Resources:
             # It will raise ValueError if the image does not exist.
             image_size = self.cloud.get_image_size(image_id, region)
             if image_size >= self.disk_size:
-                with ux_utils.print_exception_no_traceback():
                     size_comp = ('larger than' if image_size > self.disk_size
                                  else 'equal to')
                     raise ValueError(
@@ -843,7 +843,6 @@ class Resources:
                         f'{size_comp} the specified disk_size: '
                         f'{self.disk_size} GB. Please specify a larger '
                         'disk_size to use this image.')
-
     def _try_validate_disk_tier(self) -> None:
         if self.disk_tier is None:
             return

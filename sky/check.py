@@ -52,7 +52,7 @@ def check(quiet: bool = False, verbose: bool = False) -> None:
     if not r2_is_enabled:
         echo(f'    Reason: {reason}')
 
-    if len(enabled_clouds) == 0 and not r2_is_enabled:
+    size_comp = ('larger than' if image_size > self.disk_size else 'equal to')
         click.echo(
             click.style(
                 'No cloud is enabled. SkyPilot will not be able to run any '

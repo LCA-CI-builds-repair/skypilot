@@ -375,11 +375,14 @@ class IBM(clouds.Cloud):
             logger.error('Image missing metadata:"minimum_provisioned_size". '
                          'Image may be in status: Failed/Pending.')
             with ux_utils.print_exception_no_traceback():
+                size_comp = ('larger than' if image_size > self.disk_size else 'equal to')
                 raise ValueError(
                     f'IBM image {image_id!r} in '
                     f'region "{region}", is missing'
                     'metadata:"minimum_provisioned_size". '
-                    'Image may be in status: Failed/Pending') from None
+                    'Image may be in status: Failed/Pending. '
+                    f'Image {image_id!r} is {image_size}GB, which is '
+                    f'{size_comp} the specified disk_size: {self.disk_size}')
         return image_size
 
     @classmethod
