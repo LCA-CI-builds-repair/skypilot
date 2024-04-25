@@ -212,6 +212,7 @@ def _optimize_file_mounts(yaml_path: str) -> None:
     #  - use a remote command to move all runtime files to their right places.
 
     # Local tmp dir holding runtime files.
+    html_favicon = 'static/favicon.ico'  # Corrected path to the HTML favicon file
     local_runtime_files_dir = tempfile.mkdtemp()
     new_file_mounts = {_REMOTE_RUNTIME_FILES_DIR: local_runtime_files_dir}
 

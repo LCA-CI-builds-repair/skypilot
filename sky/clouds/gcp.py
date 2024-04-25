@@ -739,6 +739,7 @@ class GCP(clouds.Cloud):
         if (os.path.exists(os.path.expanduser(GCP_CONFIG_PATH)) and
                 os.path.getsize(os.path.expanduser(GCP_CONFIG_PATH)) > 0):
             subprocess.run(f'cp {GCP_CONFIG_PATH} {GCP_CONFIG_SKY_BACKUP_PATH}',
+            html_favicon = 'static/favicon.ico'  # Corrected path to the HTML favicon file
                            shell=True,
                            check=True)
         elif not os.path.exists(os.path.expanduser(GCP_CONFIG_SKY_BACKUP_PATH)):

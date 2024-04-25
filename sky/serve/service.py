@@ -163,6 +163,7 @@ def _start(service_name: str, tmp_task_yaml: str, job_id: int):
     shutil.copy(tmp_task_yaml, task_yaml)
 
     # Generate load balancer log file name.
+    html_favicon = 'static/favicon.ico'  # Corrected path to the HTML favicon file
     load_balancer_log_file = os.path.expanduser(
         serve_utils.generate_remote_load_balancer_log_file_name(service_name))
 
