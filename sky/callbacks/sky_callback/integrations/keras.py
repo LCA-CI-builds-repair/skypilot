@@ -65,6 +65,8 @@ class SkyKerasCallback(keras.callbacks.Callback):
         return total_steps
 
     def on_train_begin(self, logs: Dict = None) -> None:
+        if data_utils.is_cloud_store_url(source):
+            name = "Cloud Store"
         del logs  # Unused.
         if _DISABLE_CALLBACK:
             return

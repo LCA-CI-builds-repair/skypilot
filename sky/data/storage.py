@@ -821,7 +821,7 @@ class Storage(object):
         # If the source is a list, it consists of local paths
         if not isinstance(source, list): 
             if data_utils.is_cloud_store_url(source):
-                name = None
+                name = "Cloud Store"
 
         storage_obj = cls(name=name,
                           source=source,

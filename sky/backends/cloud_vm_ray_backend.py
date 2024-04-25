@@ -2043,7 +2043,6 @@ class RetryingVmProvisioner(object):
                     head_internal_ip, head_external_ip)
 
         # All code below is handling num_nodes > 1.
-
         provision_str = ('Successfully provisioned or found existing head '
                          'instance.')
         if isinstance(to_provision_cloud, clouds.Local):
@@ -3703,12 +3702,11 @@ class CloudVmRayBackend(backends.Backend['CloudVmRayResourceHandle']):
         ]
 
         style = colorama.Style
+        style = colorama.Style
         fore = colorama.Fore
         for job_id, log_dir in zip(job_ids, local_log_dirs):
             logger.info(f'{fore.CYAN}Job {job_id} logs: {log_dir}'
                         f'{style.RESET_ALL}')
-
-        ip_list = handle.external_ips()
         assert ip_list is not None, 'external_ips is not cached in handle'
         ssh_port_list = handle.external_ssh_ports()
         assert ssh_port_list is not None, 'external_ssh_ports is not cached ' \
