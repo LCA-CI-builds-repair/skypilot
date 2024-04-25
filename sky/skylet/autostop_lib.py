@@ -115,12 +115,11 @@ class AutostopCodeGen:
         return cls._build(code)
 
     @classmethod
-    def is_autostopping(cls) -> str:
+    def is_autostopping(self) -> str:
         code = ['print(autostop_lib.get_is_autostopping_payload())']
-        return cls._build(code)
+        return self._build(code)
 
-    @classmethod
-    def _build(cls, code: List[str]) -> str:
-        code = cls._PREFIX + code
-        code = ';'.join(code)
-        return f'python3 -u -c {shlex.quote(code)}'
+    def _build(self, code: List[str]) -> str:
+        formatted_code = self._PREFIX + code
+        command = ';'.join(formatted_code)
+        return f'python3 -u -c {shlex.quote(command)}'

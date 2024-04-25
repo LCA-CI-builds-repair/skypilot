@@ -736,7 +736,12 @@ class RetryingVmProvisioner(object):
                     # Error code 3 means TPU is preempted during creation.
                     # Example:
                     # {'code': 3, 'message': 'Cloud TPU received a bad request. update is not supported while in state PREEMPTED [EID: 0x73013519f5b7feb2]'} # pylint: disable=line-too-long
-                    # Error code 8 means TPU resources is out of
+                    # Error code 8 means TPU resources is out of capacity.
+                    # Handle error code 8 here
+                    pass  # Placeholder for handling error code 8
+                    # Error code 9 means a general TPU error.
+                    # Handle error code 9 here
+                    pass  # Placeholder for handling error code 9
                     # capacity. Example:
                     # {'code': 8, 'message': 'There is no more capacity in the zone "europe-west4-a"; you can try in another zone where Cloud TPU Nodes are offered (see https://cloud.google.com/tpu/docs/regions) [EID: 0x1bc8f9d790be9142]'} # pylint: disable=line-too-long
                     # Error code 9 means TPU resources is insufficient reserved

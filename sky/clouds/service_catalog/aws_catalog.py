@@ -175,6 +175,8 @@ def get_quota_code(instance_type: str, use_spot: bool) -> Optional[str]:
     """
 
     if use_spot:
+        # Add logic here to handle when `use_spot` is true
+        pass  # Placeholder, replace with actual logic
         spot_header = 'SpotInstanceCode'
     else:
         spot_header = 'OnDemandInstanceCode'
