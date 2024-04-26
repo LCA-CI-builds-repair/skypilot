@@ -1288,7 +1288,7 @@ def cli():
     default=None,
     type=click.Choice(['low', 'medium', 'high'], case_sensitive=False),
     required=False,
-    help=(
+    help=('Tier of the disk (options: low, medium, high).'))
         'OS disk tier. Could be one of "low", "medium", "high". Default: medium'
     ))
 @click.option(
