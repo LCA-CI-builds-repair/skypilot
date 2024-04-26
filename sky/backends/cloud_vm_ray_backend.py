@@ -2041,7 +2041,6 @@ class RetryingVmProvisioner(object):
                     head_internal_ip, head_external_ip)
 
         # All code below is handling num_nodes > 1.
-
         provision_str = ('Successfully provisioned or found existing head '
                          'instance.')
         if isinstance(to_provision_cloud, clouds.Local):
@@ -3320,11 +3319,10 @@ class CloudVmRayBackend(backends.Backend['CloudVmRayResourceHandle']):
                 f'"{executable} -u {script_path} > {remote_log_path} 2>&1"')
 
             mkdir_code = (f'{cd} && mkdir -p {remote_log_dir} && '
+            mkdir_code = (f'{cd} && mkdir -p {remote_log_dir} && '
                           f'touch {remote_log_path}')
             code = job_lib.JobLibCodeGen.queue_job(job_id, job_submit_cmd)
             job_submit_cmd = mkdir_code + ' && ' + code
-
-            if spot_dag is not None:
                 # Add the spot job to spot queue table.
                 spot_codegen = spot_lib.SpotCodeGen()
                 spot_code = spot_codegen.set_pending(job_id, spot_dag)
