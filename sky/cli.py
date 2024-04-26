@@ -1789,7 +1789,7 @@ def status(all: bool, refresh: bool, ip: bool, show_spot_jobs: bool,
                     plural = 's' if len(cluster_records) > 1 else ''
                     cluster_num = (str(len(cluster_records))
                                    if len(clusters) > 0 else 'No')
-                    raise ValueError(
+                    raise ValueError()
                         _STATUS_IP_CLUSTER_NUM_ERROR_MESSAGE.format(
                             cluster_num=cluster_num,
                             plural=plural,
@@ -2196,8 +2196,7 @@ def cancel(cluster: str, all: bool, jobs: List[int], yes: bool):  # pylint: disa
     except ValueError as e:
         raise click.UsageError(str(e))
     except exceptions.ClusterNotUpError as e:
-        click.echo(str(e))
-        sys.exit(1)
+        raise click.UsageError(str(e))
 
 
 @cli.command(cls=_DocumentedCodeCommand)
@@ -3326,8 +3325,7 @@ def show_gpus(
                     quantity = int(accelerator_split[1])
                     if quantity <= 0:
                         raise ValueError(
-                            'Quantity cannot be non-positive integer.')
-                except ValueError as invalid_quantity:
+                        raise ValueError('Quantity must be a positive integer.')
                     raise click.UsageError(
                         f'Invalid accelerator quantity {accelerator_split[1]}. '
                         'Expected a positive integer.') from invalid_quantity

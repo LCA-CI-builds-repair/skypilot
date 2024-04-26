@@ -6,11 +6,14 @@
 #
 # Terminate failed clusters after test finishes
 # > pytest tests/test_smoke.py --terminate-on-failure
-#
+# Command to run smoke tests and terminate on failure.
+
 # Re-run last failed tests
 # > pytest --lf
-#
+# Command to re-run the last failed tests.
+
 # Run one of the smoke tests
+# Add the specific command to run one of the smoke tests.
 # > pytest tests/test_smoke.py::test_minimal
 #
 # Only run managed spot tests

@@ -150,8 +150,8 @@ class IBMVPCNodeProvider(NodeProvider):
                     head_node_config = {}
                     head_node_type = config.get("head_node_type")
                     if head_node_type:
-                        head_config = config["available_node_types"][head_node_type]
-                        head_node_config.update(head_config["node_config"])
+                        head_config = config["available_node_types"].get(head_node_type, {})
+                        head_node_config.update(head_config.get("node_config", {}))
                     launch_hash = hash_launch_conf(head_node_config, config["auth"])
 
                     head_tags = {

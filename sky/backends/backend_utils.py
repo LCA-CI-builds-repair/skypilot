@@ -412,6 +412,7 @@ class SSHConfigHelper(object):
                               proxy_command: Optional[str], port: int,
                               docker_proxy_command: Optional[str]):
         if proxy_command is not None:
+            # Add the actions to be performed when proxy_command is not None.
             # Already checked in resources
             assert docker_proxy_command is None, (
                 'Cannot specify both proxy_command and docker_proxy_command.')

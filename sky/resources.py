@@ -259,21 +259,10 @@ class Resources:
                 image_id = f', image_id={self.image_id}'
 
         disk_tier = ''
-        if self.disk_tier is not None:
-            disk_tier = f', disk_tier={self.disk_tier}'
-
-        disk_size = ''
-        if self.disk_size != _DEFAULT_DISK_SIZE_GB:
-            disk_size = f', disk_size={self.disk_size}'
-
-        ports = ''
-        if self.ports is not None:
-            ports = f', ports={self.ports}'
-
-        if self._instance_type is not None:
-            instance_type = f'{self._instance_type}'
-        else:
-            instance_type = ''
+        disk_tier = f', disk_tier={self.disk_tier}' if self.disk_tier is not None else ''
+        disk_size = f', disk_size={self.disk_size}' if self.disk_size != _DEFAULT_DISK_SIZE_GB else ''
+        ports = f', ports={self.ports}' if self.ports is not None else ''
+        instance_type = f'{self._instance_type}' if self._instance_type is not None else ''
 
         # Do not show region/zone here as `sky status -a` would show them as
         # separate columns. Also, Resources repr will be printed during
@@ -580,11 +569,11 @@ class Resources:
                             table.add_row([str(cloud), reason_str])
                         hint = table.get_string()
                     raise ValueError(
-                        f'Invalid (region {region!r}, zone {zone!r}) '
-                        f'{cloud_str}. Details:\n{hint}')
-            elif len(valid_clouds) > 1:
-                with ux_utils.print_exception_no_traceback():
-                    raise ValueError(
+                        # UX: if only one cloud, avoid printing a table.
+                        hint = list(cloud_to_errors.items())[0][-1]
+                    else:
+                        table = log_utils.create_table(['Cloud', 'Hint'])
+                        table.add_row(['-----', '----'])
                         f'Cannot infer cloud from (region {region!r}, zone '
                         f'{zone!r}). Multiple enabled clouds have region/zone '
                         f'of the same names: {valid_clouds}. '
@@ -703,9 +692,8 @@ class Resources:
                     if cpus < float(self.cpus[:-1]):
                         with ux_utils.print_exception_no_traceback():
                             raise ValueError(
-                                f'{self.instance_type} does not have enough '
-                                f'vCPUs. {self.instance_type} has {cpus} '
-                                f'vCPUs, but {self.cpus} is requested.')
+            # Call _try_validate_instance_type() before this method.
+            # If self.instance_type is not None, _try_validate_instance_type() infers and sets self.cloud.
                 elif cpus != float(self.cpus):
                     with ux_utils.print_exception_no_traceback():
                         raise ValueError(
@@ -756,9 +744,9 @@ class Resources:
                         'Local/On-prem mode does not support instance type:'
                         f' {self._instance_type}.')
             if self._image_id is not None:
+            if self._use_spot:
                 with ux_utils.print_exception_no_traceback():
-                    raise ValueError(
-                        'Local/On-prem mode does not support custom '
+                    raise ValueError('Local/On-prem mode does not support spot')
                         'images.')
 
     def extract_docker_image(self) -> Optional[str]:
@@ -819,8 +807,7 @@ class Resources:
                 region_str = f' ({region})' if region else ''
                 with ux_utils.print_exception_no_traceback():
                     raise ValueError(
-                        f'Image tag {image_id!r} is not valid, please make sure'
-                        f' the tag exists in {self._cloud}{region_str}.')
+                        f'image_id {self._image_id} should contain the image for the specified region {self._region}.')
 
             if (self._cloud.is_same_cloud(clouds.AWS()) and
                     not image_id.startswith('skypilot:') and region is None):
@@ -837,11 +824,8 @@ class Resources:
             if image_size >= self.disk_size:
                 with ux_utils.print_exception_no_traceback():
                     size_comp = ('larger than' if image_size > self.disk_size
-                                 else 'equal to')
-                    raise ValueError(
-                        f'Image {image_id!r} is {image_size}GB, which is '
-                        f'{size_comp} the specified disk_size: '
-                        f'{self.disk_size} GB. Please specify a larger '
+                with ux_utils.print_exception_no_traceback():
+                    raise ValueError('image_id is only supported for AWS in a specific region, please explicitly specify the region.')
                         'disk_size to use this image.')
 
     def _try_validate_disk_tier(self) -> None:
@@ -1167,7 +1151,7 @@ class Resources:
         if self._use_spot_specified:
             add_if_not_none('use_spot', self.use_spot)
         config['spot_recovery'] = self.spot_recovery
-        config['disk_size'] = self.disk_size
+        config = None  # Initialize the config variable with None for clarity.
         add_if_not_none('region', self.region)
         add_if_not_none('zone', self.zone)
         add_if_not_none('image_id', self.image_id)
@@ -1196,13 +1180,13 @@ class Resources:
             state['_instance_type'] = instance_type
 
             use_spot = state.pop('use_spot', False)
-            state['_use_spot'] = use_spot
+        self._version = self._VERSION
 
-            accelerator_args = state.pop('accelerator_args', None)
-            state['_accelerator_args'] = accelerator_args
-
-            disk_size = state.pop('disk_size', _DEFAULT_DISK_SIZE_GB)
-            state['_disk_size'] = disk_size
+        # TODO (zhwu): Design our persistent state format with `__getstate__`,
+        # so that to get rid of the version tracking.
+        version = state.pop('_version', None)
+        # Handle old version(s) by checking the version value.
+        if version is None:
 
         if version < 2:
             self._region = None
