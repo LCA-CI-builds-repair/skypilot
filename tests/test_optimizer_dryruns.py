@@ -284,7 +284,7 @@ def test_instance_type_from_cpu_memory(monkeypatch, capfd):
     _test_resources_launch(monkeypatch,
                            cpus='16+',
                            memory='32+',
-                           accelerators='T4')
+                           accelerators='T4'))
     stdout, _ = capfd.readouterr()
     # Choose cheapest T4 instance type that satisfies the requirement
     assert 'n1-standard-16' in stdout  # GCP, 16 vCPUs, 60 GB memory, 1 T4 GPU
