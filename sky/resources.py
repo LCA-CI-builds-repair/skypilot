@@ -153,8 +153,7 @@ class Resources:
                 with ux_utils.print_exception_no_traceback():
                     raise ValueError(
                         f"OS disk size must be an integer. Got: {disk_size}."
-                    )
-            self._disk_size = int(disk_size)
+                    self._disk_size = int(disk_size)
         else:
             self._disk_size = _DEFAULT_DISK_SIZE_GB
 
