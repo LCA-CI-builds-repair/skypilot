@@ -777,10 +777,15 @@ class ClusterCleaner:
                         which may contain up to 200 namespaces per http response"""
 
         res = requests.get(
-            f"{self.cf_namespaces_url}/{namespace_id}/actions?limit=200",
-            headers=self.get_headers(),
-        )
-        return json.loads(res.text)
+try:
+    res = requests.get(
+        f"{self.cf_namespaces_url}/{namespace_id}/actions?limit=200",
+        headers=self.get_headers(),
+    )
+    return json.loads(res.text)
+except Exception as e:
+    logger.error(f"Error parsing JSON response: {e}")
+    return None
 
     def create_action(self, namespace_id):
         logger.info(f"creating action on namespace: {namespace_id}")

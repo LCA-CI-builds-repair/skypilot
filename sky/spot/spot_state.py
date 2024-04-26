@@ -189,13 +189,13 @@ class SpotStatus(enum.Enum):
     # resources unavailability. This exception includes the following cases:
     # 1. The optimizer cannot find a feasible solution.
     # 2. Precheck errors: invalid cluster name, failure in getting cloud user
-    #    identity, or unsupported feature.
+    # FAILED_PRECHECKS: The job failed due to pre-checks, such as authentication failure,
+    # identity issues, or unsupported features.
     FAILED_PRECHECKS = 'FAILED_PRECHECKS'
-    # FAILED_NO_RESOURCE: The job is finished with failure because there is no
-    # resource available in the cloud provider(s) to launch the spot cluster.
+    # FAILED_NO_RESOURCE: The job failed because there were no available resources
+    # in the cloud provider(s) to launch the spot cluster.
     FAILED_NO_RESOURCE = 'FAILED_NO_RESOURCE'
-    # FAILED_CONTROLLER: The job is finished with failure because of unexpected
-    # error in the controller process.
+    # FAILED_CONTROLLER: The job failed due to an unexpected error in the controller process.
     FAILED_CONTROLLER = 'FAILED_CONTROLLER'
 
     def is_terminal(self) -> bool:
@@ -393,7 +393,7 @@ def set_failed(
         failure_reason: The failure reason.
         end_time: The end time. If None, the current time will be used.
     """
-    assert failure_type.is_failed(), failure_type
+    assert failure_type.is_failed(), f"Invalid failure type: {failure_type}"
     end_time = time.time() if end_time is None else end_time
 
     fields_to_set = {

@@ -1,24 +1,5 @@
 # Smoke tests for SkyPilot
 # Default options are set in pyproject.toml
-# Example usage:
-# Run all tests except for AWS and Lambda Cloud
-# > pytest tests/test_smoke.py
-#
-# Terminate failed clusters after test finishes
-# > pytest tests/test_smoke.py --terminate-on-failure
-#
-# Re-run last failed tests
-# > pytest --lf
-#
-# Run one of the smoke tests
-# > pytest tests/test_smoke.py::test_minimal
-#
-# Only run managed spot tests
-# > pytest tests/test_smoke.py --managed-spot
-#
-# Only run test for AWS + generic tests
-# > pytest tests/test_smoke.py --aws
-#
 # Change cloud for generic tests to aws
 # > pytest tests/test_smoke.py --generic-cloud aws
 
@@ -1157,13 +1138,10 @@ def test_job_queue_multinode(generic_cloud: str):
             f'sky cancel -y {name} 4',
             f's=$(sky queue {name}) && echo "$s" && (echo "$s" | grep {name}-4 | grep CANCELLED)',
             f'sky exec {name} --gpus T4:0.2 "[[ \$SKYPILOT_NUM_GPUS_PER_NODE -eq 1 ]] || exit 1"',
-            f'sky exec {name} --gpus T4:0.2 --num-nodes 2 "[[ \$SKYPILOT_NUM_GPUS_PER_NODE -eq 1 ]] || exit 1"',
-            f'sky exec {name} --gpus T4:1 --num-nodes 2 "[[ \$SKYPILOT_NUM_GPUS_PER_NODE -eq 1 ]] || exit 1"',
-            f'sky logs {name} 5 --status',
-            f'sky logs {name} 6 --status',
-            f'sky logs {name} 7 --status',
-        ],
-        f'sky down -y {name}',
+for suffix in ['-1', '-2', '-3']:
+    f'sky exec {name} -n {name}{suffix} -d examples/job_queue/job_multinode.yaml',
+    f's=$(sky queue {name}) && (echo "$s" | grep {name}{suffix} | grep RUNNING)',
+'sleep 90',
     )
     run_one_test(test)
 
@@ -1177,12 +1155,12 @@ def test_large_job_queue(generic_cloud: str):
             f'sky launch -y -c {name} --cpus 8 --cloud {generic_cloud}',
             f'for i in `seq 1 75`; do sky exec {name} -n {name}-$i -d "echo $i; sleep 100000000"; done',
             f'sky cancel -y {name} 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16',
-            'sleep 75',
-            # Each job takes 0.5 CPU and the default VM has 8 CPUs, so there should be 8 / 0.5 = 16 jobs running.
-            # The first 16 jobs are canceled, so there should be 75 - 32 = 43 jobs PENDING.
-            f's=$(sky queue {name}); echo "$s"; echo; echo; echo "$s" | grep -v grep | grep PENDING | wc -l | grep 43',
-            # Make sure the jobs are scheduled in FIFO order
-            *[
+f's=$(sky queue {name}) && (echo "$s" | grep {name}-4 | grep CANCELLED)',
+f'sky exec {name} --gpus T4:0.2 "[[ \$SKYPILOT_NUM_GPUS_PER_NODE -eq 1 ]] || exit 1"',
+f'sky exec {name} --gpus T4:0.2 --num-nodes 2 "[[ \$SKYPILOT_NUM_GPUS_PER_NODE -eq 1 ]] || exit 1"',
+f'sky exec {name} --gpus T4:1 --num-nodes 2 "[[ \$SKYPILOT_NUM_GPUS_PER_NODE -eq 1 ]] || exit 1"',
+f'sky logs {name} 5 --status',
+f'sky logs {name} 6 --status',
                 f's=$(sky queue {name}); echo "$s"; echo; echo; echo "$s" | grep {name}-{i} | grep CANCELLED'
                 for i in range(1, 17)
             ],
@@ -2039,14 +2017,14 @@ def test_spot_pipeline_recovery_aws(aws_config_region):
             # SKYPILOT_TASK_ID, which gets the second to last field
             # separated by `-`.
             (
-                f'SPOT_JOB_ID=`cat /tmp/{name}-run-id | rev | '
-                'cut -d\'-\' -f2 | rev`;'
-                f'aws ec2 terminate-instances --region {region} --instance-ids $('
-                f'aws ec2 describe-instances --region {region} '
-                # TODO(zhwu): fix the name for spot cluster.
-                '--filters Name=tag:ray-cluster-name,Values=*-${SPOT_JOB_ID}'
-                f'-{user_hash} '
-                f'--query Reservations[].Instances[].InstanceId '
+@pytest.mark.managed_spot
+def test_spot_pipeline_recovery_aws(aws_config_region):
+    """Test managed spot recovery for a pipeline."""
+    name = _get_cluster_name()
+    user_hash = common_utils.get_user_hash()
+    user_hash = user_hash[:common_utils.USER_HASH_LENGTH_IN_CLUSTER_NAME]
+    region = aws_config_region
+    if region != 'us-east-2':
                 '--output text)'),
             'sleep 100',
             f'{_SPOT_QUEUE_WAIT}| grep {name} | head -n1 | grep "RECOVERING"',

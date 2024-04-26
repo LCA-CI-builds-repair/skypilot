@@ -485,8 +485,7 @@ class AWSNodeProvider(NodeProvider):
                         # NOTE(maximsmol): This is needed for mocking
                         # boto3 for tests. This is likely a bug in moto
                         # but AWS docs don't seem to say.
-                        # You can patch moto/ec2/responses/instances.py
-                        # to fix this (add <stateReason> to EC2_RUN_INSTANCES)
+# Comment removed: You can patch moto/ec2/responses/instances.py to fix this (add <stateReason> to EC2_RUN_INSTANCES)
 
                         # The correct value is technically
                         # {"code": "0", "Message": "pending"}

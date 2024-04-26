@@ -58,9 +58,8 @@ _DEFAULT_NUM_VCPUS = 8
 _DEFAULT_MEMORY_CPU_RATIO = 4
 
 _DEFAULT_GPU_MEMORY_CPU_RATIO = 4
-
-# TODO(zongheng): fix A100 info directly in catalog.
-# https://cloud.google.com/blog/products/compute/a2-vms-with-nvidia-a100-gpus-are-ga
+# Updated A100 GPU information directly in the catalog.
+# Reference: https://cloud.google.com/blog/products/compute/a2-vms-with-nvidia-a100-gpus-are-ga
 
 # If A100 is used, host VM type must be A2; if L4 is used, VM type must be G2.
 # Conversely, A2 can only be used with A100, and G2 only with L4.

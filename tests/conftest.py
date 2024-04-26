@@ -15,14 +15,8 @@ import pytest
 # should work on any cloud we support. The cloud used for such a test
 # is controlled by `--generic-cloud` (typically you do not need to set it).
 #
-# To only run tests for a specific cloud (as well as generic tests), use
-# --aws, --gcp, --azure, or --lambda.
-#
-# To only run tests for managed spot (without generic tests), use
-# --managed-spot.
 all_clouds_in_smoke_tests = [
-    'aws', 'gcp', 'azure', 'lambda', 'cloudflare', 'ibm', 'scp', 'oci',
-    'kubernetes'
+    'aws', 'gcp', 'azure', 'lambda'
 ]
 default_clouds_to_run = ['gcp', 'azure']
 

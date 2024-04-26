@@ -162,6 +162,7 @@ class IBMVPCNodeProvider(NodeProvider):
                         TAG_RAY_USER_NODE_TYPE: config["head_node_type"],
                         TAG_RAY_RUNTIME_CONFIG: runtime_hash,
                         TAG_RAY_LAUNCH_CONFIG: launch_hash,
+                    }
                         TAG_RAY_FILE_MOUNTS_CONTENTS: mounts_contents_hash,
                     }
 
@@ -199,11 +200,10 @@ class IBMVPCNodeProvider(NodeProvider):
         self.nodes_tags = {}
         # Cache of starting/running/pending(below PENDING_TIMEOUT)nodes.
         # in the format{node_id:node_data}.
-        self.cached_nodes = {}
-        # cache of the nodes created, but not yet tagged and running.
-        # in the format {node_id:time_of_creation}.
+        # Cache of the nodes created but not yet tagged and running.
+        # Format: {node_id: time_of_creation}
         self.pending_nodes = {}
-        # ids of nodes scheduled for deletion.
+        # List of IDs of nodes scheduled for deletion.
         self.deleted_nodes = []
 
         self._load_tags()
@@ -254,7 +254,7 @@ class IBMVPCNodeProvider(NodeProvider):
             else:
                 result = self.ibm_vpc_client.list_instances().get_result()
             instances = result["instances"]
-            # using pagination to acquire instances from all result pages:
+            # Using pagination to acquire instances from all result pages:
             # https://cloud.ibm.com/apidocs/vpc/latest?code=python#api-pagination
             while result.get("next"):
                 start = result["next"]["href"].split("start=")[1]

@@ -103,17 +103,18 @@ _TEARDOWN_FAILURE_MESSAGE = (
     '{stderr}')
 
 _TEARDOWN_PURGE_WARNING = (
+warning_message = (
     f'{colorama.Fore.YELLOW}'
-    'WARNING: Received non-zero exit code from {reason}. '
+    f'WARNING: Received non-zero exit code from {reason}. '
     'Make sure resources are manually deleted.\n'
-    'Details: {details}'
+    f'Details: {details}'
     f'{colorama.Style.RESET_ALL}')
 
 _RSYNC_NOT_FOUND_MESSAGE = (
-    '`rsync` command is not found in the specified image. '
+    'The `rsync` command is not found in the specified image. '
     'Please use an image with rsync installed.')
 
-_TPU_NOT_FOUND_ERROR = 'ERROR: (gcloud.compute.tpus.delete) NOT_FOUND'
+_TPU_NOT_FOUND_ERROR = 'ERROR: The specified TPU was not found.'
 
 _CTRL_C_TIP_MESSAGE = ('INFO: Tip: use Ctrl-C to exit log streaming '
                        '(task will not be killed).')

@@ -886,7 +886,7 @@ def spot_cancel(name: Optional[str] = None,
     else:
         assert name is not None, (job_ids, name, all)
         code = spot.SpotCodeGen.cancel_job_by_name(name)
-    # The stderr is redirected to stdout
+    # Redirecting stderr to stdout after canceling jobs based on conditions
     returncode, stdout, _ = backend.run_on_head(handle,
                                                 code,
                                                 require_outputs=True,

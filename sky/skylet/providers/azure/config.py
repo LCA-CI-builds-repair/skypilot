@@ -48,8 +48,6 @@ def _configure_resource_group(config):
     if subscription_id is None:
         subscription_id = get_cli_profile().get_subscription_id()
     # Increase the timeout to fix the Azure get-access-token (used by ray azure
-    # node_provider) timeout issue.
-    # Tracked in https://github.com/Azure/azure-cli/issues/20404#issuecomment-1249575110
     resource_client = ResourceManagementClient(
         AzureCliCredential(process_timeout=30), subscription_id
     )

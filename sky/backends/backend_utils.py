@@ -2128,9 +2128,9 @@ def _update_cluster_status_no_lock(
                 f'normally should not happen. {colorama.Fore.RED}Please check '
                 'the cloud console and fix any possible resources leakage '
                 '(e.g., if there are any stopped nodes and they do not have '
-                'data or are unhealthy, terminate them).'
+                'data or are unhealthy, terminate them).\n'
                 f'{colorama.Style.RESET_ALL}')
-    assert len(node_statuses) <= handle.launched_nodes
+    assert len(node_statuses) == handle.launched_nodes
 
     # If the node_statuses is empty, all the nodes are terminated. We can
     # safely set the cluster status to TERMINATED. This handles the edge case

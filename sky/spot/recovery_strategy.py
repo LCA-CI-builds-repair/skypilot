@@ -274,6 +274,7 @@ class StrategyExecutor:
                 unavailability.
                 2. The cluster is preempted before the job is submitted.
                 3. Any unexpected error happens during the `sky.launch`.
+
         Other exceptions may be raised depending on the backend.
         """
         # TODO(zhwu): handle the failure during `preparing sky runtime`.
