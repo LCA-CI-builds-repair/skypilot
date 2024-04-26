@@ -97,8 +97,7 @@ html_logo = '_static/SkyPilot_wide_light.svg'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs. This file should be a Windows icon file (.ico), 16x16 or 32x32 pixels.
-html_favicon = '_static/favicon.ico'
-
+html_favicon = 'path/to/correct/favicon.ico'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named 'default.css' will overwrite the builtin 'default.css'.
