@@ -557,7 +557,6 @@ class KubernetesInstanceType:
     type is the accelerator type.
 
     CPU and memory can be specified as floats. Accelerator count must be int.
-
     Examples:
         - 4CPU--16GB
         - 0.5CPU--1.5GB
