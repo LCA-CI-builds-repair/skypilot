@@ -286,9 +286,9 @@ def test_instance_type_from_cpu_memory(monkeypatch, capfd):
                            memory='32+',
                            accelerators='T4')
     stdout, _ = capfd.readouterr()
-    # Choose cheapest T4 instance type that satisfies the requirement
+    # Assert that the output contains the expected instance types
     assert 'n1-standard-16' in stdout  # GCP, 16 vCPUs, 60 GB memory, 1 T4 GPU
-    assert 'g4dn.4xlarge' in stdout  # AWS, 16 vCPUs, 64 GB memory, 1 T4 GPU
+    assert 'g4dn.4xlarge' in stdout   # AWS, 16 vCPUs, 64 GB memory, 1 T4 GPU
     assert 'Standard_NC16as_T4_v3' in stdout  # Azure, 16 vCPUs, 110 GB memory, 1 T4 GPU
 
     _test_resources_launch(monkeypatch, memory='200+', accelerators='T4')

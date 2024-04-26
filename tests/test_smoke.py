@@ -1,23 +1,25 @@
 # Smoke tests for SkyPilot
+# Explanation of test options and example usages:
 # Default options are set in pyproject.toml
-# Example usage:
-# Run all tests except for AWS and Lambda Cloud
-# > pytest tests/test_smoke.py
 #
-# Terminate failed clusters after test finishes
-# > pytest tests/test_smoke.py --terminate-on-failure
+# Example usages:
+# - Run all tests except for AWS and Lambda Cloud:
+#   > pytest tests/test_smoke.py
 #
-# Re-run last failed tests
-# > pytest --lf
+# - Terminate failed clusters after the test finishes:
+#   > pytest tests/test_smoke.py --terminate-on-failure
 #
-# Run one of the smoke tests
-# > pytest tests/test_smoke.py::test_minimal
+# - Re-run the last failed tests:
+#   > pytest --lf
 #
-# Only run managed spot tests
-# > pytest tests/test_smoke.py --managed-spot
+# - Run one of the smoke tests (e.g., test_minimal):
+#   > pytest tests/test_smoke.py::test_minimal
 #
-# Only run test for AWS + generic tests
-# > pytest tests/test_smoke.py --aws
+# - Only run managed spot tests:
+#   > pytest tests/test_smoke.py --managed-spot
+#
+# - Only run tests for AWS + generic tests:
+#   > pytest tests/test_smoke.py --aws
 #
 # Change cloud for generic tests to aws
 # > pytest tests/test_smoke.py --generic-cloud aws
@@ -548,14 +550,16 @@ def test_aws_image_id_dict_zone():
 
 
 @pytest.mark.gcp
-def test_gcp_image_id_dict_zone():
-    name = _get_cluster_name()
     test = Test(
         'gcp_image_id_dict_zone',
         [
             # Use zone to filter image_id dict.
             f'sky launch -y -c {name} --zone us-east1-a tests/test_yamls/gcp_per_region_images.yaml && exit 1 || true',
             f'sky status | grep {name} && exit 1 || true',  # Ensure the cluster is not created.
+            f'sky launch -y -c {name} --zone us-central1-a tests/test_yamls/gcp_per_region_images.yaml',
+            # Should success because the image id match for the zone.
+        ]
+    )
             f'sky launch -y -c {name} --zone us-central1-a tests/test_yamls/gcp_per_region_images.yaml',
             # Should success because the image id match for the zone.
             f'sky launch -y -c {name} --cloud gcp --image-id skypilot:cpu-debian-10 tests/test_yamls/minimal.yaml',

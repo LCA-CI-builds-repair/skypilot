@@ -2036,17 +2036,11 @@ class RetryingVmProvisioner(object):
                 head_internal_ip = internal_ip_list[0]
 
             logger.debug(f'Get head ips from ray up stdout: {head_internal_ip} '
-                         f'{head_external_ip}')
-            return (GangSchedulingStatus.CLUSTER_READY, stdout, stderr,
-                    head_internal_ip, head_external_ip)
-
         # All code below is handling num_nodes > 1.
 
-        provision_str = ('Successfully provisioned or found existing head '
-                         'instance.')
+        provision_str = 'Successfully provisioned or found existing head instance.'
         if isinstance(to_provision_cloud, clouds.Local):
             provision_str = 'Successfully connected to head node.'
-
         logger.info(f'{style.BRIGHT}{provision_str} '
                     f'Waiting for workers.{style.RESET_ALL}')
 

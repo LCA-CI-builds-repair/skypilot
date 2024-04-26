@@ -115,6 +115,7 @@ class AutostopCodeGen:
         return cls._build(code)
 
     @classmethod
+    @classmethod
     def is_autostopping(cls) -> str:
         code = ['print(autostop_lib.get_is_autostopping_payload())']
         return cls._build(code)
