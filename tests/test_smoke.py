@@ -20,7 +20,7 @@
 # > pytest tests/test_smoke.py --aws
 #
 # Change cloud for generic tests to aws
-# > pytest tests/test_smoke.py --generic-cloud aws
+# > pytest tests/test_smoke.py --aws
 
 import inspect
 import os

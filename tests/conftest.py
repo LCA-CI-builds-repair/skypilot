@@ -133,14 +133,17 @@ def pytest_collection_modifyitems(config, items):
             item.add_marker(skip_marks['managed_spot'])
 
     # Check if tests need to be run serially for Kubernetes and Lambda Cloud
-    # We run Lambda Cloud tests serially because Lambda Cloud rate limits its
-    # launch API to one launch every 10 seconds.
-    # We run Kubernetes tests serially because the Kubernetes cluster may have
-    # limited resources (e.g., just 8 cpus).
-    serial_mark = pytest.mark.xdist_group(
-        name=f'serial_{generic_cloud_keyword}')
-    # Handle generic tests
-    if generic_cloud in ['lambda', 'kubernetes']:
+import pytest
+
+# We run Lambda Cloud tests serially because Lambda Cloud rate limits its
+# launch API to one launch every 10 seconds.
+# We run Kubernetes tests serially because the Kubernetes cluster may have
+# limited resources (e.g., just 8 cpus).
+serial_mark = pytest.mark.xdist_group(
+    name=f'serial_{generic_cloud_keyword}'
+)
+# Handle generic tests
+if generic_cloud_keyword in ['lambda', 'kubernetes']:
         for item in items:
             if (_is_generic_test(item) and
                     f'no_{generic_cloud_keyword}' not in item.keywords):
