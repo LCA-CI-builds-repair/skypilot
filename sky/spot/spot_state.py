@@ -393,7 +393,7 @@ def set_failed(
         failure_reason: The failure reason.
         end_time: The end time. If None, the current time will be used.
     """
-    assert failure_type.is_failed(), failure_type
+    assert failure_type in SpotStatus.FAILED_*, failure_type
     end_time = time.time() if end_time is None else end_time
 
     fields_to_set = {

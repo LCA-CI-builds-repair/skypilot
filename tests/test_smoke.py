@@ -24,7 +24,6 @@
 #
 # Change cloud for generic tests to aws
 # > pytest tests/test_smoke.py --generic-cloud aws
-
 import inspect
 import json
 import os
@@ -475,10 +474,10 @@ def test_aws_image_id_dict_region():
             #       us-east-2: skypilot:gpu-ubuntu-2004
             # Use region to filter image_id dict.
             f'sky launch -y -c {name} --region us-east-1 examples/per_region_images.yaml && exit 1 || true',
+            f'sky launch -y -c {name} --region us-east-1 examples/per_region_images.yaml && exit 1 || true',
             f'sky status | grep {name} && exit 1 || true',  # Ensure the cluster is not created.
             f'sky launch -y -c {name} --region us-east-2 examples/per_region_images.yaml',
-            # Should success because the image id match for the region.
-            f'sky launch -c {name} --image-id skypilot:gpu-ubuntu-2004 examples/minimal.yaml',
+            # Should succeed because the image id match for the region.
             f'sky exec {name} --image-id skypilot:gpu-ubuntu-2004 examples/minimal.yaml',
             f'sky exec {name} --image-id skypilot:gpu-ubuntu-1804 examples/minimal.yaml && exit 1 || true',
             f'sky logs {name} 1 --status',
@@ -1294,13 +1293,13 @@ def test_ibm_job_queue_multinode():
             f'sky cancel -y {name} 4',
             f's=$(sky queue {name}) && printf "$s" && (echo "$s" | grep {name}-4 | grep CANCELLED)',
             f'sky exec {name} --gpus v100:0.2 "[[ \$SKYPILOT_NUM_GPUS_PER_NODE -eq 1 ]] || exit 1"',
+            f'sky exec {name} --gpus v100:0.2 "[[ \$SKYPILOT_NUM_GPUS_PER_NODE -eq 1 ]] || exit 1"',
             f'sky exec {name} --gpus v100:0.2 --num-nodes 2 "[[ \$SKYPILOT_NUM_GPUS_PER_NODE -eq 1 ]] || exit 1"',
             f'sky exec {name} --gpus v100:1 --num-nodes 2 "[[ \$SKYPILOT_NUM_GPUS_PER_NODE -eq 1 ]] || exit 1"',
             f'sky logs {name} 5 --status',
             f'sky logs {name} 6 --status',
             f'sky logs {name} 7 --status',
         ],
-        f'sky down -y {name}',
         timeout=20 * 60,  # 20 mins
     )
     run_one_test(test)

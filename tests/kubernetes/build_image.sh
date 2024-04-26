@@ -68,7 +68,6 @@ else
   echo "Unsupported architecture: $(uname -m)"
   exit 1
 fi
-
 echo "Tagging image."
 if [[ $gpu ]]; then
   docker tag $TAG skypilot:latest-gpu

@@ -900,8 +900,8 @@ class IBMVPCNodeProvider(NodeProvider):
         try:
             if self.cache_stopped_nodes:
                 cli_logger.print(
-                    f"Stopping instance {node_id}. To terminate instead, "
-                    "set `cache_stopped_nodes: False` "
+                    f"Stopping instance {node_id}. To terminate instead, \n"
+                    "set `cache_stopped_nodes: False` \n"
                     "under `provider` in the cluster configuration"
                 )
 
@@ -947,9 +947,8 @@ class IBMVPCNodeProvider(NodeProvider):
 
             tries -= 1
             time.sleep(sleep_interval)
-        logger.Error("\nFailed to delete instance within expected time frame\n")
+        logger.error("\nFailed to delete instance within expected time frame\n")
         return False
-
     @staticmethod
     def bootstrap_config(cluster_config) -> Dict[str, Any]:
         return cluster_config
