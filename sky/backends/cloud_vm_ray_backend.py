@@ -103,19 +103,19 @@ _TEARDOWN_FAILURE_MESSAGE = (
     '{stderr}')
 
 _TEARDOWN_PURGE_WARNING = (
-    f'{colorama.Fore.YELLOW}'
-    'WARNING: Received non-zero exit code from {reason}. '
-    'Make sure resources are manually deleted.\n'
-    'Details: {details}'
+    f'{colorama.Fore.YELLOW}',
+    'WARNING: Received non-zero exit code from {reason}. ',
+    'Make sure resources are manually deleted.\n',
+    'Details: {details}',
     f'{colorama.Style.RESET_ALL}')
 
 _RSYNC_NOT_FOUND_MESSAGE = (
-    '`rsync` command is not found in the specified image. '
+    '`rsync` command is not found in the specified image. ',
     'Please use an image with rsync installed.')
 
 _TPU_NOT_FOUND_ERROR = 'ERROR: (gcloud.compute.tpus.delete) NOT_FOUND'
 
-_CTRL_C_TIP_MESSAGE = ('INFO: Tip: use Ctrl-C to exit log streaming '
+_CTRL_C_TIP_MESSAGE = ('INFO: Tip: use Ctrl-C to exit log streaming ',
                        '(task will not be killed).')
 
 _MAX_RAY_UP_RETRY = 5
@@ -700,7 +700,7 @@ class RetryingVmProvisioner(object):
                 code = error['code']
                 message = error['message']
                 logger.warning(f'Got return code {code} in {zone.name} '
-                               f'{style.DIM}(message: {message})'
+                               f'{style.DIM}(message: {message})',
                                f'{style.RESET_ALL}')
                 if code == 'QUOTA_EXCEEDED':
                     if '\'GPUS_ALL_REGIONS\' exceeded' in message:
@@ -736,7 +736,7 @@ class RetryingVmProvisioner(object):
                     # Error code 3 means TPU is preempted during creation.
                     # Example:
                     # {'code': 3, 'message': 'Cloud TPU received a bad request. update is not supported while in state PREEMPTED [EID: 0x73013519f5b7feb2]'} # pylint: disable=line-too-long
-                    # Error code 8 means TPU resources is out of
+                    # Error code 8 means TPU resources is out of,
                     # capacity. Example:
                     # {'code': 8, 'message': 'There is no more capacity in the zone "europe-west4-a"; you can try in another zone where Cloud TPU Nodes are offered (see https://cloud.google.com/tpu/docs/regions) [EID: 0x1bc8f9d790be9142]'} # pylint: disable=line-too-long
                     # Error code 9 means TPU resources is insufficient reserved
@@ -1632,8 +1632,8 @@ class RetryingVmProvisioner(object):
                 continue
                 # NOTE: The code below in the loop should not be reachable
                 # with the new provisioner.
-
-            tpu_name = config_dict.get('tpu_name')
+                
+                tpu_name = config_dict.get('tpu_name')
             if tpu_name is not None:
                 logger.info(
                     f'{colorama.Style.BRIGHT}Provisioning TPU on '

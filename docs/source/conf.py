@@ -68,8 +68,6 @@ html_theme_options = {
     'use_edit_page_button': True,
     'path_to_docs': 'docs/source',
 }
-
-# The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
 html_title = 'SkyPilot documentation'
 

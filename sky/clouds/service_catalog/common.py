@@ -316,8 +316,6 @@ def _filter_with_cpus(df: pd.DataFrame, cpus: Optional[str]) -> pd.DataFrame:
         with ux_utils.print_exception_no_traceback():
             raise ValueError(f'The "cpus" field should be either a number or '
                              f'a string "<number>+". Found: {cpus!r}') from None
-
-    if cpus.endswith('+'):
         return df[df['vCPUs'] >= num_cpus]
     else:
         return df[df['vCPUs'] == num_cpus]
@@ -329,6 +327,7 @@ def _filter_with_mem(df: pd.DataFrame,
         return df
 
     # The following code is partially redundant with the code in
+    # The following code is partially redundant with the code in
     # resources.py::_set_memory() but we add it here for safety.
     if memory_gb_or_ratio.endswith(('+', 'x')):
         memory_gb_str = memory_gb_or_ratio[:-1]
@@ -339,8 +338,7 @@ def _filter_with_mem(df: pd.DataFrame,
     except ValueError:
         with ux_utils.print_exception_no_traceback():
             raise ValueError(f'The "memory" field should be either a number or '
-                             'a string "<number>+" or "<number>x". Found: '
-                             f'{memory_gb_or_ratio!r}') from None
+                             f'a string "<number>+". Found: {memory_gb_or_ratio!r}') from None
     if memory_gb_or_ratio.endswith('+'):
         return df[df['MemoryGiB'] >= memory]
     elif memory_gb_or_ratio.endswith('x'):

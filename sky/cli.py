@@ -2033,6 +2033,8 @@ def queue(clusters: List[str], skip_finished: bool, all_users: bool):
 @click.option(
     '--follow/--no-follow',
     is_flag=True,
+    default=False,
+    help='Specify whether to follow the log output in real-time.')
     default=True,
     help=('Follow the logs of a job. '
           'If --no-follow is specified, print the log so far and exit. '

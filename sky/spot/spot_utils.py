@@ -724,7 +724,7 @@ class SpotCodeGen:
         return cls._build(code)
 
     @classmethod
-    def set_pending(cls, job_id: int, spot_dag: 'dag_lib.Dag') -> str:
+    def set_pending(self, job_id: int, spot_dag: 'dag_lib.Dag') -> str:
         dag_name = spot_dag.name
         # Add the spot job to spot queue table.
         code = [
@@ -741,9 +741,9 @@ class SpotCodeGen:
         return cls._build(code)
 
     @classmethod
-    def _build(cls, code: List[str]) -> str:
-        code = cls._PREFIX + code
-        generated_code = '; '.join(code)
+    def _build(self, script_code: List[str]) -> str:
+        script_code = self._PREFIX + script_code
+        generated_code = '; '.join(script_code)
         return f'python3 -u -c {shlex.quote(generated_code)}'
 
 
@@ -752,8 +752,6 @@ def dump_job_table_cache(job_table: str):
     cache_file = pathlib.Path(_SPOT_STATUS_CACHE).expanduser()
     with cache_file.open('w') as f:
         json.dump((time.time(), job_table), f)
-
-
 def load_job_table_cache() -> Optional[Tuple[float, str]]:
     """Load job table cache from file.
 

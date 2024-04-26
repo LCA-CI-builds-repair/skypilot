@@ -917,7 +917,7 @@ class JobLibCodeGen:
         return cls._build(code)
 
     @classmethod
-    def _build(cls, code: List[str]) -> str:
-        code = cls._PREFIX + code
-        code = ';'.join(code)
-        return f'python3 -u -c {shlex.quote(code)}'
+    def _build(self, script_code: List[str]) -> str:
+        script_code = self._PREFIX + script_code
+        script_code = ';'.join(script_code)
+        return f'python3 -u -c {shlex.quote(script_code)}'

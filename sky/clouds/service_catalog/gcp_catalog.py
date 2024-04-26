@@ -192,6 +192,7 @@ def get_quota_code(accelerator: str, use_spot: bool) -> Optional[str]:
     """
 
     if use_spot:
+        # Add relevant code logic here to complete the conditional statement.
         spot_header = 'SpotInstanceCode'
     else:
         spot_header = 'OnDemandInstanceCode'
