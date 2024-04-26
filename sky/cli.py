@@ -2196,8 +2196,7 @@ def cancel(cluster: str, all: bool, jobs: List[int], yes: bool):  # pylint: disa
     except ValueError as e:
         raise click.UsageError(str(e))
     except exceptions.ClusterNotUpError as e:
-        click.echo(str(e))
-        sys.exit(1)
+        click.echo(str(e), nl=False)
 
 
 @cli.command(cls=_DocumentedCodeCommand)

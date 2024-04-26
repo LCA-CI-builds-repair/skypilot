@@ -841,7 +841,8 @@ class Resources:
                     raise ValueError(
                         f'Image {image_id!r} is {image_size}GB, which is '
                         f'{size_comp} the specified disk_size: '
-                        f'{self.disk_size} GB. Please specify a larger '
+                        f'{self.disk_size} GB. Please specify a larger size.'
+                    )
                         'disk_size to use this image.')
 
     def _try_validate_disk_tier(self) -> None:
