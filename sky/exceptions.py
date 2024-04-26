@@ -110,22 +110,8 @@ class ClusterNotUpError(Exception):
 
 
 class ClusterSetUpError(Exception):
-    """Raised when a cluster has setup error."""
-    pass
-
-
-class NotSupportedError(Exception):
-    """Raised when a feature is not supported."""
-    pass
-
-
-class StorageError(Exception):
-    pass
-
-
 class StorageSpecError(ValueError):
-    # Errors raised due to invalid specification of the Storage object
-    pass
+    """Errors raised due to invalid specification of the Storage object."""
 
 
 class StorageInitError(StorageError):

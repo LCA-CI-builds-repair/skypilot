@@ -1,6 +1,5 @@
 setup: |
   echo failed setup
   exit 1
-
 run: |
   echo run

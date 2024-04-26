@@ -21,8 +21,7 @@ import pytest
 # To only run tests for managed spot (without generic tests), use
 # --managed-spot.
 all_clouds_in_smoke_tests = [
-    'aws', 'gcp', 'azure', 'lambda', 'cloudflare', 'ibm', 'scp', 'oci',
-    'kubernetes'
+    'aws', 'gcp', 'azure', 'lambda'
 ]
 default_clouds_to_run = ['gcp', 'azure']
 
@@ -43,16 +42,17 @@ cloud_to_pytest_keyword = {
 
 
 def pytest_addoption(parser):
+def pytest_addoption(parser):
     # tests marked as `slow` will be skipped by default, use --runslow to run
     parser.addoption('--runslow',
                      action='store_true',
                      default=False,
-                     help='run slow tests.')
+                     help='Run slow tests.')
     for cloud in all_clouds_in_smoke_tests:
         parser.addoption(f'--{cloud}',
                          action='store_true',
                          default=False,
-                         help=f'Only run {cloud.upper()} tests.')
+                         help=f'Only run tests for {cloud.upper()} cloud.')
     parser.addoption('--managed-spot',
                      action='store_true',
                      default=False,
@@ -70,7 +70,6 @@ def pytest_addoption(parser):
         type=str,
         default='gcp',
         choices=all_clouds_in_smoke_tests,
-        help='Cloud to use for generic tests. If the generic cloud is '
         'not within the clouds to be run, it will be reset to the first '
         'cloud in the list of the clouds to be run.')
 

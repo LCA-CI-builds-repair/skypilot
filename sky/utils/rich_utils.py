@@ -24,9 +24,11 @@ class _NoOpConsoleStatus:
         pass
 
     def stop(self):
+        # Add logic to stop the functionality provided by this class
         pass
 
     def start(self):
+        # Add logic to start the functionality provided by this class
         pass
 
 

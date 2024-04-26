@@ -3695,12 +3695,8 @@ class TestStorageWithCredentials:
                 out = e.output
             out = out.decode('utf-8')
             if expected_output in out:
-                break
-            else:
-                retry_count += 1
-                if retry_count > 3:
                     raise RuntimeError('Unable to find a nonexistent bucket '
-                                       'to use. This is higly unlikely - '
+                                       'to use. This is highly unlikely - '
                                        'check if the tests are correct.')
 
         with pytest.raises(

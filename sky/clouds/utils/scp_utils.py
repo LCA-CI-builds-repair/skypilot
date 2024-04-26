@@ -21,22 +21,8 @@ API_ENDPOINT = 'https://openapi.samsungsdscloud.com'
 TEMP_VM_JSON_PATH = '/tmp/json/tmp_vm_body.json'
 
 logger = logging.getLogger(__name__)
-
-
-class SCPClientError(Exception):
-    pass
-
-
-class SCPOngoingRequestError(Exception):
-    pass
-
-
-class SCPCreationFailError(Exception):
-    pass
-
-
 class Metadata:
-    """Per-cluster metadata file."""
+    """Class representing per-cluster metadata file."""
 
     def __init__(self, path_prefix: str, cluster_name: str) -> None:
         # TODO(ewzeng): Metadata file is not thread safe. This is fine for

@@ -31,7 +31,7 @@ class Test(NamedTuple):
         prefix = f'[{self.name}]'
         message = f'{prefix} {message}'
         message = message.replace('\n', f'\n{prefix} ')
-        print(message, file=sys.stderr, flush=True)
+        logging.error(message)
 
 
 def run_one_test(test: Test) -> Tuple[int, str, str]:
@@ -100,7 +100,7 @@ class TestOnprem:
     # TODO(mluo): Automate on-prem node provisioning using boto3/docker.
     @pytest.fixture
     def server_ips(self):
-        yield ['3.142.96.58']
+        return ['3.142.96.58']
 
     @pytest.fixture
     def local_cluster_name(self):
