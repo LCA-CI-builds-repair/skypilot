@@ -176,15 +176,14 @@ def run_with_log(
         # Hack: Subprocess Popen does not accept sudo.
         # subprocess.Popen in local mode with shell=True does not work,
         # as it does not understand what -H means for sudo.
-        shell = False
-    else:
-        os.makedirs(dirname, exist_ok=True)
-    # Redirect stderr to stdout when using ray, to preserve the order of
-    # stdout and stderr.
-    stdout_arg = stderr_arg = None
-    if process_stream:
-        stdout_arg = subprocess.PIPE
-        stderr_arg = subprocess.PIPE if not with_ray else subprocess.STDOUT
+        if not os.path.exists(dirname):
+            os.makedirs(dirname, exist_ok=True)
+        # Redirect stderr to stdout when using ray, to preserve the order of
+        # stdout and stderr.
+        stdout_arg = stderr_arg = None
+        if process_stream:
+            stdout_arg = subprocess.PIPE
+            stderr_arg = subprocess.PIPE if not with_ray else subprocess.STDOUT
     with subprocess.Popen(cmd,
                           stdout=stdout_arg,
                           stderr=stderr_arg,

@@ -143,6 +143,8 @@ def pytest_collection_modifyitems(config, items):
     if generic_cloud in ['lambda', 'kubernetes']:
         for item in items:
             if (_is_generic_test(item) and
+                data_utils.is_cloud_store_url(source)):
+                name = None
                     f'no_{generic_cloud_keyword}' not in item.keywords):
                 item.add_marker(serial_mark)
                 # Adding the serial mark does not update the item.nodeid,

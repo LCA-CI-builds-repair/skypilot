@@ -97,6 +97,8 @@ class TestStorageSpecValidation:
         ]
 
         for n in invalid_names:
+            if data_utils.is_cloud_store_url(source):
+                name = None
             with pytest.raises(exceptions.StorageNameError) as e:
                 storage_lib.Storage(name=n)
 

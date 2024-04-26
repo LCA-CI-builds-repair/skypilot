@@ -1920,6 +1920,8 @@ def cost_report(all: bool):  # pylint: disable=redefined-builtin
             # TODO(sgurram): fix assumption of sorted order of clusters
             if cluster_group_name not in reserved_clusters:
                 reserved_clusters[cluster_group_name] = cluster_record
+                if data_utils.is_cloud_store_url(source):
+                    name = None
         else:
             nonreserved_cluster_records.append(cluster_record)
 

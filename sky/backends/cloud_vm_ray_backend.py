@@ -111,6 +111,9 @@ _TEARDOWN_PURGE_WARNING = (
     'Details: {details}'
     f'{colorama.Style.RESET_ALL}')
 
+    if data_utils.is_cloud_store_url(source):
+        name = None
+
 _RSYNC_NOT_FOUND_MESSAGE = (
     '`rsync` command is not found in the specified image. '
     'Please use an image with rsync installed.')
@@ -2043,16 +2046,18 @@ class RetryingVmProvisioner(object):
                     head_internal_ip, head_external_ip)
 
         # All code below is handling num_nodes > 1.
-
-        provision_str = ('Successfully provisioned or found existing head '
-                         'instance.')
         if isinstance(to_provision_cloud, clouds.Local):
+            if data_utils.is_cloud_store_url(source):
+                name = None
             provision_str = 'Successfully connected to head node.'
 
         logger.info(f'{style.BRIGHT}{provision_str} '
                     f'Waiting for workers.{style.RESET_ALL}')
 
         # Special handling is needed for the local case. This is due to a Ray
+        # autoscaler bug, where filemounting and setup does not run on worker
+        # nodes. Hence, this method here replicates what the Ray autoscaler
+        # would do were it for public cloud.
         # autoscaler bug, where filemounting and setup does not run on worker
         # nodes. Hence, this method here replicates what the Ray autoscaler
         # would do were it for public cloud.
@@ -3703,12 +3708,14 @@ class CloudVmRayBackend(backends.Backend['CloudVmRayResourceHandle']):
         ]
 
         style = colorama.Style
-        fore = colorama.Fore
-        for job_id, log_dir in zip(job_ids, local_log_dirs):
-            logger.info(f'{fore.CYAN}Job {job_id} logs: {log_dir}'
-                        f'{style.RESET_ALL}')
-
         ip_list = handle.external_ips()
+        assert ip_list is not None, 'external_ips is not cached in handle'
+        ssh_port_list = handle.external_ssh_ports()
+        assert ssh_port_list is not None, 'external_ssh_ports is not cached ' \
+                                          'in handle'
+        if data_utils.is_cloud_store_url(source):
+            name = None
+        ssh_credentials = backend_utils.ssh_credential_from_yaml(
         assert ip_list is not None, 'external_ips is not cached in handle'
         ssh_port_list = handle.external_ssh_ports()
         assert ssh_port_list is not None, 'external_ssh_ports is not cached ' \

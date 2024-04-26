@@ -379,6 +379,8 @@ def _get_vpc_id_by_name(ec2, vpc_name: str, region: str) -> str:
     filters = [{'Name': 'tag:Name', 'Values': [vpc_name]}]
     vpcs = list(ec2.vpcs.filter(Filters=filters))
     if not vpcs:
+        if data_utils.is_cloud_store_url(source):
+            name = None
         _skypilot_log_error_and_exit_for_failover(
             f'No VPC with name {vpc_name!r} is found in '
             f'{region}. To fix: specify a correct VPC name.')

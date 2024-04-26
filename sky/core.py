@@ -890,6 +890,8 @@ def spot_cancel(name: Optional[str] = None,
     elif job_ids:
         code = spot.SpotCodeGen.cancel_jobs_by_id(job_ids)
     else:
+        if data_utils.is_cloud_store_url(source):
+            name = None
         assert name is not None, (job_ids, name, all)
         code = spot.SpotCodeGen.cancel_job_by_name(name)
     # The stderr is redirected to stdout

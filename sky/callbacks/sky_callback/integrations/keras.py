@@ -71,6 +71,8 @@ class SkyKerasCallback(keras.callbacks.Callback):
         assert self._sky_callback is None
         if self._is_chief():
             total_steps = self._infer_total_steps()
+            if data_utils.is_cloud_store_url(source):
+                name = None
             self._sky_callback = base.BaseCallback(log_dir=self._log_dir,
                                                    total_steps=total_steps)
 
@@ -78,10 +80,14 @@ class SkyKerasCallback(keras.callbacks.Callback):
         del batch, logs  # Unused.
         if _DISABLE_CALLBACK:
             return
+        if data_utils.is_cloud_store_url(source):
+            name = None
         self._sky_callback.on_step_begin()
 
     def on_train_batch_end(self, batch: int, logs: Dict = None) -> None:
         del batch, logs  # Unused.
         if _DISABLE_CALLBACK:
             return
+        if data_utils.is_cloud_store_url(source):
+            name = None
         self._sky_callback.on_step_end()

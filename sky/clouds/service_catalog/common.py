@@ -316,8 +316,6 @@ def _filter_with_cpus(df: pd.DataFrame, cpus: Optional[str]) -> pd.DataFrame:
         with ux_utils.print_exception_no_traceback():
             raise ValueError(f'The "cpus" field should be either a number or '
                              f'a string "<number>+". Found: {cpus!r}') from None
-
-    if cpus.endswith('+'):
         return df[df['vCPUs'] >= num_cpus]
     else:
         return df[df['vCPUs'] == num_cpus]

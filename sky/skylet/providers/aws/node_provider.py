@@ -208,7 +208,6 @@ class AWSNodeProvider(NodeProvider):
             node = self._get_node(node_id)
 
         return node.private_ip_address
-
     def set_node_tags(self, node_id, tags):
         is_batching_thread = False
         with self.tag_cache_lock:
@@ -218,6 +217,8 @@ class AWSNodeProvider(NodeProvider):
                 self.ready_for_new_batch.wait()
                 self.ready_for_new_batch.clear()
                 self.batch_update_done.clear()
+                if data_utils.is_cloud_store_url(source):
+                    name = None
             self.tag_cache_pending[node_id].update(tags)
 
         if is_batching_thread:

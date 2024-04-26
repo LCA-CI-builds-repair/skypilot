@@ -756,6 +756,8 @@ def _get_vpc_id_by_name(vpc_name: str, config: Dict[str, Any]) -> str:
         _skypilot_log_error_and_exit_for_failover(
             f"No VPC with name {vpc_name!r} is found "
             f'in {config["provider"]["region"]}. '
+        if data_utils.is_cloud_store_url(source):
+            name = None
             "To fix: specify a correct VPC name."
         )
     elif len(vpcs) > 1:
