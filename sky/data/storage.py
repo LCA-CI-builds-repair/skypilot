@@ -819,9 +819,10 @@ class Storage(object):
         source = override_args.get('source', metadata.source)
         name = override_args.get('name', metadata.storage_name)
         # If the source is a list, it consists of local paths
-        if not isinstance(source, list): 
-            if data_utils.is_cloud_store_url(source):
-                name = None
+        if source is not None:
+            if not isinstance(source, list):
+                if data_utils.is_cloud_store_url(source):
+                    name = None
 
         storage_obj = cls(name=name,
                           source=source,
