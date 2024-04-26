@@ -65,9 +65,11 @@ LAMBDA_TYPE = '--cloud lambda --gpus A10'
 
 SCP_TYPE = '--cloud scp'
 SCP_GPU_V100 = '--gpus V100-32GB'
-
 storage_setup_commands = [
-    'touch ~/tmpfile', 'mkdir -p ~/tmp-workdir', 'mkdir -p ~/tmp-workdir-2',
+    'touch ~/tmpfile', 
+    'mkdir -p ~/tmp-workdir', 
+    'mkdir -p ~/tmp-workdir-2',
+]
     'touch ~/tmp-workdir/tmp\ file', 'touch ~/tmp-workdir/tmp\ file2',
     'touch ~/tmp-workdir/foo', 'touch ~/tmp-workdir-2/tmp\ file',
     'ln -f -s ~/tmp-workdir/ ~/tmp-workdir/circle-link',

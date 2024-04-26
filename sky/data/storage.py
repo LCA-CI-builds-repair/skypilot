@@ -1047,7 +1047,7 @@ class Storage(object):
         if (self.source is None or not isinstance(self.source, str) or
                 not data_utils.is_cloud_store_url(self.source)):
             # Remove name if source is a cloud store URL
-            name = self.name
+            name = None
         add_if_not_none('name', name)
         add_if_not_none('source', self.source)
 

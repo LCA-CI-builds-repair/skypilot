@@ -321,17 +321,19 @@ class IBMVPCNodeProvider(NodeProvider):
         """
 
         # collecting valid nodes that are either starting, running or pending.
-        res_nodes = []
+import logging
 
-        found_nodes = self._get_nodes_by_tags(tag_filters)
+res_nodes = []
 
-        for node in found_nodes:
+found_nodes = self._get_nodes_by_tags(tag_filters)
 
-            # check if node scheduled for delete
-            with self.lock:
-                if node["id"] in self.deleted_nodes:
-                    logger.info(f"{node['id']} scheduled for delete")
-                    continue
+for node in found_nodes:
+
+    # check if node scheduled for delete
+    with self.lock:
+        if node["id"] in self.deleted_nodes:
+            logging.info(f"{node['id']} scheduled for delete")
+            continue
 
             # delete failed nodes and skip nodes in other invalid states
             valid_statuses = ["pending", "starting", "running"]
