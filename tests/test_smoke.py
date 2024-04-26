@@ -65,9 +65,9 @@ LAMBDA_TYPE = '--cloud lambda --gpus A10'
 
 SCP_TYPE = '--cloud scp'
 SCP_GPU_V100 = '--gpus V100-32GB'
-
 storage_setup_commands = [
     'touch ~/tmpfile', 'mkdir -p ~/tmp-workdir', 'mkdir -p ~/tmp-workdir-2',
+]
     'touch ~/tmp-workdir/tmp\ file', 'touch ~/tmp-workdir/tmp\ file2',
     'touch ~/tmp-workdir/foo', 'touch ~/tmp-workdir-2/tmp\ file',
     'ln -f -s ~/tmp-workdir/ ~/tmp-workdir/circle-link',
@@ -1364,12 +1364,13 @@ def test_ibm_job_queue_multinode():
             f'sky cancel -y {name} 4',
             f's=$(sky queue {name}) && printf "$s" && (echo "$s" | grep {name}-4 | grep CANCELLED)',
             f'sky exec {name} --gpus v100:0.2 "[[ \$SKYPILOT_NUM_GPUS_PER_NODE -eq 1 ]] || exit 1"',
-            f'sky exec {name} --gpus v100:0.2 --num-nodes 2 "[[ \$SKYPILOT_NUM_GPUS_PER_NODE -eq 1 ]] || exit 1"',
-            f'sky exec {name} --gpus v100:1 --num-nodes 2 "[[ \$SKYPILOT_NUM_GPUS_PER_NODE -eq 1 ]] || exit 1"',
-            f'sky logs {name} 5 --status',
-            f'sky logs {name} 6 --status',
-            f'sky logs {name} 7 --status',
-        ],
+smoke_test_commands = [
+    f'sky exec {name} --gpus v100:0.2 --num-nodes 2 "[[ \$SKYPILOT_NUM_GPUS_PER_NODE -eq 1 ]] || exit 1"',
+    f'sky exec {name} --gpus v100:1 --num-nodes 2 "[[ \$SKYPILOT_NUM_GPUS_PER_NODE -eq 1 ]] || exit 1"',
+    f'sky logs {name} 5 --status',
+    f'sky logs {name} 6 --status',
+    f'sky logs {name} 7 --status',
+]
         f'sky down -y {name}',
         timeout=20 * 60,  # 20 mins
     )

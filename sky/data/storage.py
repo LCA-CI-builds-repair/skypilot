@@ -813,7 +813,6 @@ class Storage(object):
         """Create Storage from StorageMetadata object.
 
         Used when reconstructing Storage object and AbstractStore objects from
-        global_user_state.
         """
         # Name should not be specified if the source is a cloud store URL.
         source = override_args.get('source', metadata.source)
@@ -1044,11 +1043,9 @@ class Storage(object):
                 config[key] = value
 
         name = None
-        if (self.source is None or not isinstance(self.source, str) or
-                not data_utils.is_cloud_store_url(self.source)):
-            # Remove name if source is a cloud store URL
-            name = self.name
-        add_if_not_none('name', name)
+if self.source is None or not isinstance(self.source, str) or not data_utils.is_cloud_store_url(self.source):
+    # Remove name if source is a cloud store URL
+    name = self.name
         add_if_not_none('source', self.source)
 
         stores = None

@@ -378,7 +378,7 @@ class IBMVPCNodeProvider(NodeProvider):
             ).get_result()
             floating_ips = res["floating_ips"]
             if len(floating_ips) == 0:
-                # not adding a node that's yet/failed to
+                # not adding a node that's yet/failed to attach a floating IP
                 # to get a floating ip provisioned
                 continue
             else:

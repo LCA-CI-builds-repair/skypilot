@@ -43,5 +43,5 @@ kind load docker-image --name us-central1-docker.pkg.dev/skypilot-375900/skypilo
 
 # Print CPUs available on the local cluster
 NUM_CPUS=$(kubectl get nodes -o jsonpath='{.items[0].status.capacity.cpu}')
-echo "Kubernetes cluster ready! Run `sky check` to setup Kubernetes access."
+echo "Kubernetes cluster ready! Run \`sky check\` to setup Kubernetes access."
 echo "Number of CPUs available on the local cluster: $NUM_CPUS"

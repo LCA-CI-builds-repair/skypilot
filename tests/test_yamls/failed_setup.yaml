@@ -1,4 +1,5 @@
 setup: |
+setup: |
   echo failed setup
   exit 1
 

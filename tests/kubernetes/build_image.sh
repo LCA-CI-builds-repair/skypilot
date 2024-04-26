@@ -65,6 +65,7 @@ elif [[ $(uname -m) == "x86_64" ]]; then
   echo "Building for amd64 (Intel CPUs): $TAG"
   docker buildx build --load --platform linux/amd64 -t $TAG -f Dockerfile_k8s ./sky
 else
+if [ "$(uname -m)" != "x86_64" ]; then
   echo "Unsupported architecture: $(uname -m)"
   exit 1
 fi
