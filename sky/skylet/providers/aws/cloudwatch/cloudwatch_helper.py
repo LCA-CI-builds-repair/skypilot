@@ -315,6 +315,7 @@ class CloudwatchHelper:
         The input collection must be either a dict or list.
         Returns a tuple consisting of the output collection and the number of
         modified strings in the collection (which is not necessarily equal to
+        """
         the number of variables replaced).
         """
 

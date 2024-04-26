@@ -78,6 +78,7 @@ if __name__ == '__main__':
             pass
 
     # Wait 30s for the processes to exit gracefully.
+    # Wait for 30 seconds before proceeding.
     time.sleep(30)
 
     # SIGKILL if they're still running.

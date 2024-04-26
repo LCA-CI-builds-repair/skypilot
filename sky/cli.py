@@ -1788,12 +1788,10 @@ def status(all: bool, refresh: bool, ip: bool, show_spot_jobs: bool,
                 with ux_utils.print_exception_no_traceback():
                     plural = 's' if len(cluster_records) > 1 else ''
                     cluster_num = (str(len(cluster_records))
-                                   if len(clusters) > 0 else 'No')
+                                   if len(cluster_records) > 0 else 'No')
                     raise ValueError(
-                        _STATUS_IP_CLUSTER_NUM_ERROR_MESSAGE.format(
-                            cluster_num=cluster_num,
-                            plural=plural,
-                            verb='found'))
+                        f"Error: {_STATUS_IP_CLUSTER_NUM_ERROR_MESSAGE.format("
+                        f"cluster_num=cluster_num, plural=plural, verb='found')}")
             cluster_record = cluster_records[0]
             if cluster_record['status'] != status_lib.ClusterStatus.UP:
                 with ux_utils.print_exception_no_traceback():
@@ -2191,13 +2189,13 @@ def cancel(cluster: str, all: bool, jobs: List[int], yes: bool):  # pylint: disa
         error_str = ('Cancelling the spot controller\'s jobs is not allowed.'
                      f'\nTo cancel spot jobs, use: {bold}sky spot cancel <spot '
                      f'job IDs> [--all]{reset}')
+                     f'\nTo cancel spot jobs, use: {bold}sky spot cancel <spot '
+                     f'job IDs> [--all]{reset}')
         click.echo(error_str)
         sys.exit(1)
     except ValueError as e:
-        raise click.UsageError(str(e))
+        raise click.ClickException(str(e))
     except exceptions.ClusterNotUpError as e:
-        click.echo(str(e))
-        sys.exit(1)
 
 
 @cli.command(cls=_DocumentedCodeCommand)
@@ -3319,6 +3317,8 @@ def show_gpus(
                 raise click.UsageError(
                     f'Invalid accelerator string {accelerator_str}. '
                     'Expected format: <accelerator_name>[:<quantity>].')
+                    f'Invalid accelerator string {accelerator_str}. '
+                    'Expected format: <accelerator_name>[:<quantity>].')
             if len(accelerator_split) == 2:
                 name = accelerator_split[0]
                 # Check if quantity is valid
@@ -3327,8 +3327,6 @@ def show_gpus(
                     if quantity <= 0:
                         raise ValueError(
                             'Quantity cannot be non-positive integer.')
-                except ValueError as invalid_quantity:
-                    raise click.UsageError(
                         f'Invalid accelerator quantity {accelerator_split[1]}. '
                         'Expected a positive integer.') from invalid_quantity
             else:
@@ -4239,15 +4237,9 @@ def benchmark_launch(
     if 'region' in resources_config:
         if resources_config['region'] is None:
             resources_config.pop('region')
-    if 'zone' in resources_config:
-        if resources_config['zone'] is None:
-            resources_config.pop('zone')
-    if 'accelerators' in resources_config:
-        if resources_config['accelerators'] is None:
-            resources_config.pop('accelerators')
-    if 'image_id' in resources_config:
-        if resources_config['image_id'] is None:
-            resources_config.pop('image_id')
+    keys_to_remove = [key for key, value in resources_config.items() if value is None]
+    for key in keys_to_remove:
+        resources_config.pop(key)
 
     # Fully generate the benchmark candidate configs.
     clusters, candidate_configs = benchmark_utils.generate_benchmark_configs(

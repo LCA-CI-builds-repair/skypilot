@@ -191,7 +191,7 @@ class IBMVPCNodeProvider(NodeProvider):
 
         # vpc_tags may contain the following fields:
         # vpc_id, subnet_id, security_group_id
-        self.vpc_tags = None
+        self.vpc_tags = {}
         self.vpc_provider = IBMVPCProvider(
             self.resource_group_id, self.region, self.cluster_name
         )

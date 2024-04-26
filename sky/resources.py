@@ -1193,17 +1193,16 @@ class Resources:
             state['_cloud'] = cloud
 
             instance_type = state.pop('instance_type', None)
-            state['_instance_type'] = instance_type
+            state['_instance_type'] = instance_type  # Set the instance type
 
             use_spot = state.pop('use_spot', False)
-            state['_use_spot'] = use_spot
+            state['_use_spot'] = use_spot  # Set the use_spot flag
 
             accelerator_args = state.pop('accelerator_args', None)
-            state['_accelerator_args'] = accelerator_args
+            state['_accelerator_args'] = accelerator_args  # Set the accelerator arguments
 
             disk_size = state.pop('disk_size', _DEFAULT_DISK_SIZE_GB)
-            state['_disk_size'] = disk_size
-
+            state['_disk_size'] = disk_size  # Set the disk size
         if version < 2:
             self._region = None
 

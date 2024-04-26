@@ -8,18 +8,19 @@
 # > pytest tests/test_smoke.py --terminate-on-failure
 #
 # Re-run last failed tests
+# Run all smoke tests with the last failed test
 # > pytest --lf
 #
-# Run one of the smoke tests
+# Run the 'test_minimal' smoke test only
 # > pytest tests/test_smoke.py::test_minimal
 #
-# Only run managed spot tests
+# Run only managed spot tests
 # > pytest tests/test_smoke.py --managed-spot
 #
-# Only run test for AWS + generic tests
+# Run tests for AWS and generic scenarios
 # > pytest tests/test_smoke.py --aws
 #
-# Change cloud for generic tests to aws
+# Change the cloud provider for generic tests to AWS
 # > pytest tests/test_smoke.py --generic-cloud aws
 
 import inspect

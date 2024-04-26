@@ -15,7 +15,7 @@ import pytest
 # should work on any cloud we support. The cloud used for such a test
 # is controlled by `--generic-cloud` (typically you do not need to set it).
 #
-# To only run tests for a specific cloud (as well as generic tests), use
+# To only run tests for a specific cloud provider (including generic tests), use
 # --aws, --gcp, --azure, or --lambda.
 #
 # To only run tests for managed spot (without generic tests), use
@@ -135,8 +135,8 @@ def pytest_collection_modifyitems(config, items):
     # Check if tests need to be run serially for Kubernetes and Lambda Cloud
     # We run Lambda Cloud tests serially because Lambda Cloud rate limits its
     # launch API to one launch every 10 seconds.
-    # We run Kubernetes tests serially because the Kubernetes cluster may have
-    # limited resources (e.g., just 8 cpus).
+    # We run Kubernetes tests serially due to potential resource constraints,
+    # such as limited CPUs (e.g., just 8 cpus).
     serial_mark = pytest.mark.xdist_group(
         name=f'serial_{generic_cloud_keyword}')
     # Handle generic tests

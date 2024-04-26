@@ -144,12 +144,15 @@ class Backend(Generic[_ResourceHandleType]):
                  task: 'task_lib.Task',
                  detach_run: bool,
                  dryrun: bool = False) -> None:
+        """Method to be implemented in subclasses."""
         raise NotImplementedError
 
     def _post_execute(self, handle: _ResourceHandleType, down: bool) -> None:
+        """Method to be implemented in subclasses."""
         raise NotImplementedError
 
     def _teardown_ephemeral_storage(self, task: 'task_lib.Task') -> None:
+        """Method to be implemented in subclasses."""
         raise NotImplementedError
 
     def _teardown(self,

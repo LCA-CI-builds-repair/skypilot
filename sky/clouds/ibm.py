@@ -377,7 +377,7 @@ class IBM(clouds.Cloud):
             with ux_utils.print_exception_no_traceback():
                 raise ValueError(
                     f'IBM image {image_id!r} in '
-                    f'region "{region}", is missing'
+                    f'region "{region}", is missing')
                     'metadata:"minimum_provisioned_size". '
                     'Image may be in status: Failed/Pending') from None
         return image_size
