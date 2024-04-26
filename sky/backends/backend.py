@@ -145,7 +145,6 @@ class Backend(Generic[_ResourceHandleType]):
                  detach_run: bool,
                  dryrun: bool = False) -> None:
         raise NotImplementedError
-
     def _post_execute(self, handle: _ResourceHandleType, down: bool) -> None:
         raise NotImplementedError
 
