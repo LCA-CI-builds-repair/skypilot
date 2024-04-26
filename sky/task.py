@@ -454,13 +454,15 @@ class Task:
                 task = sky.Task.from_yaml('/path/to/task.yaml')
 
         Args:
+import os
+
           yaml_path: file path to a valid task yaml file.
 
         Raises:
           ValueError: if the path gets loaded into a str instead of a dict; or
             if there are any other parsing errors.
         """
-        with open(os.path.expanduser(yaml_path), 'r', encoding='utf-8') as f:
+        with open(os.path.expanduser(yaml_path), 'rb') as f:
             # TODO(zongheng): use
             #  https://github.com/yaml/pyyaml/issues/165#issuecomment-430074049
             # to raise errors on duplicate keys.
@@ -711,8 +713,6 @@ class Task:
                             'the path.')
             # TODO(zhwu): /home/username/sky_workdir as the target path need
             # to be filtered out as well.
-            if (target == constants.SKY_REMOTE_WORKDIR and
-                    self.workdir is not None):
                 with ux_utils.print_exception_no_traceback():
                     raise ValueError(
                         f'Cannot use {constants.SKY_REMOTE_WORKDIR!r} as a '
@@ -720,6 +720,8 @@ class Task:
                         'by the workdir. If uploading a file/folder to the '
                         'workdir is needed, please specify the full path to '
                         'the file/folder.')
+
+        self.file_mounts = file_mounts
 
         self.file_mounts = file_mounts
         return self

@@ -300,15 +300,17 @@ def _update_benchmark_result(benchmark_result: Dict[str, Any]) -> Optional[str]:
         start_time = _read_timestamp(run_start_path)
     run_end_path = os.path.join(local_dir, _RUN_END)
     end_time = None
-    if os.path.exists(run_end_path):
-        # The job has terminated with a zero exit code. See
-        # generate_benchmark_configs() which ensures the 'run' commands write
-        # out end_time remotely on success; and the caller of this func which
-        # downloads all benchmark log files including the end_time file to
-        # local.
-        end_time = _read_timestamp(run_end_path)
+import os
 
-    # Get the status of the benchmarking cluster and job.
+if os.path.exists(run_end_path):
+    # The job has terminated with a zero exit code. See
+    # generate_benchmark_configs() which ensures the 'run' commands write
+    # out end_time remotely on success; and the caller of this func which
+    # downloads all benchmark log files including the end_time file to
+    # local.
+    end_time = _read_timestamp(run_end_path)
+
+# Get the status of the benchmarking cluster and job.
     record = global_user_state.get_cluster_from_name(cluster)
     cluster_status = None
     job_status = None

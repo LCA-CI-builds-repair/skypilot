@@ -1762,7 +1762,6 @@ class RetryingVmProvisioner(object):
         os.makedirs('/tmp/ray', exist_ok=True)
 
         # Launch the cluster with ray up
-
         # Retry if the any of the following happens:
         # 1. Failed due to timeout when fetching head node for Azure.
         # 2. Failed due to file mounts, because it is probably has too

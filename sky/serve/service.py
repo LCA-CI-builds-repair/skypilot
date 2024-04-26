@@ -154,15 +154,17 @@ def _start(service_name: str, tmp_task_yaml: str, job_id: int):
     os.makedirs(service_dir, exist_ok=True)
 
     # Copy the tmp task yaml file to the final task yaml file.
-    # This is for the service name conflict case. The _execute will
-    # sync file mounts first and then realized a name conflict. We
-    # don't want the new file mounts to overwrite the old one, so we
-    # sync to a tmp file first and then copy it to the final name
-    # if there is no name conflict.
-    task_yaml = serve_utils.generate_task_yaml_file_name(service_name)
-    shutil.copy(tmp_task_yaml, task_yaml)
+import shutil
 
-    # Generate load balancer log file name.
+# This is for the service name conflict case. The _execute will
+# sync file mounts first and then realize a name conflict. We
+# don't want the new file mounts to overwrite the old one, so we
+# sync to a tmp file first and then copy it to the final name
+# if there is no name conflict.
+task_yaml = serve_utils.generate_task_yaml_file_name(service_name)
+shutil.copy(tmp_task_yaml, task_yaml)
+
+# Generate load balancer log file name.
     load_balancer_log_file = os.path.expanduser(
         serve_utils.generate_remote_load_balancer_log_file_name(service_name))
 
