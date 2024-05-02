@@ -9,6 +9,9 @@ if ! docker info > /dev/null 2>&1; then
     >&2 echo "Docker is not running. Please start Docker and try again."
     exit 1
 fi
+    >&2 echo "Docker is not running. Please start Docker and try again."
+    exit 1
+fi
 
 # Check if kind is installed
 if ! kind version > /dev/null 2>&1; then
