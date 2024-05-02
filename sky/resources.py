@@ -149,11 +149,15 @@ class Resources:
                 self._spot_recovery = spot_recovery.upper()
 
         if disk_size is not None:
-            if round(disk_size) != disk_size:
-                with ux_utils.print_exception_no_traceback():
+            try:
+                if round(disk_size) != disk_size:
                     raise ValueError(
                         f"OS disk size must be an integer. Got: {disk_size}."
                     )
+            except ValueError:
+                raise ValueError(
+                    f"OS disk size must be a valid integer. Got: {disk_size}."
+                )
             self._disk_size = int(disk_size)
         else:
             self._disk_size = _DEFAULT_DISK_SIZE_GB
