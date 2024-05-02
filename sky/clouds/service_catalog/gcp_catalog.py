@@ -183,14 +183,31 @@ def _closest_power_of_two(x: int) -> int:
     return 1 << ((x - 1).bit_length() - 1)
 
 
+import pandas as pd
+from typing import Optional
+
+# Define the _quotas_df DataFrame here
+
 def get_quota_code(accelerator: str, use_spot: bool) -> Optional[str]:
     """Get the quota code based on `accelerator` and `use_spot`.
-
+    
     The quota code is fetched from `_quotas_df` based on the accelerator
     specified, and will then be utilized in a GCP CLI command in order
     to check for a non-zero quota.
+    
+    Args:
+        accelerator (str): The type of accelerator for which quota code is needed.
+        use_spot (bool): Flag indicating whether spot instances are used.
+        
+    Returns:
+        Optional[str]: The quota code for the specified accelerator, or None if not found.
     """
-
+    
+    # Implement logic to retrieve quota code based on accelerator and use_spot
+    
+    quota_code = None  # Placeholder for the retrieved quota code
+    
+    return quota_code
     if use_spot:
         spot_header = 'SpotInstanceCode'
     else:

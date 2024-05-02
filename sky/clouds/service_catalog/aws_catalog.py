@@ -166,14 +166,31 @@ def _get_df() -> pd.DataFrame:
     return _user_df
 
 
+import pandas as pd
+from typing import Optional
+
+# Define the _quotas_df DataFrame here
+
 def get_quota_code(instance_type: str, use_spot: bool) -> Optional[str]:
     """Get the quota code based on `instance_type` and `use_spot`.
-
+    
     The quota code is fetched from `_quotas_df` based on the instance type
     specified, and will then be utilized in a botocore API command in order
     to check its quota.
+    
+    Args:
+        instance_type (str): The type of instance for which quota code is needed.
+        use_spot (bool): Flag indicating whether spot instances are used.
+        
+    Returns:
+        Optional[str]: The quota code for the specified instance type, or None if not found.
     """
-
+    
+    # Implement logic to retrieve quota code based on instance_type and use_spot
+    
+    quota_code = None  # Placeholder for the retrieved quota code
+    
+    return quota_code
     if use_spot:
         spot_header = 'SpotInstanceCode'
     else:

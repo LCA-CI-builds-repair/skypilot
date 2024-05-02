@@ -114,13 +114,22 @@ class AutostopCodeGen:
         ]
         return cls._build(code)
 
+import shlex
+from typing import List
+
+class AutostopLib:
     @classmethod
     def is_autostopping(cls) -> str:
-        code = ['print(autostop_lib.get_is_autostopping_payload())']
+        code = [f'print({cls.get_is_autostopping_payload()})']
         return cls._build(code)
 
     @classmethod
+    def get_is_autostopping_payload(cls) -> str:
+        # Implement the logic to retrieve autostopping payload
+        return "Autostop payload"  # Placeholder value
+
+    @classmethod
     def _build(cls, code: List[str]) -> str:
-        code = cls._PREFIX + code
-        code = ';'.join(code)
-        return f'python3 -u -c {shlex.quote(code)}'
+        cls._PREFIX = 'python3 -u -c '
+        code = cls._PREFIX + ';'.join(code)
+        return shlex.quote(code)
