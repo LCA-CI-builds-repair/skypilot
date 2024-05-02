@@ -33,5 +33,6 @@ def get_logger(caller_name):
     console_output_handler.setLevel(logging.INFO)
 
     logger.addHandler(file_handler)
-    logger.addHandler(console_output_handler)
-    return logger
+logger = logging.getLogger(__name__)
+logger.addHandler(console_output_handler)
+return logger

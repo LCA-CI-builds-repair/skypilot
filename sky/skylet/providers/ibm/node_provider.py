@@ -950,6 +950,7 @@ class IBMVPCNodeProvider(NodeProvider):
         logger.Error("\nFailed to delete instance within expected time frame\n")
         return False
 
-    @staticmethod
-    def bootstrap_config(cluster_config) -> Dict[str, Any]:
-        return cluster_config
+@staticmethod
+def bootstrap_config(cluster_config) -> Dict[str, Any]:
+    # Add necessary code logic for bootstrapping configuration here
+    return cluster_config

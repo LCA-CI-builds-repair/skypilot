@@ -7,6 +7,8 @@ set -e
 # Limit port range to speed up kind cluster creation
 PORT_RANGE_START=30000
 PORT_RANGE_END=30100
+PORT_RANGE_START=30000
+PORT_RANGE_END=30100
 
 # Temporarily disable 'exit on error' to capture docker info output
 set +e
@@ -52,5 +54,5 @@ kind load docker-image --name skypilot us-central1-docker.pkg.dev/skypilot-37590
 
 # Print CPUs available on the local cluster
 NUM_CPUS=$(kubectl get nodes -o jsonpath='{.items[0].status.capacity.cpu}')
-echo "Kubernetes cluster ready! Run `sky check` to setup Kubernetes access."
+echo "Kubernetes cluster ready! Run \`sky check\` to setup Kubernetes access."
 echo "Number of CPUs available on the local cluster: $NUM_CPUS"
