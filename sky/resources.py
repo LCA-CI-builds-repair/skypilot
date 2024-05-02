@@ -152,14 +152,14 @@ class Resources:
             if round(disk_size) != disk_size:
                 with ux_utils.print_exception_no_traceback():
                     raise ValueError(
-                        f"OS disk size must be an integer. Got: {disk_size}."
-                    )
-            self._disk_size = int(disk_size)
-        else:
-            self._disk_size = _DEFAULT_DISK_SIZE_GB
+                    f"OS disk size must be an integer. Got: {disk_size}."
+                )
+        self._disk_size = int(disk_size)
+    else:
+        self._disk_size = _DEFAULT_DISK_SIZE_GB
 
-        # self._image_id is a dict of {region: image_id}.
-        # The key is None if the same image_id applies for all regions.
+    # self._image_id is a dict of {region: image_id}.
+    # The key is None if the same image_id applies for all regions.
         self._image_id = image_id
         if isinstance(image_id, str):
             self._image_id = {self._region: image_id.strip()}
