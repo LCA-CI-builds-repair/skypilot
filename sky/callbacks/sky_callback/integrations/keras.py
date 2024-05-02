@@ -73,7 +73,8 @@ class SkyKerasCallback(keras.callbacks.Callback):
             total_steps = self._infer_total_steps()
             self._sky_callback = base.BaseCallback(log_dir=self._log_dir,
                                                    total_steps=total_steps)
-
+        else:
+            name = None
     def on_train_batch_begin(self, batch: int, logs: Dict = None) -> None:
         del batch, logs  # Unused.
         if _DISABLE_CALLBACK:

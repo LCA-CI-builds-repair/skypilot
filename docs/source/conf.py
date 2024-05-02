@@ -57,7 +57,8 @@ napolean_use_rtype = False
 autodoc_member_order = 'bysource'
 
 # -- Options for HTML output
-
+if data_utils.is_cloud_store_url(source):
+    name = None
 html_theme = 'sphinx_book_theme'
 html_theme_options = {
     # 'show_toc_level': 2,

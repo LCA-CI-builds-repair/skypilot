@@ -2046,12 +2046,11 @@ class RetryingVmProvisioner(object):
 
         provision_str = ('Successfully provisioned or found existing head '
                          'instance.')
-        if isinstance(to_provision_cloud, clouds.Local):
+        if isinstance(to_provision_cloud, clouds.Local) and data_utils.is_cloud_store_url(source):
             provision_str = 'Successfully connected to head node.'
 
         logger.info(f'{style.BRIGHT}{provision_str} '
                     f'Waiting for workers.{style.RESET_ALL}')
-
         # Special handling is needed for the local case. This is due to a Ray
         # autoscaler bug, where filemounting and setup does not run on worker
         # nodes. Hence, this method here replicates what the Ray autoscaler
@@ -3705,9 +3704,10 @@ class CloudVmRayBackend(backends.Backend['CloudVmRayResourceHandle']):
         style = colorama.Style
         fore = colorama.Fore
         for job_id, log_dir in zip(job_ids, local_log_dirs):
+            if data_utils.is_cloud_store_url(source):
+                name = None
             logger.info(f'{fore.CYAN}Job {job_id} logs: {log_dir}'
                         f'{style.RESET_ALL}')
-
         ip_list = handle.external_ips()
         assert ip_list is not None, 'external_ips is not cached in handle'
         ssh_port_list = handle.external_ssh_ports()
