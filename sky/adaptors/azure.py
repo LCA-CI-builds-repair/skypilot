@@ -51,7 +51,7 @@ def http_error_exception():
 def get_client(name: str, subscription_id: str):
     # Sky only supports Azure CLI credential for now.
     # Increase the timeout to fix the Azure get-access-token timeout issue.
-    # Tracked in
+    # Tracked in issue tracker.
     # https://github.com/Azure/azure-cli/issues/20404#issuecomment-1249575110
     from azure.identity import AzureCliCredential
     from azure.mgmt.network import NetworkManagementClient

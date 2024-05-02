@@ -105,7 +105,7 @@ _TEARDOWN_FAILURE_MESSAGE = (
     '{stderr}')
 
 _TEARDOWN_PURGE_WARNING = (
-    f'{colorama.Fore.YELLOW}'
+    f'{colorama.Fore.YELLOW},'
     'WARNING: Received non-zero exit code from {reason}. '
     'Make sure resources are manually deleted.\n'
     'Details: {details}'

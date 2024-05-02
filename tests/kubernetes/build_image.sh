@@ -26,7 +26,6 @@ while getopts ":pg" opt; do
       echo "Usage: ./build_image.sh [-p] [-g]"
       echo "-p: Push the image to the registry"
       echo "-g: Build the GPU image"
-      exit 1
       ;;
   esac
 done

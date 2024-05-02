@@ -653,7 +653,7 @@ class GCP(clouds.Cloud):
             return False, (
                 'Getting project ID or user identity failed. You can debug '
                 'with `gcloud auth list`. To fix this, '
-                f'{cls._CREDENTIAL_HINT[0].lower()}'
+                f'{cls._CREDENTIAL_HINT[0].lower()},'
                 f'{cls._CREDENTIAL_HINT[1:]}\n'
                 f'{cls._INDENT_PREFIX}Details: '
                 f'{common_utils.format_exception(e, use_bracket=True)}')

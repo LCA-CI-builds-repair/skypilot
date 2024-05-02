@@ -26,7 +26,7 @@ from sky.utils import ux_utils
 # enabled; this is ok because we take the intersection of the list here with
 # the user-specific enabled regions in `aws_catalog`, via the "availability
 # zone mapping".
-# TODO(zhwu): fix the regions with no supported AMI (maybe by finding AMIs
+# fix the regions with no supported AMI (maybe by finding AMIs
 # similar to the Deep Learning AMI).
 ALL_REGIONS = [
     'us-east-1',

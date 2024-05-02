@@ -2173,7 +2173,6 @@ def cost_report(all: bool):  # pylint: disable=redefined-builtin
             # TODO(sgurram): fix assumption of sorted order of clusters
             if controller_name not in controllers:
                 controllers[controller_name] = cluster_record
-        else:
             normal_cluster_records.append(cluster_record)
 
     total_cost = status_utils.get_total_cost_of_displayed_records(

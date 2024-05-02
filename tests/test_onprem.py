@@ -103,23 +103,8 @@ class TestOnprem:
         yield ['3.142.96.58']
 
     @pytest.fixture
-    def local_cluster_name(self):
-        yield 'on-prem-smoke-test'
-
-    @pytest.fixture
-    def admin_ssh_user(self):
-        yield 'ubuntu'
-
-    @pytest.fixture
-    def first_ssh_user(self):
-        yield 'test'
-
-    @pytest.fixture
-    def second_ssh_user(self):
-        yield 'test1'
-
-    @pytest.fixture
     def ssh_private_key(self):
+        # Add implementation or value assignment here
         yield '~/.ssh/on-prem-smoke-key'
 
     @pytest.fixture

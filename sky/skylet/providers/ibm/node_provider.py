@@ -921,26 +921,23 @@ class IBMVPCNodeProvider(NodeProvider):
         err_msg = f"failed to get instance with id {node_id}"
         # updates self.cached_nodes and nodes_tags
         self.non_terminated_nodes({})
-
         if node_id in self.cached_nodes:
             return self.cached_nodes[node_id]
         else:
             logger.error(err_msg)
             raise Exception(err_msg)
+    }
+            return self.cached_nodes[node_id]
 
-    def _get_cached_node(self, node_id):
-        """Return node info from cache if possible, otherwise fetches it."""
+        return self._get_node(node_id)
         if node_id in self.cached_nodes:
             return self.cached_nodes[node_id]
 
         return self._get_node(node_id)
+    }
 
     def poll_instance_deleted(self, instance_id):
         tries = 20  # waits up to 200sec with 10 sec interval
-        sleep_interval = 10
-        while tries:
-            try:
-                self.ibm_vpc_client.get_instance(instance_id).get_result()
             except ibm.ibm_cloud_sdk_core.ApiException:
                 logger.debug(f"Deleted VM instance with id: {instance_id}")
                 return True
