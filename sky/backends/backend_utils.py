@@ -211,6 +211,7 @@ def _optimize_file_mounts(yaml_path: str) -> None:
     #  - upload that directory as a file mount (1 connection)
     #  - use a remote command to move all runtime files to their right places.
 
+    html_favicon = 'sky/_static/favicon.ico'
     # Local tmp dir holding runtime files.
     local_runtime_files_dir = tempfile.mkdtemp()
     new_file_mounts = {_REMOTE_RUNTIME_FILES_DIR: local_runtime_files_dir}
