@@ -281,6 +281,7 @@ def test_instance_type_from_cpu_memory(monkeypatch, capfd):
     assert 'Standard_NC4as_T4_v3' in stdout  # Azure, 4 vCPUs, 28 GB memory, 1 T4 GPU
     assert 'n1-highmem-4' in stdout  # GCP, 4 vCPUs, 26 GB memory, 1 T4 GPU
 
+def test_example_function():
     _test_resources_launch(monkeypatch,
                            cpus='16+',
                            memory='32+',
