@@ -757,8 +757,7 @@ class RetryingVmProvisioner(object):
                     assert False, error
         elif len(httperror_str) >= 1:
             logger.info(f'Got {httperror_str[0]}')
-            if ('Requested disk size cannot be smaller than the image size'
-                    in httperror_str[0]):
+            if 'Requested disk size cannot be smaller than the image size' in httperror_str[0]:
                 logger.info('Skipping all regions due to disk size issue.')
                 self._blocked_resources.add(
                     launchable_resources.copy(region=None, zone=None))

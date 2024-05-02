@@ -53,8 +53,7 @@ def _validation_check(node_config):
     if 'diskSize' not in node_config:
         err_msg = "Disk size value is mandatory."
     elif node_config['diskSize'] < 100 or node_config['diskSize'] > 300:
-        err_msg =  f'The disk size must be between 100 and 300. ' \
-                   f'Input: {node_config["diskSize"]}'
+        err_msg = f'The disk size must be between 100 and 300. Input: {node_config["diskSize"]}'
     if err_msg:
         raise SCPError(err_msg)
 

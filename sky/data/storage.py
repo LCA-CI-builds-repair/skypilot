@@ -138,6 +138,7 @@ def get_storetype_from_cloud(cloud: clouds.Cloud) -> StoreType:
         with ux_utils.print_exception_no_traceback():
             raise ValueError('SCP does not provide cloud storage.')
     else:
+        # Add the continuation of the code logic here
         with ux_utils.print_exception_no_traceback():
             raise ValueError(f'Unknown cloud type: {cloud}')
 

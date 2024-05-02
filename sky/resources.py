@@ -156,6 +156,7 @@ class Resources:
                     )
             self._disk_size = int(disk_size)
         else:
+            # Add the continuation of the code logic here
             self._disk_size = _DEFAULT_DISK_SIZE_GB
 
         # self._image_id is a dict of {region: image_id}.
@@ -866,13 +867,15 @@ class Resources:
                         "region, please explicitly specify the region."
                     )
 
-        # Validate the image exists and the size is smaller than the disk size.
         for region, image_id in self._image_id.items():
             # Check the image exists and get the image size.
             # It will raise ValueError if the image does not exist.
             image_size = self.cloud.get_image_size(image_id, region)
             if image_size >= self.disk_size:
                 with ux_utils.print_exception_no_traceback():
+                    size_comparison = (
+                        # Add the continuation of the code logic here
+                    )
                     size_comparison = (
                         "larger" if image_size > self.disk_size else "equal"
                     )

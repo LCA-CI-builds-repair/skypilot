@@ -10,13 +10,13 @@ PORT_RANGE_END=30100
 
 # Check if docker is running
 if ! docker info > /dev/null 2>&1; then
-    >&2 echo "Docker is not running. Please start Docker and try again."
+    echo "Docker is not running. Please start Docker and try again." >&2
     exit 1
 fi
 
 # Check if kind is installed
 if ! kind version > /dev/null 2>&1; then
-    >&2 echo "kind is not installed. Please install kind and try again. Installation instructions: https://kind.sigs.k8s.io/docs/user/quick-start/#installation."
+    echo "kind is not installed. Please install kind and try again. Installation instructions: https://kind.sigs.k8s.io/docs/user/quick-start/#installation." >&2
     exit 1
 fi
 
@@ -41,5 +41,5 @@ kind load docker-image --name skypilot us-central1-docker.pkg.dev/skypilot-37590
 
 # Print CPUs available on the local cluster
 NUM_CPUS=$(kubectl get nodes -o jsonpath='{.items[0].status.capacity.cpu}')
-echo "Kubernetes cluster ready! Run `sky check` to setup Kubernetes access."
+echo "Kubernetes cluster ready! Run \`sky check\` to setup Kubernetes access."
 echo "Number of CPUs available on the local cluster: $NUM_CPUS"
