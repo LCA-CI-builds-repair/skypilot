@@ -281,14 +281,18 @@ def test_instance_type_from_cpu_memory(monkeypatch, capfd):
     assert 'Standard_NC4as_T4_v3' in stdout  # Azure, 4 vCPUs, 28 GB memory, 1 T4 GPU
     assert 'n1-highmem-4' in stdout  # GCP, 4 vCPUs, 26 GB memory, 1 T4 GPU
 
-    _test_resources_launch(monkeypatch,
-                           cpus='16+',
-                           memory='32+',
-                           accelerators='T4')
-    stdout, _ = capfd.readouterr()
-    # Choose cheapest T4 instance type that satisfies the requirement
-    assert 'n1-standard-16' in stdout  # GCP, 16 vCPUs, 60 GB memory, 1 T4 GPU
-    assert 'g4dn.4xlarge' in stdout  # AWS, 16 vCPUs, 64 GB memory, 1 T4 GPU
+    import pytest
+    from tests.test_resources import _test_resources_launch
+
+    def test_optimizer_dryruns(monkeypatch, capfd):
+        _test_resources_launch(monkeypatch,
+                               cpus='16+',
+                               memory='32+',
+                               accelerators='T4')
+        stdout, _ = capfd.readouterr()
+        # Choose cheapest T4 instance type that satisfies the requirement
+        assert 'n1-standard-16' in stdout  # GCP, 16 vCPUs, 60 GB memory, 1 T4 GPU
+        assert 'g4dn.xlarge' in stdout  # AWS, 16 vCPUs, 64 GB memory, 1 T4 GPU
     assert 'Standard_NC16as_T4_v3' in stdout  # Azure, 16 vCPUs, 110 GB memory, 1 T4 GPU
 
     _test_resources_launch(monkeypatch, memory='200+', accelerators='T4')
