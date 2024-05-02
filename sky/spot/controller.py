@@ -283,7 +283,8 @@ class SpotController:
                                                             get_end_time=True)
                     logger.info(
                         'The user job failed. Please check the logs below.\n'
-                        f'== Logs of the user job (ID: {self._job_id}) ==\n')
+                        f'== Logs of the user job (ID: {self._job_id}) ==\n'
+                    )
 
                     self._download_log_and_stream(handle)
                     spot_status_to_set = spot_state.SpotStatus.FAILED

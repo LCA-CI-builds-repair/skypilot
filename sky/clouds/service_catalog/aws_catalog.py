@@ -173,7 +173,8 @@ def get_quota_code(instance_type: str, use_spot: bool) -> Optional[str]:
     specified, and will then be utilized in a botocore API command in order
     to check its quota.
     """
-
+    # Implement logic to fetch quota code based on instance_type and use_spot
+    # Return the fetched quota code as a string
     if use_spot:
         spot_header = 'SpotInstanceCode'
     else:

@@ -190,7 +190,8 @@ def get_quota_code(accelerator: str, use_spot: bool) -> Optional[str]:
     specified, and will then be utilized in a GCP CLI command in order
     to check for a non-zero quota.
     """
-
+    # Implement logic to fetch quota code based on accelerator and use_spot
+    # Return the fetched quota code as a string
     if use_spot:
         spot_header = 'SpotInstanceCode'
     else:
