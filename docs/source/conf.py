@@ -55,9 +55,9 @@ napolean_use_rtype = False
 
 # Python methods should be presented in source code order
 autodoc_member_order = 'bysource'
+autodoc_default_flags = ['members', 'undoc-members', 'private-members', 'special-members', 'inherited-members', 'show-inheritance']
 
 # -- Options for HTML output
-
 html_theme = 'sphinx_book_theme'
 html_theme_options = {
     # 'show_toc_level': 2,
