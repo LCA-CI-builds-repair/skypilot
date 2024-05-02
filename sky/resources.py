@@ -576,12 +576,12 @@ class Resources:
                         table.add_row(['-----', '----'])
                         for cloud, error in cloud_to_errors.items():
                             reason_str = '\n'.join(textwrap.wrap(
-                                str(error), 80))
-                            table.add_row([str(cloud), reason_str])
+                            str(error), 80))
+                        table.add_row([str(cloud), reason_str])
                         hint = table.get_string()
-                    raise ValueError(
-                        f'Invalid (region {region!r}, zone {zone!r}) '
-                        f'{cloud_str}. Details:\n{hint}')
+                        raise ValueError(
+                            f'Invalid (region {region!r}, zone {zone!r}) '
+                            f'{cloud_str}. Details:\n{hint}')
             elif len(valid_clouds) > 1:
                 with ux_utils.print_exception_no_traceback():
                     raise ValueError(
