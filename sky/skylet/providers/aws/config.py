@@ -826,7 +826,6 @@ def _configure_security_group(config):
         node_types_to_configure.remove(head_node_type)
         node_types_to_configure.append(head_node_type)
     security_groups = _upsert_security_groups(config, node_types_to_configure)
-
     for node_type_key in node_types_to_configure:
         node_config = config["available_node_types"][node_type_key]["node_config"]
         sg = security_groups[node_type_key]
@@ -834,7 +833,6 @@ def _configure_security_group(config):
         security_group_info_src[node_type_key] = "default"
 
     return config
-
 
 def _check_ami(config):
     """Provide helpful message for missing ImageId for node configuration."""
