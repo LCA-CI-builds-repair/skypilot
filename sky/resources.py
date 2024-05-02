@@ -848,6 +848,7 @@ class Resources:
         if self.disk_tier is None:
             return
         if self.disk_tier not in ['high', 'medium', 'low']:
+            # Add validation logic here if needed
             with ux_utils.print_exception_no_traceback():
                 raise ValueError(
                     f'Invalid disk_tier {self.disk_tier}. '
