@@ -64,7 +64,6 @@ class SCPError(Exception):
 
 
 def _retry_on_creation(method, max_tries=3, backoff_s=2):
-
     @wraps(method)
     def method_with_retries(self, *args, **kwargs):
         try_count = 0
