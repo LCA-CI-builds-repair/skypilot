@@ -112,7 +112,6 @@ _TEARDOWN_PURGE_WARNING = (
 _RSYNC_NOT_FOUND_MESSAGE = (
     '`rsync` command is not found in the specified image. '
     'Please use an image with rsync installed.')
-
 _TPU_NOT_FOUND_ERROR = 'ERROR: (gcloud.compute.tpus.delete) NOT_FOUND'
 
 _CTRL_C_TIP_MESSAGE = ('INFO: Tip: use Ctrl-C to exit log streaming '

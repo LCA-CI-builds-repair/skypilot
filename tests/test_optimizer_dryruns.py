@@ -281,10 +281,9 @@ def test_instance_type_from_cpu_memory(monkeypatch, capfd):
     assert 'Standard_NC4as_T4_v3' in stdout  # Azure, 4 vCPUs, 28 GB memory, 1 T4 GPU
     assert 'n1-highmem-4' in stdout  # GCP, 4 vCPUs, 26 GB memory, 1 T4 GPU
 
-    _test_resources_launch(monkeypatch,
-                           cpus='16+',
-                           memory='32+',
-                           accelerators='T4')
+# Add a function or context to execute the necessary test functions
+def test_check_cheapest_instance_type(monkeypatch, capfd):
+    _test_resources_launch(monkeypatch, cpus='16+', memory='32+', accelerators='T4')
     stdout, _ = capfd.readouterr()
     # Choose cheapest T4 instance type that satisfies the requirement
     assert 'n1-standard-16' in stdout  # GCP, 16 vCPUs, 60 GB memory, 1 T4 GPU

@@ -197,6 +197,7 @@ class SpotStatus(enum.Enum):
     # FAILED_CONTROLLER: The job is finished with failure because of unexpected
     # error in the controller process.
     FAILED_CONTROLLER = 'FAILED_CONTROLLER'
+    FAILED_CONTROLLER = 'FAILED_CONTROLLER'
 
     def is_terminal(self) -> bool:
         return self in self.terminal_statuses()
@@ -385,7 +386,6 @@ def set_failed(
 ):
     """Set an entire job or task to failed, if they are in non-terminal states.
 
-    Args:
         job_id: The job id.
         task_id: The task id. If None, all non-finished tasks of the job will
             be set to failed.
@@ -394,6 +394,7 @@ def set_failed(
         end_time: The end time. If None, the current time will be used.
     """
     assert failure_type.is_failed(), failure_type
+    end_time = time.time() if end_time is None else end_time
     end_time = time.time() if end_time is None else end_time
 
     fields_to_set = {
