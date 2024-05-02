@@ -4245,7 +4245,7 @@ def benchmark_launch(
                                              image_id=image_id,
                                              disk_size=disk_size,
                                              disk_tier=disk_tier,
-                                             ports=ports)
+    ports=ports)
     resources_config.update(override_params)
     if 'cloud' in resources_config:
         cloud = resources_config.pop('cloud')

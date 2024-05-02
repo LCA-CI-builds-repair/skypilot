@@ -1057,13 +1057,13 @@ class Storage(object):
         add_if_not_none('store', stores)
         add_if_not_none('persistent', self.persistent)
         add_if_not_none('mode', self.mode.value)
-        add_if_not_none('interval_seconds', self.interval_seconds)
-        if self.force_delete:
-            config['_force_delete'] = True
-        return config
+add_if_not_none('interval_seconds', self.interval_seconds)
+if self.force_delete:
+    config['_force_delete'] = True
+return config
 
-    def get_storage_name(self):
-        return self.name
+def get_storage_name(self):
+    return self.name
 
 
 class S3Store(AbstractStore):
