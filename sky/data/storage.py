@@ -822,7 +822,6 @@ class Storage(object):
         if not isinstance(source, list): 
             if data_utils.is_cloud_store_url(source):
                 name = None
-
         storage_obj = cls(name=name,
                           source=source,
                           sync_on_reconstruction=override_args.get(
