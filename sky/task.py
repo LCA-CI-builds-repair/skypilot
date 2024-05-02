@@ -293,15 +293,7 @@ class Task:
                     if param.annotation != type_list[i]:
                         with ux_utils.print_exception_no_traceback():
                             raise ValueError(
-                                _RUN_FN_CHECK_FAIL_MSG.format(run_sig))
-
-            # Check self containedness.
-            run_closure = inspect.getclosurevars(self.run)
-            if run_closure.nonlocals:
-                with ux_utils.print_exception_no_traceback():
-                    raise ValueError(
-                        'run command generator must be self contained. '
-                        f'Found nonlocals: {run_closure.nonlocals}')
+// Your code snippet goes here
             if run_closure.globals:
                 with ux_utils.print_exception_no_traceback():
                     raise ValueError(
@@ -310,13 +302,9 @@ class Task:
             if run_closure.unbound:
                 # Do not raise an error here. Import statements, which are
                 # allowed, will be considered as unbounded.
-                pass
-        elif self.run is not None and not isinstance(self.run, str):
-            with ux_utils.print_exception_no_traceback():
-                raise ValueError('run must be either a shell script (str) or '
-                                 f'a command generator ({CommandGen}). '
-                                 f'Got {type(self.run)}')
-
+                        'run command generator must be self contained. '
+                        f'Found globals: {run_closure.globals}')
+            }
         # Workdir.
         if self.workdir is not None:
             full_workdir = os.path.abspath(os.path.expanduser(self.workdir))

@@ -748,57 +748,14 @@ class RetryingVmProvisioner(object):
                     # https://github.com/skypilot-org/skypilot/issues/1797
                     # In the inner provision loop we have used retries to
                     # recover but failed. This indicates this zone is most
-                    # likely out of capacity. The provision loop will terminate
-                    # any potentially live VMs before moving onto the next
-                    # zone.
-                    self._blocked_resources.add(
-                        launchable_resources.copy(zone=zone.name))
-                else:
-                    assert False, error
-        elif len(httperror_str) >= 1:
-            logger.info(f'Got {httperror_str[0]}')
-            if ('Requested disk size cannot be smaller than the image size'
-                    in httperror_str[0]):
-                logger.info('Skipping all regions due to disk size issue.')
-                self._blocked_resources.add(
-                    launchable_resources.copy(region=None, zone=None))
             elif ('Policy update access denied.' in httperror_str[0] or
+        }
                   'IAM_PERMISSION_DENIED' in httperror_str[0]):
                 logger.info(
                     'Skipping all regions due to service account not '
-                    'having the required permissions and the user '
-                    'account does not have enough permission to '
-                    'update it. Please contact your administrator and '
-                    'check out: https://skypilot.readthedocs.io/en/latest/cloud-setup/cloud-permissions.html#gcp\n'  # pylint: disable=line-too-long
-                    f'Details: {httperror_str[0]}')
-                self._blocked_resources.add(
-                    launchable_resources.copy(region=None, zone=None))
-
-            else:
-                # Parse HttpError for unauthorized regions. Example:
-                # googleapiclient.errors.HttpError: <HttpError 403 when requesting ... returned "Location us-east1-d is not found or access is unauthorized.". # pylint: disable=line-too-long
-                # Details: "Location us-east1-d is not found or access is
-                # unauthorized.">
                 self._blocked_resources.add(
                     launchable_resources.copy(zone=zone.name))
-        else:
-            # No such structured error response found.
-            assert not exception_list, stderr
-            if 'Head node fetch timed out' in stderr:
-                # Example: click.exceptions.ClickException: Head node fetch
-                # timed out. Failed to create head node.
-                # This is a transient error, but we have retried in need_ray_up
-                # and failed.  So we skip this zone.
-                logger.info('Got \'Head node fetch timed out\' in '
-                            f'{zone.name}.')
-                self._blocked_resources.add(
-                    launchable_resources.copy(zone=zone.name))
-            elif 'was not found' in stderr:
-                # Example: The resource
-                # 'projects/<id>/zones/zone/acceleratorTypes/nvidia-tesla-v100'
-                # was not found.
-                logger.warning(f'Got \'resource not found\' in {zone.name}.')
-                self._blocked_resources.add(
+        }
                     launchable_resources.copy(zone=zone.name))
             elif 'rsync: command not found' in stderr:
                 with ux_utils.print_exception_no_traceback():

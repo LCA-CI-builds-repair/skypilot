@@ -629,32 +629,7 @@ class GCPCompute(GCPResource):
             result = operation
 
         return result
-
-    def resize_disk(
-        self, base_config: dict, instance_name: str, wait_for_operation: bool = True
-    ) -> dict:
-        """Resize a Google Cloud disk based on the provided configuration."""
-
-        # Extract the specified disk size from the configuration
-        new_size_gb = base_config["disks"][0]["initializeParams"]["diskSizeGb"]
-
-        # Fetch the instance details to get the disk name and current disk size
-        response = (
-            self.resource.instances()
-            .get(
-                project=self.project_id,
-                zone=self.availability_zone,
-                instance=instance_name,
-            )
-            .execute()
-        )
-        disk_name = response["disks"][0]["source"].split("/")[-1]
-
-        # Execute the resize request and return the response
-        operation = (
-            self.resource.disks()
-            .resize(
-                project=self.project_id,
+// Your code snippet goes here
                 zone=self.availability_zone,
                 disk=disk_name,
                 body={

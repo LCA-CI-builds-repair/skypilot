@@ -46,8 +46,6 @@ def synchronized(f):
             self.lock.release()
 
     return wrapper
-
-
 def _validation_check(node_config):
     err_msg = None
     if 'diskSize' not in node_config:
