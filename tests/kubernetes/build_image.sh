@@ -70,7 +70,7 @@ else
 fi
 
 echo "Tagging image."
-if [[ $gpu ]]; then
+if [[ $gpu == "true" ]]; then
   docker tag $TAG skypilot:latest-gpu
 else
   docker tag $TAG skypilot:latest

@@ -73,11 +73,6 @@ storage_setup_commands = [
     'ln -f -s ~/tmp-workdir/ ~/tmp-workdir/circle-link',
     'touch ~/.ssh/id_rsa.pub'
 ]
-
-# Wait until the spot controller is not in INIT state.
-# This is a workaround for the issue that when multiple spot tests
-# are running in parallel, the spot controller may be in INIT and
-# the spot queue/cancel command will return staled table.
 _SPOT_QUEUE_WAIT = ('s=$(sky spot queue); '
                     'until [ `echo "$s" '
                     '| grep "jobs will not be shown until it becomes UP." '

@@ -4252,16 +4252,16 @@ def benchmark_launch(
         if cloud is not None:
             resources_config['cloud'] = str(cloud)
     if 'region' in resources_config:
-        if resources_config['region'] is None:
+        if resources_config.get('region') is None:
             resources_config.pop('region')
     if 'zone' in resources_config:
-        if resources_config['zone'] is None:
+        if resources_config.get('zone') is None:
             resources_config.pop('zone')
     if 'accelerators' in resources_config:
-        if resources_config['accelerators'] is None:
+        if resources_config.get('accelerators') is None:
             resources_config.pop('accelerators')
     if 'image_id' in resources_config:
-        if resources_config['image_id'] is None:
+        if resources_config.get('image_id') is None:
             resources_config.pop('image_id')
 
     # Fully generate the benchmark candidate configs.

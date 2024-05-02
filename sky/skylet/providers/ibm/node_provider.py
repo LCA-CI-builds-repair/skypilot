@@ -335,9 +335,9 @@ class IBMVPCNodeProvider(NodeProvider):
 
             # delete failed nodes and skip nodes in other invalid states
             valid_statuses = ["pending", "starting", "running"]
-            if node["status"] not in valid_statuses:
+            if node["state"] not in valid_statuses:
                 with self.lock:
-                    if node["status"] == "failed":
+                    if node["state"] == "failed":
                         # since non_terminated_nodes is called periodically,
                         # prevent access until node is deleted
                         self._delete_node(node["id"], node)
