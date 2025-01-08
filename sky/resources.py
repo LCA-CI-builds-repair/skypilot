@@ -152,8 +152,7 @@ class Resources:
             if round(disk_size) != disk_size:
                 with ux_utils.print_exception_no_traceback():
                     raise ValueError(
-                        f"OS disk size must be an integer. Got: {disk_size}."
-                    )
+                        f"OS disk size must be an integer. Got: {disk_size}.")
             self._disk_size = int(disk_size)
         else:
             self._disk_size = _DEFAULT_DISK_SIZE_GB
@@ -177,7 +176,8 @@ class Resources:
                 ports = list(ports)
             if not isinstance(ports, list):
                 ports = [ports]
-            ports = resources_utils.simplify_ports([str(port) for port in ports])
+            ports = resources_utils.simplify_ports(
+                [str(port) for port in ports])
             if not ports:
                 # Set to None if empty. This is mainly for resources from
                 # cli, which will comes in as an empty tuple.
@@ -280,8 +280,7 @@ class Resources:
         hardware_str = (
             f"{instance_type}{use_spot}"
             f"{cpus}{memory}{accelerators}{accelerator_args}{image_id}"
-            f"{disk_tier}{disk_size}{ports}"
-        )
+            f"{disk_tier}{disk_size}{ports}")
         # It may have leading ',' (for example, instance_type not set) or empty
         # spaces.  Remove them.
         while hardware_str and hardware_str[0] in (",", " "):
@@ -483,11 +482,9 @@ class Resources:
                     accelerators = {accelerators: 1}
                 else:
                     splits = accelerators.split(":")
-                    parse_error = (
-                        'The "accelerators" field as a str '
-                        "should be <name> or <name>:<cnt>. "
-                        f"Found: {accelerators!r}"
-                    )
+                    parse_error = ('The "accelerators" field as a str '
+                                   "should be <name> or <name>:<cnt>. "
+                                   f"Found: {accelerators!r}")
                     if len(splits) != 2:
                         with ux_utils.print_exception_no_traceback():
                             raise ValueError(parse_error)
