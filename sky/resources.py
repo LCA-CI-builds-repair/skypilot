@@ -531,7 +531,8 @@ class Resources:
                     logger.info(
                         'Missing runtime_version in accelerator_args, using'
                         f' default ({accelerator_args["runtime_version"]})')
-
+        
+        self._accelerators = accelerators
         self._accelerators = accelerators
         self._accelerator_args = accelerator_args
 
