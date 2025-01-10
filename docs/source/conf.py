@@ -59,10 +59,8 @@ napolean_use_rtype = False
 autodoc_member_order = 'bysource'
 
 # -- Options for HTML output
-
 html_theme = 'sphinx_book_theme'
 html_theme_options = {
-    # 'show_toc_level': 2,
     'logo': {
         'image_dark': '_static/SkyPilot_wide_dark.svg',
     },
@@ -73,10 +71,7 @@ html_theme_options = {
     'repository_branch': 'master',
     'path_to_docs': 'docs/source',
     'pygment_light_style': 'tango',
-    'pygment_dark_style': 'monokai',
-    'primary_sidebar_end': [],
 }
-
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
 html_title = 'SkyPilot documentation'
