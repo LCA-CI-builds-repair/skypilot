@@ -104,9 +104,9 @@ class Resources:
           use_spot: whether to use spot instances. If None, defaults to
             False.
           spot_recovery: the spot recovery strategy to use for the managed
-            spot to recover the cluster from preemption. Refer to
-            `recovery_strategy module <https://github.com/skypilot-org/skypilot/blob/master/sky/spot/recovery_strategy.py>`__ # pylint: disable=line-too-long
-            for more details.
+            spot to recover the cluster from preemption. Refer to the
+            `recovery_strategy module
+            <https://github.com/skypilot-org/skypilot/blob/master/sky/spot/recovery_strategy.py>`__ for more details. # pylint: disable=line-too-long
           region: the region to use.
           zone: the zone to use.
           image_id: the image ID to use. If a str, must be a string
