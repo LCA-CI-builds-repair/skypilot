@@ -479,7 +479,8 @@ class Resources:
                 if ':' not in accelerators:
                     accelerators = {accelerators: 1}
                 else:
-                    splits = accelerators.split(':')
+                    splits = accelerators.split(
+                        ':')
                     parse_error = ('The "accelerators" field as a str '
                                    'should be <name> or <name>:<cnt>. '
                                    f'Found: {accelerators!r}')
