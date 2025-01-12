@@ -569,7 +569,8 @@ class Resources:
                     cloud_str = f'for any cloud among {enabled_clouds}'
                 with ux_utils.print_exception_no_traceback():
                     if len(cloud_to_errors) == 1:
-                        # UX: if 1 cloud, don't print a table.
+                        # User experience: if only one cloud, don't print a 
+                        # table.
                         hint = list(cloud_to_errors.items())[0][-1]
                     else:
                         table = log_utils.create_table(['Cloud', 'Hint'])
