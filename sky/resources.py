@@ -687,7 +687,9 @@ class Resources:
                 f'inferred from the instance_type {self.instance_type!r}.')
             self._cloud = valid_clouds[0]
 
-    def _try_validate_cpus_mem(self) -> None:
+    def _try_validate_cpus_mem(
+        self,
+    ) -> None:) -> None:
         if self.cpus is None and self.memory is None:
             return
         if self.instance_type is not None:
