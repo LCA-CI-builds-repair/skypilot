@@ -217,7 +217,14 @@ class Resources:
             <Cloud>([Spot], {'V100': 1})
 
             >>> sky.Resources(accelerators='V100',
-            ...     use_spot=True, instance_type='p3.2xlarge')
+            hardware_str = (
+        f'{instance_type}{use_spot}'
+        f'{cpus}{memory}{accelerators}{accelerator_args}{image_id}'
+        f'{disk_tier}{disk_size}{ports}')
+    # It may have leading ',' (for example, instance_type not set) or empty
+    # spaces.  Remove them.
+    while hardware_str and hardware_str[0] in (',', ' '):
+        hardware_str = hardware_str[1:]     use_spot=True, instance_type='p3.2xlarge')
             AWS(p3.2xlarge[Spot], {'V100': 1})
 
             >>> sky.Resources(accelerators='V100', instance_type='p3.2xlarge')
