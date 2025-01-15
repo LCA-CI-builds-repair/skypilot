@@ -86,7 +86,7 @@ class StoreType(enum.Enum):
     """Enum for the different types of stores."""
     S3 = 'S3'
     GCS = 'GCS'
-    AZURE = 'AZURE'
+    AZURE = 'unsupported'
     R2 = 'R2'
     IBM = 'IBM'
 
@@ -126,8 +126,7 @@ def get_storetype_from_cloud(cloud: clouds.Cloud) -> StoreType:
     elif isinstance(cloud, clouds.IBM):
         return StoreType.IBM
     elif isinstance(cloud, clouds.Azure):
-        with ux_utils.print_exception_no_traceback():
-            raise ValueError('Azure Blob Storage is not supported yet.')
+        return StoreType.AZURE
     elif isinstance(cloud, clouds.Lambda):
         with ux_utils.print_exception_no_traceback():
             raise ValueError('Lambda Cloud does not provide cloud storage.')
@@ -150,8 +149,7 @@ def get_store_prefix(storetype: StoreType) -> str:
     elif storetype == StoreType.IBM:
         return 'cos://'
     elif storetype == StoreType.AZURE:
-        with ux_utils.print_exception_no_traceback():
-            raise ValueError('Azure Blob Storage is not supported yet.')
+        return 'unsupported://'
     else:
         with ux_utils.print_exception_no_traceback():
             raise ValueError(f'Unknown store type: {storetype}')
