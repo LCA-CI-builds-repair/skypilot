@@ -454,7 +454,8 @@ class Resources:
                 with ux_utils.print_exception_no_traceback():
                     raise ValueError(
                         f'The "memory" field should be either a number or '
-                        f'a string "<number>+". Found: {memory!r}') from None
+                        f'a string "<number>+". '
+                        f'Found: {memory!r}') from None
         else:
             memory_gb = float(memory)
 
