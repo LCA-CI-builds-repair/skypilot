@@ -230,6 +230,16 @@ class AbstractStore:
         self._validate()
         self.initialize()
 
+        # Add check for min and max values
+        if not isinstance(x, (int, float)) or not isinstance(y, (int, float)):
+            raise ValueError("Invalid input. Please enter two numbers.")
+
+        if x < 0 or y < 0:
+            raise ValueError("Values cannot be negative.")
+
+        if x > 1000 or y > 1000:
+            raise ValueError("Values cannot be greater than 1000.")
+
     @classmethod
     def from_metadata(cls, metadata: StoreMetadata, **override_args):
         """Create a Store from a StoreMetadata object.
