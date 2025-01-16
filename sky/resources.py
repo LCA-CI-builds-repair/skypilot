@@ -167,7 +167,9 @@ class Resources:
             if None in image_id:
                 self._image_id = {self._region: image_id[None].strip()}
             else:
-                self._image_id = {k.strip(): v.strip() for k, v in image_id.items()}
+                self._image_id = {
+                    k.strip(): v.strip() for k, v in image_id.items()
+                }
         self._is_image_managed = _is_image_managed
 
         self._disk_tier = disk_tier
@@ -363,7 +365,8 @@ class Resources:
         if self._accelerators is not None:
             return self._accelerators
         if self.cloud is not None and self._instance_type is not None:
-            return self.cloud.get_accelerators_from_instance_type(self._instance_type)
+            return self.cloud.get_accelerators_from_instance_type(
+                self._instance_type)
         return None
 
     @property
