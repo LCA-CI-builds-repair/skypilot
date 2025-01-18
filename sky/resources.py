@@ -481,8 +481,8 @@ class Resources:
                 else:
                     splits = accelerators.split(':')
                     parse_error = ('The "accelerators" field as a str '
-                                   'should be <name> or <name>:<cnt>. '
-                                   f'Found: {accelerators!r}')
+                                 'should be <name> or <name>:<cnt>. '
+                                 f'Found: {accelerators!r}')
                     if len(splits) != 2:
                         with ux_utils.print_exception_no_traceback():
                             raise ValueError(parse_error)
