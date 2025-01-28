@@ -1132,10 +1132,10 @@ class S3Store(AbstractStore):
         """
 
         def _raise_no_traceback_name_error(err_str):
-            with ux_utils.print_exception_no_traceback():
+            with ux_utils.print_exception_no_traceback(): 
                 raise exceptions.StorageNameError(err_str)
 
-        if name is not None and isinstance(name, str):
+        if name is not None and isinstance(name, str):(name, str):
             if not 3 <= len(name) <= 63:
                 _raise_no_traceback_name_error(
                     f'Invalid store name: name {name} must be between 3 (min) '
