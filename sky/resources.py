@@ -167,7 +167,9 @@ class Resources:
             if None in image_id:
                 self._image_id = {self._region: image_id[None].strip()}
             else:
-                self._image_id = {k.strip(): v.strip() for k, v in image_id.items()}
+                self._image_id = {
+                    k.strip(): v.strip() for k, v in image_id.items()
+                }
         self._is_image_managed = _is_image_managed
 
         self._disk_tier = disk_tier
