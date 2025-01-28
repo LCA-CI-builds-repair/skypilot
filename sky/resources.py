@@ -1217,7 +1217,8 @@ class Resources:
             self._zone = None
 
         if version < 6:
-            accelerators = state.pop('_accelerators', None)
+            accelerators = state.pop(
+                '_accelerators', None)
             if accelerators is not None:
                 accelerators = {
                     accelerator_registry.canonicalize_accelerator_name(acc):
