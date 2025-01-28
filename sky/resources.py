@@ -551,37 +551,39 @@ class Resources:
         if self._cloud is None:
             # Try to infer the cloud from region/zone, if unique. If 0 or >1
             # cloud corresponds to region/zone, errors out.
-            valid_clouds = []
-            enabled_clouds = global_user_state.get_enabled_clouds()
-            cloud_to_errors = {}
-            for cloud in enabled_clouds:
-                try:
-                    cloud.validate_region_zone(region, zone)
-                except ValueError as e:
-                    cloud_to_errors[repr(cloud)] = e
-                    continue
-                valid_clouds.append(cloud)
+                valid_clouds = []
+                enabled_clouds = global_user_state.get_enabled_clouds()
+                cloud_to_errors = {}
+                for cloud in enabled_clouds:
+                    try:
+                        cloud.validate_region_zone(region, zone)
+                    except ValueError as e:
+                        cloud_to_errors[repr(cloud)] = e
+                        continue
+                    valid_clouds.append(cloud)
 
-            if len(valid_clouds) == 0:
-                if len(enabled_clouds) == 1:
-                    cloud_str = f'for cloud {enabled_clouds[0]}'
-                else:
-                    cloud_str = f'for any cloud among {enabled_clouds}'
-                with ux_utils.print_exception_no_traceback():
-                    if len(cloud_to_errors) == 1:
-                        # UX: if 1 cloud, don't print a table.
-                        hint = list(cloud_to_errors.items())[0][-1]
+                if len(valid_clouds) == 0:
+                    if len(enabled_clouds) == 1:
+                        cloud_str = f'for cloud {enabled_clouds[0]}'
                     else:
-                        table = log_utils.create_table(['Cloud', 'Hint'])
-                        table.add_row(['-----', '----'])
-                        for cloud, error in cloud_to_errors.items():
-                            reason_str = '\n'.join(textwrap.wrap(
-                                str(error), 80))
-                            table.add_row([str(cloud), reason_str])
-                        hint = table.get_string()
-                    raise ValueError(
-                        f'Invalid (region {region!r}, zone {zone!r}) '
-                        f'{cloud_str}. Details:\n{hint}')
+                        cloud_str = (
+                            f'for any cloud among {enabled_clouds}'
+                        )
+                    with ux_utils.print_exception_no_traceback():
+                        if len(cloud_to_errors) == 1:
+                            # UX: if 1 cloud, don't print a table.
+                            hint = list(cloud_to_errors.items())[0][-1]
+                        else:
+                            table = log_utils.create_table(['Cloud', 'Hint'])
+                            table.add_row(['-----', '----'])
+                            for cloud, error in cloud_to_errors.items():
+                                reason_str = '\n'.join(textwrap.wrap(
+                                    str(error), 80))
+                                table.add_row([str(cloud), reason_str])
+                            hint = table.get_string()
+                        raise ValueError(
+                            f'Invalid (region {region!r}, zone {zone!r}) '
+                            f'{cloud_str}. Details:\n{hint}')
             elif len(valid_clouds) > 1:
                 with ux_utils.print_exception_no_traceback():
                     raise ValueError(
