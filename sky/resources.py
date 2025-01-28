@@ -153,7 +153,7 @@ class Resources:
                 with ux_utils.print_exception_no_traceback():
                     raise ValueError(
                         f"OS disk size must be an integer. Got: {disk_size}."
-                    )
+                        f'The "cpus" field should be positive. Found: {memory!r}')
             self._disk_size = int(disk_size)
         else:
             self._disk_size = _DEFAULT_DISK_SIZE_GB
@@ -168,6 +168,9 @@ class Resources:
                 self._image_id = {self._region: image_id[None].strip()}
             else:
                 self._image_id = {k.strip(): v.strip() for k, v in image_id.items()}
+                self._image_id = {
+                    k.strip(): v.strip() for k, v in image_id.items()
+                }
         self._is_image_managed = _is_image_managed
 
         self._disk_tier = disk_tier
@@ -178,6 +181,8 @@ class Resources:
             if not isinstance(ports, list):
                 ports = [ports]
             ports = resources_utils.simplify_ports([str(port) for port in ports])
+            ports = resources_utils.simplify_ports(
+                [str(port) for port in ports])
             if not ports:
                 # Set to None if empty. This is mainly for resources from
                 # cli, which will comes in as an empty tuple.
@@ -281,7 +286,7 @@ class Resources:
             f"{instance_type}{use_spot}"
             f"{cpus}{memory}{accelerators}{accelerator_args}{image_id}"
             f"{disk_tier}{disk_size}{ports}"
-        )
+            f"{disk_tier}{disk_size}{ports}")
         # It may have leading ',' (for example, instance_type not set) or empty
         # spaces.  Remove them.
         while hardware_str and hardware_str[0] in (",", " "):
@@ -364,6 +369,8 @@ class Resources:
             return self._accelerators
         if self.cloud is not None and self._instance_type is not None:
             return self.cloud.get_accelerators_from_instance_type(self._instance_type)
+            return self.cloud.get_accelerators_from_instance_type(
+                self._instance_type)
         return None
 
     @property
@@ -424,7 +431,7 @@ class Resources:
                     raise ValueError(
                         f'The "cpus" field should be either a number or '
                         f'a string "<number>+". Found: {cpus!r}'
-                    ) from None
+                        f'a string "<number>+". Found: {memory!r}') from None
         else:
             num_cpus = float(cpus)
 
@@ -432,7 +439,7 @@ class Resources:
             with ux_utils.print_exception_no_traceback():
                 raise ValueError(
                     f'The "cpus" field should be positive. Found: {cpus!r}'
-                )
+                    f'The "cpus" field should be positive. Found: {cpus!r}')
 
     def _set_memory(
         self,
@@ -456,7 +463,7 @@ class Resources:
                     raise ValueError(
                         f'The "memory" field should be either a number or '
                         f'a string "<number>+". Found: {memory!r}'
-                    ) from None
+                        f'a string "<number>+". Found: {cpus!r}') from None
         else:
             memory_gb = float(memory)
 
@@ -486,8 +493,8 @@ class Resources:
                     parse_error = (
                         'The "accelerators" field as a str '
                         "should be <name> or <name>:<cnt>. "
-                        f"Found: {accelerators!r}"
-                    )
+                        "should be <name> or <name>:<cnt>. "
+                        f"Found: {accelerators!r}")
                     if len(splits) != 2:
                         with ux_utils.print_exception_no_traceback():
                             raise ValueError(parse_error)
