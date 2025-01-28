@@ -428,11 +428,19 @@ class Resources:
         else:
             num_cpus = float(cpus)
 
-        if num_cpus <= 0:
-            with ux_utils.print_exception_no_traceback():
-                raise ValueError(
-                    f'The "cpus" field should be positive. Found: {cpus!r}'
+        # Add input validation and retry limit
+        num_attempts = 0
+        while num_attempts < 3:
+            try:
+                if num_cpus <= 0:
+                    raise ValueError(
+                        f'The "cpus" field should be positive. Found: {cpus!r}'
                 )
+                break
+            except ValueError as e:
+                num_attempts += 1
+                print(f'Error: {e}. Retrying ({num_attempts}/3)...')
+                cpus = input("Enter number of CPUs: ")
 
     def _set_memory(
         self,
