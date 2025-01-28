@@ -404,7 +404,7 @@ class Storage(object):
     class StorageMetadata(object):
         """A pickle-able tuple of:
 
-        - (required) Storage name.
+        - (optional) Storage name.
         - (required) Source.
         - (optional) Sync every interval_seconds for CSYNC mode.
         - (optional) Storage mode.
