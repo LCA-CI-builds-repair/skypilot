@@ -152,7 +152,8 @@ class Resources:
             if round(disk_size) != disk_size:
                 with ux_utils.print_exception_no_traceback():
                     raise ValueError(
-                        f"OS disk size must be an integer. Got: {disk_size}."
+                        f"OS disk size must be an integer. Got: "
+                        f"{disk_size}."
                     )
             self._disk_size = int(disk_size)
         else:
