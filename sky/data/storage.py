@@ -1891,6 +1891,14 @@ class GcsStore(AbstractStore):
                 # Try public bucket to see if bucket exists
                 with ux_utils.print_exception_no_traceback():
                     raise PermissionError(
+                         'External Bucket detected. User not allowed to access ' +
+                         'external bucket. Please check if the bucket exists and ' +
+                         'is accessible with the current GCP credentials.') from e
+         except gcp.not_found_exception() as e:
+             with ux_utils.print_exception_no_traceback():
+                 raise exceptions.StorageBucketGetError(
+                     f'Bucket {self.name} not found.') from e
+
                         'External Bucket detected. User not allowed to delete '
                         'external bucket.') from e
             except gcp.not_found_exception():
