@@ -278,10 +278,11 @@ class Resources:
         # Do not show region/zone here as `sky status -a` would show them as
         # separate columns. Also, Resources repr will be printed during
         # failover, and the region may be dynamically determined.
-        hardware_str = (
-            f'{instance_type}{use_spot}'
-            f'{cpus}{memory}{accelerators}{accelerator_args}{image_id}'
-            f'{disk_tier}{disk_size}{ports}')
+        hardware_str = (f'{instance_type}{use_spot}'
+                        f'{cpus}{memory}{accelerators}'
+                        f'{accelerator_args}{image_id}{disk_tier}'
+                        f'{disk_size}{ports}')
+
         # It may have leading ',' (for example, instance_type not set) or empty
         # spaces.  Remove them.
         while hardware_str and hardware_str[0] in (',', ' '):
