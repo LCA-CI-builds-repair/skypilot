@@ -418,21 +418,13 @@ class Resources:
                 num_cpus_str = cpus
 
             try:
-                num_cpus = float(num_cpus_str)
-            except ValueError:
+                num_cpus = max(int(num_cpus_str), 1)
+            except ValueError as e:
                 with ux_utils.print_exception_no_traceback():
                     raise ValueError(
                         f'The "cpus" field should be either a number or '
-                        f'a string "<number>+". Found: {cpus!r}'
-                    ) from None
-        else:
-            num_cpus = float(cpus)
-
-        if num_cpus <= 0:
-            with ux_utils.print_exception_no_traceback():
-                raise ValueError(
-                    f'The "cpus" field should be positive. Found: {cpus!r}'
-                )
+                        f'a string "<int>+". Found: {cpus!r}. {str(e)}'
+                    ) from e
 
     def _set_memory(
         self,
@@ -450,21 +442,13 @@ class Resources:
                 num_memory_gb = memory
 
             try:
-                memory_gb = float(num_memory_gb)
-            except ValueError:
+                memory_gb = max(float(num_memory_gb), 0.1)
+            except ValueError as e:
                 with ux_utils.print_exception_no_traceback():
                     raise ValueError(
                         f'The "memory" field should be either a number or '
-                        f'a string "<number>+". Found: {memory!r}'
-                    ) from None
-        else:
-            memory_gb = float(memory)
-
-        if memory_gb <= 0:
-            with ux_utils.print_exception_no_traceback():
-                raise ValueError(
-                    f'The "cpus" field should be positive. Found: {memory!r}'
-                )
+                        f'a string "<float>+". Found: {memory!r}. {str(e)}'
+                    ) from e
 
     def _set_accelerators(
         self,
@@ -483,17 +467,18 @@ class Resources:
                     accelerators = {accelerators: 1}
                 else:
                     splits = accelerators.split(":")
-                    parse_error = (
-                        'The "accelerators" field as a str '
-                        "should be <name> or <name>:<cnt>. "
-                        f"Found: {accelerators!r}"
-                    )
                     if len(splits) != 2:
                         with ux_utils.print_exception_no_traceback():
+                            parse_error = (
+                                'The "accelerators" field as a str '
+                                "should be <name> or <name>:<int>. "
+                                f"Found: {accelerators!r}"
+                            )
                             raise ValueError(parse_error)
                     try:
-                        num = float(splits[1])
-                        num = int(num) if num.is_integer() else num
+                        num = int(splits[1])
+                        if num <= 0:
+                            raise ValueError("Accelerator count must be positive")
                         accelerators = {splits[0]: num}
                     except ValueError:
                         with ux_utils.print_exception_no_traceback():
