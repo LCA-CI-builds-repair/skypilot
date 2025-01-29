@@ -821,9 +821,10 @@ class Resources:
                     raise ValueError(
                         f'Image tag {image_id!r} is not valid, please make sure'
                         f' the tag exists in {self._cloud}{region_str}.')
+            if (self._cloud.is_same_cloud(clouds.AWS()) and not image_id.startswith('skypilot:') and
+                    region is None):
 
-            if (self._cloud.is_same_cloud(clouds.AWS()) and
-                    not image_id.startswith('skypilot:') and region is None):
+
                 with ux_utils.print_exception_no_traceback():
                     raise ValueError(
                         'image_id is only supported for AWS in a specific '
