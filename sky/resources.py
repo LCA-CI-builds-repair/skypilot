@@ -799,9 +799,10 @@ class Resources:
                         clouds.IBM()) and not self._cloud.is_same_cloud(
                             clouds.OCI()):
             with ux_utils.print_exception_no_traceback():
-                raise ValueError(
+                max_line_length = 80
+                raise ValueError(textwrap.fill(
                     'image_id is only supported for AWS/GCP/IBM/OCI, please '
-                    'explicitly specify the cloud.')
+                    'explicitly specify the cloud.', width=max_line_length))
 
         if self._region is not None:
             if self._region not in self._image_id:
