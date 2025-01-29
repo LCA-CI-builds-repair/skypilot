@@ -1094,7 +1094,8 @@ class Resources:
 
     def get_required_cloud_features(
             self) -> Set[clouds.CloudImplementationFeatures]:
-        """Returns the set of cloud features required by this Resources."""
+        """Returns the set of cloud features required by this Resources.
+        """
         features = set()
         if self.use_spot:
             features.add(clouds.CloudImplementationFeatures.SPOT_INSTANCE)
