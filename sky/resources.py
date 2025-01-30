@@ -151,9 +151,7 @@ class Resources:
         if disk_size is not None:
             if round(disk_size) != disk_size:
                 with ux_utils.print_exception_no_traceback():
-                    raise ValueError(
-                        f"OS disk size must be an integer. Got: {disk_size}."
-                    )
+                    raise ValueError(f"OS disk size must be an integer. Got: {disk_size}.")
             self._disk_size = int(disk_size)
         else:
             self._disk_size = _DEFAULT_DISK_SIZE_GB
@@ -167,7 +165,9 @@ class Resources:
             if None in image_id:
                 self._image_id = {self._region: image_id[None].strip()}
             else:
-                self._image_id = {k.strip(): v.strip() for k, v in image_id.items()}
+                self._image_id = {
+                    k.strip(): v.strip() for k, v in image_id.items()
+                }
         self._is_image_managed = _is_image_managed
 
         self._disk_tier = disk_tier
@@ -177,7 +177,8 @@ class Resources:
                 ports = list(ports)
             if not isinstance(ports, list):
                 ports = [ports]
-            ports = resources_utils.simplify_ports([str(port) for port in ports])
+            ports = resources_utils.simplify_ports(
+                [str(port) for port in ports])
             if not ports:
                 # Set to None if empty. This is mainly for resources from
                 # cli, which will comes in as an empty tuple.
@@ -423,8 +424,7 @@ class Resources:
                 with ux_utils.print_exception_no_traceback():
                     raise ValueError(
                         f'The "cpus" field should be either a number or '
-                        f'a string "<number>+". Found: {cpus!r}'
-                    ) from None
+                        f'a string "<number>+". Found: {cpus!r}') from None
         else:
             num_cpus = float(cpus)
 
@@ -455,8 +455,7 @@ class Resources:
                 with ux_utils.print_exception_no_traceback():
                     raise ValueError(
                         f'The "memory" field should be either a number or '
-                        f'a string "<number>+". Found: {memory!r}'
-                    ) from None
+                        f'a string "<number>+". Found: {memory!r}') from None
         else:
             memory_gb = float(memory)
 
@@ -483,11 +482,9 @@ class Resources:
                     accelerators = {accelerators: 1}
                 else:
                     splits = accelerators.split(":")
-                    parse_error = (
-                        'The "accelerators" field as a str '
-                        "should be <name> or <name>:<cnt>. "
-                        f"Found: {accelerators!r}"
-                    )
+                    parse_error = ('The "accelerators" field as a str '
+                                   "should be <name> or <name>:<cnt>. "
+                                   f"Found: {accelerators!r}")
                     if len(splits) != 2:
                         with ux_utils.print_exception_no_traceback():
                             raise ValueError(parse_error)
