@@ -870,8 +870,27 @@ class Resources:
         if self.cloud is not None:
             self.cloud.check_features_are_supported(
                 {clouds.CloudImplementationFeatures.OPEN_PORTS})
-        # We don't need to check the ports format since we already done it
-        # in resources_utils.simplify_ports
+        attempts = 0
+        while attempts < 3:
+            try:
+                for port in self.ports:
+                    if '-' in port:
+                        start_port, end_port = port.split('-')
+                        start_port = int(start_port)
+                        end_port = int(end_port)
+                        if start_port < 0 or end_port > 65535 or start_port > end_port:
+                            raise ValueError(f'Invalid port range: {port}')
+                    else:
+                        port_num = int(port)
+                        if port_num < 0 or port_num > 65535:
+                            raise ValueError(f'Invalid port: {port}')
+                break
+            except ValueError as e:
+                attempts += 1
+                if attempts == 3:
+                    raise e
+                logger.warning(f'Invalid port(s) provided: {e}. Retry attempt {attempts}/3')
+                self.ports = input('Enter comma-separated ports: ').split(',')
 
     def get_cost(self, seconds: float) -> float:
         """Returns cost in USD for the runtime in seconds."""
