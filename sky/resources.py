@@ -151,6 +151,9 @@ class Resources:
         if disk_size is not None:
             if round(disk_size) != disk_size:
                 with ux_utils.print_exception_no_traceback():
+                    if isinstance(disk_size, str):
+                        raise ValueError(
+                            f"OS disk size must be a number. Got: {disk_size}.")
                     raise ValueError(
                         f"OS disk size must be an integer. Got: {disk_size}."
                     )
@@ -428,9 +431,12 @@ class Resources:
         else:
             num_cpus = float(cpus)
 
-        if num_cpus <= 0:
-            with ux_utils.print_exception_no_traceback():
+        with ux_utils.print_exception_no_traceback():
+            if not isinstance(num_cpus, (int, float)):
                 raise ValueError(
+                    f'The "cpus" field should be a number. Found: {cpus!r}')
+            if num_cpus <= 0:
+                raise ValueError(  
                     f'The "cpus" field should be positive. Found: {cpus!r}'
                 )
 
@@ -460,8 +466,11 @@ class Resources:
         else:
             memory_gb = float(memory)
 
-        if memory_gb <= 0:
-            with ux_utils.print_exception_no_traceback():
+        with ux_utils.print_exception_no_traceback():
+            if not isinstance(memory_gb, (int, float)):
+                raise ValueError(
+                    f'The "memory" field should be a number. Found: {memory!r}')
+            if memory_gb <= 0:  
                 raise ValueError(
                     f'The "cpus" field should be positive. Found: {memory!r}'
                 )
@@ -500,6 +509,12 @@ class Resources:
                             raise ValueError(parse_error) from None
 
             # Ignore check for the local cloud case.
+            if not isinstance(self._cloud, clouds.Local):
+                for acc, acc_count in accelerators.items():
+                    if not isinstance(acc_count, int):
+                        raise ValueError(
+                            f'Accelerator count for {acc} must be an integer.'
+                            f' Got: {acc_count}')
             # It is possible the accelerators dict can contain multiple
             # types of accelerators for some on-prem clusters.
             if not isinstance(self._cloud, clouds.Local):
