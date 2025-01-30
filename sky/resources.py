@@ -152,8 +152,7 @@ class Resources:
             if round(disk_size) != disk_size:
                 with ux_utils.print_exception_no_traceback():
                     raise ValueError(
-                        f"OS disk size must be an integer. Got: {disk_size}."
-                    )
+                        f"OS disk size must be an integer. Got: {disk_size}.")
             self._disk_size = int(disk_size)
         else:
             self._disk_size = _DEFAULT_DISK_SIZE_GB
@@ -167,7 +166,9 @@ class Resources:
             if None in image_id:
                 self._image_id = {self._region: image_id[None].strip()}
             else:
-                self._image_id = {k.strip(): v.strip() for k, v in image_id.items()}
+                self._image_id = {
+                    k.strip(): v.strip() for k, v in image_id.items()
+                }
         self._is_image_managed = _is_image_managed
 
         self._disk_tier = disk_tier
@@ -177,7 +178,8 @@ class Resources:
                 ports = list(ports)
             if not isinstance(ports, list):
                 ports = [ports]
-            ports = resources_utils.simplify_ports([str(port) for port in ports])
+            ports = resources_utils.simplify_ports(
+                [str(port) for port in ports])
             if not ports:
                 # Set to None if empty. This is mainly for resources from
                 # cli, which will comes in as an empty tuple.
@@ -363,7 +365,8 @@ class Resources:
         if self._accelerators is not None:
             return self._accelerators
         if self.cloud is not None and self._instance_type is not None:
-            return self.cloud.get_accelerators_from_instance_type(self._instance_type)
+            return self.cloud.get_accelerators_from_instance_type(
+                self._instance_type)
         return None
 
     @property
